@@ -39,7 +39,7 @@ public class Assets {
     public static BufferedImage rock;
 
     public static void Init() {
-        rock=ImageLoader.LoadImage("resources/rock.png");
+        rock=ImageLoader.LoadImage("resources/static/rock.png");
         firstGoblin=ImageLoader.LoadImage("resources/goblin/Goblin1_1.png");
         secondGoblin=ImageLoader.LoadImage("resources/goblin/Goblin2_1.png");
 

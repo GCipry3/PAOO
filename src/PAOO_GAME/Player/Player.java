@@ -1,32 +1,29 @@
 package PAOO_GAME.Player;
 
+import PAOO_GAME.Collisions.Collision;
 import PAOO_GAME.Collisions.KeyboardControl;
 import PAOO_GAME.Map.Map;
-import PAOO_GAME.Collisions.Collision;
 
 import java.awt.image.BufferedImage;
+
+import static PAOO_GAME.Constants.*;
 
 public abstract class Player {
 
     protected String name;
     protected int lives;
 
-    public int x;
-    public int y;
+    protected static int x;
+    protected static int y;
 
-    protected int speed=3;
-    protected int width=32;
-    protected int height=32;
-    protected int scale= 2;
 
     protected boolean right=false;
     protected int atackCnt=0;
-    public static boolean endAtack=true;
     protected int ytmp=y;
     protected int xtmp=x;
-    public static int shurikenCircle =128;
-    protected static boolean jumpAvailable=true;
     protected static int jumpCnt=0;
+    protected static boolean jumpAvailable=true;
+    protected static boolean endAtack=true;
 
     protected BufferedImage textureLeft;
     protected BufferedImage textureRight;
@@ -40,9 +37,13 @@ public abstract class Player {
     public abstract void update();
     public abstract boolean increaseLife();*/
 
+    protected Player(){}
 
-    public int getWidth(){return width;}
-    public int getHeight(){return height;}
+    public static boolean getEndAtackStatus(){return endAtack;}
+    public int getX(){return x;}
+    public int getY(){return y;}
+    public void setX(int x){this.x=x;}
+    public void setY(int y){this.y=y;}
 
     public String getName() {
         return name;
@@ -56,7 +57,7 @@ public abstract class Player {
         lives =3;
     }
 
-    public void atack() {
+    protected void atack() {
         if(KeyboardControl.atack)
             endAtack=false;
 
@@ -79,7 +80,8 @@ public abstract class Player {
 
         ytmp-=70;
 
-        while(Collision.checkAllWallCollisions(xtmp,ytmp,width*scale-10,height*scale-10)){
+        while(checkWallCollision())
+        {
             ytmp=ytmp+2;
         }
     }
@@ -89,7 +91,7 @@ public abstract class Player {
     public void update() {
         ytmp=y;
 
-        xtmp=x+ KeyboardControl.velocityX*speed;
+        xtmp=x+ KeyboardControl.velocityX * playerSpeed;
 
         if(KeyboardControl.velocityX== 1) right=true;
 
@@ -131,29 +133,31 @@ public abstract class Player {
             jump();
             jumpAvailable=false;
         }
-        if(!jumpAvailable){
-            jumpCnt++;
-        }
         if(jumpCnt>30){
             jumpAvailable=true;
             jumpCnt=0;
         }
 
-        if(!Collision.checkAllWallCollisions(xtmp,ytmp,width*scale-10,height*scale-10))
-        {
-            x=xtmp;
-            y=ytmp;
-        }
-        ytmp+=2;
-
-        if(KeyboardControl.velocityY== 1) {ytmp+=5;}
-        if(!Collision.checkAllWallCollisions(xtmp,ytmp,width*scale-10,height*scale-10))
+        if(!checkWallCollision())
         {
             x=xtmp;
             y=ytmp;
         }
 
-        if(Collision.checkNextLevel(x,y,this.getWidth(),this.getHeight()))
+        if(!jumpAvailable){
+            jumpCnt++;
+            ytmp+=5;
+        }
+        else{
+            ytmp+=1;
+        }
+       if(!checkWallCollision())
+        {
+            x=xtmp;
+            y=ytmp;
+        }
+
+        if(checkNextLevelCollision())
         {
             Map.index++;
         }
@@ -169,4 +173,19 @@ public abstract class Player {
         }
         return false;
     }
+
+    public boolean checkWallCollision(){
+        return Collision.checkCollisions(xtmp,ytmp,
+                playerWidth * playerDrawScale -10,
+                playerHeight * playerDrawScale -10,
+                wallCollisions);
+    }
+
+    public boolean checkNextLevelCollision(){
+        return Collision.checkCollisions(x,y,
+                playerWidth,
+                playerHeight,
+                nextLevelCollision );
+    }
+
 }

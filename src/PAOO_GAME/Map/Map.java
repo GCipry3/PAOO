@@ -1,15 +1,19 @@
 package PAOO_GAME.Map;
+
 import PAOO_GAME.Component.Drawer;
 import PAOO_GAME.Game;
-import PAOO_GAME.Graphics.Assets;
 import PAOO_GAME.Graphics.ImageLoader;
 import PAOO_GAME.Powers.*;
-import PAOO_GAME.Tiles.Tile;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+import static PAOO_GAME.Constants.tileHeight;
+import static PAOO_GAME.Constants.tileWidth;
 
 public class Map {
     private static int rows=25;
@@ -111,8 +115,10 @@ public class Map {
 
     public static void draw()
     {
-        BufferedImage img = ImageLoader.LoadImage("resources/background.png");
-        Drawer.draw(0,0, img, Game.widthTiles* Tile.tileWidth,Game.heightTiles*Tile.tileHeight);
+        BufferedImage bg = ImageLoader.LoadImage("resources/background.png");
+        Drawer.draw(0,0, bg,
+                Game.widthTiles* tileWidth,
+                Game.heightTiles*tileHeight);
 
         for(int i=0;i<listOfObjects.size();i++){
             listOfObjects.get(i).draw();

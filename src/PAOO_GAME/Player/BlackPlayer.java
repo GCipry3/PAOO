@@ -2,15 +2,15 @@ package PAOO_GAME.Player;
 
 import PAOO_GAME.Component.Drawer;
 import PAOO_GAME.Graphics.Assets;
-import PAOO_GAME.Map.Map;
-import PAOO_GAME.Tiles.Tile;
+
+import static PAOO_GAME.Constants.*;
 
 public class BlackPlayer extends Player {
 
     public BlackPlayer(String _name)
     {
-        x=1* Tile.tileWidth;
-        y=20*Tile.tileHeight;
+        x=1* tileWidth;
+        y=20*tileHeight;
         name=_name;
         lives =3;
     }
@@ -20,16 +20,20 @@ public class BlackPlayer extends Player {
         {
             if(right)
             {
-                Drawer.draw(x,y, Assets.blackNinjaRight,width*scale,height*scale);
+                Drawer.draw(x,y, Assets.blackNinjaRight,
+                        playerWidth * playerDrawScale,
+                        playerHeight * playerDrawScale);
             }
             else
             {
-                Drawer.draw(x,y,Assets.blackNinjaLeft,width*scale,height*scale);
+                Drawer.draw(x,y,Assets.blackNinjaLeft,
+                        playerWidth * playerDrawScale,
+                        playerHeight * playerDrawScale);
             }
 
             if(endAtack==false)
             {
-                Drawer.draw(x-32,y-32,Assets.ShurikenBg,shurikenCircle,shurikenCircle);
+                Drawer.draw(x-32,y-32,Assets.ShurikenBg, shurikenCirclePixels, shurikenCirclePixels);
             }
         }
     }

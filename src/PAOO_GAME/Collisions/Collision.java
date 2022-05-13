@@ -1,8 +1,8 @@
 package PAOO_GAME.Collisions;
 
+import PAOO_GAME.Constants;
 import PAOO_GAME.Game;
 import PAOO_GAME.Map.Map;
-import PAOO_GAME.Tiles.Tile;
 
 public class Collision {
     public static boolean checkCollision(int xA,int yA,int widthA,int heightA,
@@ -18,25 +18,25 @@ public class Collision {
         return false;
     }
 
-    public static boolean checkAllWallCollisions(int _x, int _y,int widthA,int heightA)
+    public static boolean checkCollisions(int _x, int _y,int widthA,int heightA, int []objectType)
     {
         int x,y;
-        int wallWidth= Tile.tileWidth;
-        int wallHeight= Tile.tileHeight;
+        int wallWidth= Constants.tileWidth;
+        int wallHeight = Constants.tileHeight;
 
         for(int i=0;i< Game.heightTiles;i++)
         {
             for(int j=0;j<Game.widthTiles;j++)
             {
-                if (Map.actualMap[i][j]==1 || Map.actualMap[i][j]==5)
-                {
-                    x=j*wallWidth;
-                    y=i*wallHeight;
+                for ( int k =0 ; k< objectType.length;k++){
+                    if (Map.actualMap[i][j] == objectType[k]) {
+                        x = j * wallWidth;
+                        y = i * wallHeight;
 
-                    if(checkCollision(_x,_y,widthA,heightA,
-                                    x,y,wallWidth,wallHeight))
-                    {
-                        return true;
+                        if (checkCollision(_x, _y, widthA, heightA,
+                                x, y, wallWidth, wallHeight)) {
+                            return true;
+                        }
                     }
                 }
             }
@@ -45,7 +45,7 @@ public class Collision {
         return false;
     }
 
-    public static boolean checkNextLevel(int _x,int _y,int widthA,int heightA)
+    /*public static boolean checkNextLevel(int _x,int _y,int widthA,int heightA, int objectType)
     {
         int x,y;
         int wallWidth= Tile.tileWidth;
@@ -55,7 +55,7 @@ public class Collision {
         {
             for(int j=0;j<Game.widthTiles;j++)
             {
-                if (Map.actualMap[i][j]==2)
+                if (Map.actualMap[i][j]==objectType)
                 {
                     x=j*wallWidth;
                     y=i*wallHeight;
@@ -70,5 +70,5 @@ public class Collision {
         }
 
         return false;
-    }
+    }*/
 }

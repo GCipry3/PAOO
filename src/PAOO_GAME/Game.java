@@ -5,15 +5,13 @@ import PAOO_GAME.Graphics.Assets;
 import PAOO_GAME.Map.Map;
 import PAOO_GAME.Player.BlackPlayer;
 import PAOO_GAME.Player.Player;
-import PAOO_GAME.Powers.Jumper;
-import PAOO_GAME.Tiles.Tile;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.io.IOException;
 
-import static PAOO_GAME.Tiles.Tile.tileHeight;
-import static PAOO_GAME.Tiles.Tile.tileWidth;
+import static PAOO_GAME.Constants.tileHeight;
+import static PAOO_GAME.Constants.tileWidth;
 
 public class Game extends Component implements Runnable {
 
@@ -28,7 +26,6 @@ public class Game extends Component implements Runnable {
     public static final int heightTiles = 25;
 
     public static Graphics g;
-    private Tile tile;
 
     public static Player player;
     public Map m=new Map(0);
@@ -41,7 +38,10 @@ public class Game extends Component implements Runnable {
     }
 
     private void InitGame() throws IOException {
-        wnd = new GameWindow("Schelet Proiect PAOO", widthTiles*tileWidth, heightTiles*tileHeight);
+        wnd = new GameWindow("Schelet Proiect PAOO",
+                widthTiles*tileWidth,
+                heightTiles*tileHeight);
+
         m.init();
         wnd.BuildGameWindow();
 
@@ -119,8 +119,8 @@ public class Game extends Component implements Runnable {
         if(m.index != tmpMapIndex)
         {
             //player.pos.set(1* Tile.tileWidth,20*Tile.tileHeight);
-            player.x=1* tileWidth;
-            player.y=20* tileHeight;
+            player.setX(1 * tileWidth);
+            player.setY(20 * tileHeight);
         }
 
     }

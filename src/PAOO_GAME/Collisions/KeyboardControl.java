@@ -48,6 +48,7 @@ public class KeyboardControl implements KeyListener {
         int key=e.getKeyCode();
         if(key == KeyEvent.VK_W)
         {
+            //KeyboardControl.jump=false;
             velocityY=0;
         }
         if(key == KeyEvent.VK_S)
