@@ -1,10 +1,8 @@
 package PAOO_GAME.Powers;
 
-import PAOO_GAME.Component.Drawer;
-import PAOO_GAME.Graphics.Assets;
-import PAOO_GAME.Player.Player;
+import PAOO_GAME.Updatable;
 
-public abstract class Powers {
+public abstract class Powers implements Updatable {
     public int x=0;
     public int y=0;
     public int width=0;

@@ -10,8 +10,7 @@ import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.io.IOException;
 
-import static PAOO_GAME.Constants.tileHeight;
-import static PAOO_GAME.Constants.tileWidth;
+import static PAOO_GAME.Constants.*;
 
 public class Game extends Component implements Runnable {
 
@@ -30,11 +29,24 @@ public class Game extends Component implements Runnable {
     public static Player player;
     public Map m=new Map(0);
 
+    private Updatable []listWithUpdatable=new Updatable[2];
+    private Drawable []listWithDrawable=new Drawable[2];
 
-    public Game()
+    public static Game instance=null;
+
+    private Game()
     {
         runState = false;
         player=new BlackPlayer("Ciprian");
+        listWithDrawable[1]=player;
+        listWithUpdatable[1]=player;
+    }
+
+    public static Game getInstance(){
+        if(instance == null){
+            instance=new Game();
+        }
+        return instance;
     }
 
     private void InitGame() throws IOException {
@@ -43,6 +55,10 @@ public class Game extends Component implements Runnable {
                 heightTiles*tileHeight);
 
         m.init();
+
+        listWithDrawable[0]=m;
+        listWithUpdatable[0]=m;//the map has to be the first
+
         wnd.BuildGameWindow();
 
         Assets.Init();
@@ -59,10 +75,10 @@ public class Game extends Component implements Runnable {
         long oldTime = System.nanoTime();
         long curentTime;
 
-        final int framesPerSecond   = 60;
+        final double framesPerSecond   = 60;
         final double timeFrame = 1000000000 / framesPerSecond;
 
-        while (runState == true)
+        while (runState)
         {
             curentTime = System.nanoTime();
             if((curentTime - oldTime) > timeFrame)
@@ -77,7 +93,7 @@ public class Game extends Component implements Runnable {
 
     public synchronized void StartGame()
     {
-        if(runState == false)
+        if(!runState)
         {
             runState = true;
             gameThread = new Thread(this);
@@ -94,14 +110,15 @@ public class Game extends Component implements Runnable {
         if(runState == true)
         {
             runState = false;
-            try
+            /*try
             {
                 gameThread.join();
             }
             catch(InterruptedException ex)
             {
                 ex.printStackTrace();
-            }
+            }*/
+            System.exit(0);
         }
         else
         {
@@ -113,14 +130,17 @@ public class Game extends Component implements Runnable {
     {
         int tmpMapIndex=m.index;
 
-        m.update();
-        player.update();
+        for(int i=0;i<listWithUpdatable.length;i++)
+        {
+            listWithUpdatable[i].update();
+        }
 
         if(m.index != tmpMapIndex)
         {
             //player.pos.set(1* Tile.tileWidth,20*Tile.tileHeight);
             player.setX(1 * tileWidth);
             player.setY(20 * tileHeight);
+            jumpHeight=64;
         }
 
     }
@@ -143,10 +163,10 @@ public class Game extends Component implements Runnable {
         g = bs.getDrawGraphics();
         g.clearRect(0, 0, wnd.GetWndWidth(), wnd.GetWndHeight());
 
-        Map.draw();
-        player.draw();
-        //jumper1.draw(player);
-        //jumper2.draw(player);
+        for(int i=0;i<listWithDrawable.length;i++){
+            listWithDrawable[i].draw();
+        }
+
 
 
         bs.show();

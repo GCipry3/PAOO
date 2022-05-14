@@ -1,5 +1,7 @@
 package PAOO_GAME.Collisions;
 
+import PAOO_GAME.Game;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -39,6 +41,10 @@ public class KeyboardControl implements KeyListener {
         if(key == KeyEvent.VK_E)
         {
             atack=true;
+        }
+        if(key == KeyEvent.VK_ESCAPE){
+            Game gameInstance=Game.getInstance();
+            gameInstance.StopGame();
         }
     }
 

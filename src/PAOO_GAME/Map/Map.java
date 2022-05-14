@@ -1,9 +1,11 @@
 package PAOO_GAME.Map;
 
 import PAOO_GAME.Component.Drawer;
+import PAOO_GAME.Drawable;
 import PAOO_GAME.Game;
 import PAOO_GAME.Graphics.ImageLoader;
 import PAOO_GAME.Powers.*;
+import PAOO_GAME.Updatable;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -15,7 +17,7 @@ import java.util.Scanner;
 import static PAOO_GAME.Constants.tileHeight;
 import static PAOO_GAME.Constants.tileWidth;
 
-public class Map {
+public class Map implements Updatable, Drawable {
     private static int rows=25;
     private static int cols=50;
     public static int[][][] map =new int[3][rows][cols];
@@ -107,13 +109,14 @@ public class Map {
                     case 7:
                         listOfObjects.add(new Gold(j*32,i*32,48,48));
                         break;
-
+                    case 9:
+                        listOfObjects.add(new Jumper(j*32,i*32,64,64));
                 }
             }
         }
     }
 
-    public static void draw()
+    public void draw()
     {
         BufferedImage bg = ImageLoader.LoadImage("resources/background.png");
         Drawer.draw(0,0, bg,

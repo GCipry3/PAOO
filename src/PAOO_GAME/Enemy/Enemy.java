@@ -1,16 +1,21 @@
 package PAOO_GAME.Enemy;
 
-import PAOO_GAME.Player.Player;
+import PAOO_GAME.Drawable;
+import PAOO_GAME.Updatable;
 
+import static PAOO_GAME.Game.player;
 import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
 
-public abstract class Enemy extends Player {
-    private boolean isClose=false;
+public abstract class Enemy implements Updatable, Drawable {
+    protected int x;
+    protected int y;
+    protected int firstX;//inamicul se va deplasa in stanga si dreapta
+    protected int firstY;//pozitiei initiale
 
-    protected abstract void move(int x1,int x2,Player player);
-    protected abstract void atack(Player player);
-    protected boolean playerClose(Player player){
+    protected abstract void move();
+    protected abstract void attack();
+    protected boolean playerClose(){
         int xPlayer=player.getX();
         int yPlayer=player.getY();
         if(sqrt(pow(x-xPlayer,2)-pow(y-yPlayer,2))<75){

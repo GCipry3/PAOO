@@ -2,13 +2,15 @@ package PAOO_GAME.Player;
 
 import PAOO_GAME.Collisions.Collision;
 import PAOO_GAME.Collisions.KeyboardControl;
+import PAOO_GAME.Drawable;
 import PAOO_GAME.Map.Map;
+import PAOO_GAME.Updatable;
 
 import java.awt.image.BufferedImage;
 
 import static PAOO_GAME.Constants.*;
 
-public abstract class Player {
+public abstract class Player implements Updatable, Drawable {
 
     protected String name;
     protected int lives;
@@ -27,15 +29,6 @@ public abstract class Player {
 
     protected BufferedImage textureLeft;
     protected BufferedImage textureRight;
-
-
-    /*public abstract String getName();
-    public abstract int getLives();
-    public abstract void Init();
-    public abstract void atack();
-    public abstract void draw();
-    public abstract void update();
-    public abstract boolean increaseLife();*/
 
     protected Player(){}
 
@@ -78,9 +71,9 @@ public abstract class Player {
         xtmp=x;
         KeyboardControl.jump=false;
 
-        ytmp-=70;
+        ytmp-=jumpHeight;
 
-        while(checkWallCollision())
+        while(checkWallCollision() || ytmp<=32)
         {
             ytmp=ytmp+2;
         }

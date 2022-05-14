@@ -11,4 +11,7 @@ public final class Constants {
     public final static int playerDrawScale = 2;
     public final static int []wallCollisions={1,5};
     public final static int []nextLevelCollision={2};
+    public final static int enemyMaxMove=64;
+
+    public static int jumpHeight=64;
 }
