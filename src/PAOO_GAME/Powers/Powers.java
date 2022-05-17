@@ -1,8 +1,8 @@
 package PAOO_GAME.Powers;
 
-import PAOO_GAME.Updatable;
+import PAOO_GAME.Drawable;
 
-public abstract class Powers implements Updatable {
+public abstract class Powers implements Drawable {
     public int x=0;
     public int y=0;
     public int width=0;

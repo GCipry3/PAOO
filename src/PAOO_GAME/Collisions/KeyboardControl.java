@@ -10,6 +10,8 @@ public class KeyboardControl implements KeyListener {
     public static int velocityY=0;
 
     public static boolean atack=false;
+    public static boolean atack2=false;
+
 
     public static boolean jump=false;
 
@@ -42,6 +44,10 @@ public class KeyboardControl implements KeyListener {
         {
             atack=true;
         }
+        if(key == KeyEvent.VK_Q){
+            atack2=true;
+        }
+
         if(key == KeyEvent.VK_ESCAPE){
             Game gameInstance=Game.getInstance();
             gameInstance.StopGame();
@@ -69,5 +75,9 @@ public class KeyboardControl implements KeyListener {
         {
             velocityX=0;
         }
+        if(key == KeyEvent.VK_Q){
+            atack2=false;
+        }
+
     }
 }

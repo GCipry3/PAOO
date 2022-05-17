@@ -7,12 +7,10 @@ import static PAOO_GAME.Constants.*;
 
 public class BlackPlayer extends Player {
 
-    public BlackPlayer(String _name)
+    public BlackPlayer()
     {
         x=1* tileWidth;
         y=20*tileHeight;
-        name=_name;
-        lives =3;
     }
 
     @Override
@@ -31,9 +29,12 @@ public class BlackPlayer extends Player {
                         playerHeight * playerDrawScale);
             }
 
-            if(endAtack==false)
+            if(endAttack ==false)
             {
                 Drawer.draw(x-32,y-32,Assets.ShurikenBg, shurikenCirclePixels, shurikenCirclePixels);
+            }
+            for(int i=0;i<listOfShurikens.size();i++){
+                listOfShurikens.get(i).draw();
             }
         }
     }

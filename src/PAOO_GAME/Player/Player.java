@@ -3,66 +3,69 @@ package PAOO_GAME.Player;
 import PAOO_GAME.Collisions.Collision;
 import PAOO_GAME.Collisions.KeyboardControl;
 import PAOO_GAME.Drawable;
+import PAOO_GAME.GameWindow.GameWindow;
 import PAOO_GAME.Map.Map;
-import PAOO_GAME.Updatable;
 
-import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 import static PAOO_GAME.Constants.*;
 
-public abstract class Player implements Updatable, Drawable {
+public abstract class Player implements  Drawable {
 
-    protected String name;
-    protected int lives;
+    protected int lifeStatus=100;
 
     protected static int x;
     protected static int y;
 
-
     protected boolean right=false;
-    protected int atackCnt=0;
+    protected int attackCnt =0;
     protected int ytmp=y;
     protected int xtmp=x;
     protected static int jumpCnt=0;
     protected static boolean jumpAvailable=true;
-    protected static boolean endAtack=true;
-
-    protected BufferedImage textureLeft;
-    protected BufferedImage textureRight;
+    protected static boolean endAttack =true;
+    protected static boolean oldAtack2=false;
 
     protected Player(){}
 
-    public static boolean getEndAtackStatus(){return endAtack;}
+    public boolean getRight(){return right;}
+
+    public static boolean getEndAttackStatus(){return endAttack;}
+
     public int getX(){return x;}
     public int getY(){return y;}
     public void setX(int x){this.x=x;}
     public void setY(int y){this.y=y;}
+    public List<ShinobiShuriken> listOfShurikens= new ArrayList<>();
 
-    public String getName() {
-        return name;
+    public int getLifeStatus() {
+        return lifeStatus;
     }
 
-    public int getLives() {
-        return lives;
-    }
-
-    public void Init() {
-        lives =3;
-    }
-
-    protected void atack() {
+    protected void attack() {
         if(KeyboardControl.atack)
-            endAtack=false;
+            endAttack =false;
 
-        if(endAtack==false)
+        if(endAttack ==false)
         {
             KeyboardControl.atack=false;
-            atackCnt++;
+            attackCnt++;
         }
-        if(atackCnt>60)
+        if(attackCnt >60)
         {
-            endAtack=true;
-            atackCnt=0;
+            endAttack =true;
+            attackCnt =0;
+        }
+    }
+
+    protected void attackWithShuriken(){
+        if(KeyboardControl.atack2 != oldAtack2 && KeyboardControl.atack2) {
+            listOfShurikens.add(new ShinobiShuriken(x, y));
+            oldAtack2=KeyboardControl.atack2;
+        }
+        if(!KeyboardControl.atack2){
+            oldAtack2= false;
         }
     }
 
@@ -82,6 +85,7 @@ public abstract class Player implements Updatable, Drawable {
     public abstract void draw();
 
     public void update() {
+        listOfShurikens.forEach((i)->i.update());
         ytmp=y;
 
         xtmp=x+ KeyboardControl.velocityX * playerSpeed;
@@ -90,38 +94,9 @@ public abstract class Player implements Updatable, Drawable {
 
         if(KeyboardControl.velocityX==-1) right=false;
 
-        /*if(jumps<jumpTimes && ok)
-        {
-            //tmp.setY(pos.getY()+KeyboardControl.velocity.getY()*speed*jumpScale);
-            ytmp=y+KeyboardControl.velocityY*speed*jumpScale;
-            if(KeyboardControl.velocityY == -1)
-            {
-                jumps++;
-                okFall=false;
-                //System.out.println("Print Jumps: "+jumps);
-            }
-        }
-        else
-        {
-            //tmp.setY(pos.getY());
-            ytmp=y;
-            jumps=0;
-            ok=false;
-        }
+        attack();
+        attackWithShuriken();
 
-        if(!ok)
-        {
-            //tmp.setY(tmp.getY()+1);
-            ytmp=ytmp+1;
-            if(Collision.checkAllWallCollisions(xtmp,ytmp,width*scale-10,height*scale-10))
-            {
-               ok=true;
-               okFall=true;
-            }
-        }
-        */
-
-        atack();
         if(KeyboardControl.jump && jumpAvailable) {
             jump();
             jumpAvailable=false;
@@ -142,7 +117,7 @@ public abstract class Player implements Updatable, Drawable {
             ytmp+=5;
         }
         else{
-            ytmp+=1;
+            ytmp+=3;
         }
        if(!checkWallCollision())
         {
@@ -157,14 +132,21 @@ public abstract class Player implements Updatable, Drawable {
         //System.out.println(x+"\t"+y);
     }
 
-    public boolean increaseLife()
+    public void increaseLifeStatus()
     {
-        if(lives<3)
+        if(lifeStatus<100)
         {
-            lives++;
-            return true;
+            if(lifeStatus+30>100){
+                lifeStatus=100;
+            }else{
+                lifeStatus+=30;
+            }
         }
-        return false;
+    }
+
+    public void takeDamage(int damage){
+        lifeStatus-=damage;
+        GameWindow.getDamage(lifeStatus);
     }
 
     public boolean checkWallCollision(){

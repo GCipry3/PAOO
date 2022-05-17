@@ -1,8 +1,10 @@
 package PAOO_GAME.Collisions;
 
 import PAOO_GAME.Constants;
-import PAOO_GAME.Game;
 import PAOO_GAME.Map.Map;
+
+import static PAOO_GAME.Constants.heightNrTiles;
+import static PAOO_GAME.Constants.widthNrTiles;
 
 public class Collision {
     public static boolean checkCollision(int xA,int yA,int widthA,int heightA,
@@ -24,9 +26,9 @@ public class Collision {
         int wallWidth= Constants.tileWidth;
         int wallHeight = Constants.tileHeight;
 
-        for(int i=0;i< Game.heightTiles;i++)
+        for(int i = 0; i< heightNrTiles; i++)
         {
-            for(int j=0;j<Game.widthTiles;j++)
+            for(int j = 0; j<widthNrTiles; j++)
             {
                 for ( int k =0 ; k< objectType.length;k++){
                     if (Map.actualMap[i][j] == objectType[k]) {

@@ -2,10 +2,9 @@ package PAOO_GAME.Map;
 
 import PAOO_GAME.Component.Drawer;
 import PAOO_GAME.Drawable;
-import PAOO_GAME.Game;
+import PAOO_GAME.Enemy.Goblin;
 import PAOO_GAME.Graphics.ImageLoader;
 import PAOO_GAME.Powers.*;
-import PAOO_GAME.Updatable;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -14,10 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import static PAOO_GAME.Constants.tileHeight;
-import static PAOO_GAME.Constants.tileWidth;
+import static PAOO_GAME.Constants.*;
 
-public class Map implements Updatable, Drawable {
+public class Map implements Drawable {
     private static int rows=25;
     private static int cols=50;
     public static int[][][] map =new int[3][rows][cols];
@@ -25,9 +23,9 @@ public class Map implements Updatable, Drawable {
     public static int nrMaps;
     public static int level;
     public static int index;
-    private static int oldindex;
+    private static int oldIndexOfMap;
 
-    private static List<Powers> listOfObjects=new ArrayList<>();
+    private static List<Drawable> listOfDrawables =new ArrayList<>();
 
     public Map(int _level)
     {
@@ -46,7 +44,7 @@ public class Map implements Updatable, Drawable {
                 break;
         }*/
         index=0;
-        oldindex=0;
+        oldIndexOfMap =0;
     }
 
     public static void readMap(String path,int mapNr) throws IOException
@@ -81,14 +79,14 @@ public class Map implements Updatable, Drawable {
 
     public void update()
     {
-        if(oldindex!=index){
+        if(oldIndexOfMap !=index){
             actualMap=map[index];
-            oldindex=index;
-            listOfObjects.clear();
+            oldIndexOfMap =index;
+            listOfDrawables.clear();
             updateListWithObjects();
         }
-        for(int i=0;i<listOfObjects.size();i++){
-            listOfObjects.get(i).update();
+        for(int i = 0; i< listOfDrawables.size(); i++){
+            listOfDrawables.get(i).update();
         }
     }
 
@@ -98,19 +96,21 @@ public class Map implements Updatable, Drawable {
                 switch(actualMap[i][j])
                 {
                     case 1:
-                        listOfObjects.add(new Rock(j*32,i*32,32,32));
+                        listOfDrawables.add(new Rock(j*32,i*32,32,32));
                         break;
                     case 6:
-                        listOfObjects.add(new Coin(j*32,i*32,32,32));
+                        listOfDrawables.add(new Coin(j*32,i*32,32,32));
                         break;
                     case 8:
-                        listOfObjects.add(new Diamond(j*32,i*32,48,48));
+                        listOfDrawables.add(new Diamond(j*32,i*32,48,48));
                         break;
                     case 7:
-                        listOfObjects.add(new Gold(j*32,i*32,48,48));
+                        listOfDrawables.add(new Gold(j*32,i*32,48,48));
                         break;
                     case 9:
-                        listOfObjects.add(new Jumper(j*32,i*32,64,64));
+                        listOfDrawables.add(new Jumper(j*32,i*32,64,64));
+                    case 4:
+                        listOfDrawables.add(new Goblin(j*32,i*32));
                 }
             }
         }
@@ -120,11 +120,11 @@ public class Map implements Updatable, Drawable {
     {
         BufferedImage bg = ImageLoader.LoadImage("resources/background.png");
         Drawer.draw(0,0, bg,
-                Game.widthTiles* tileWidth,
-                Game.heightTiles*tileHeight);
+                widthNrTiles * tileWidth,
+                heightNrTiles *tileHeight);
 
-        for(int i=0;i<listOfObjects.size();i++){
-            listOfObjects.get(i).draw();
+        for(int i = 0; i< listOfDrawables.size(); i++){
+            listOfDrawables.get(i).draw();
         }
     }
 

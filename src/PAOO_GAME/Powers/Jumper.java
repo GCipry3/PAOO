@@ -1,10 +1,10 @@
 package PAOO_GAME.Powers;
 
 import PAOO_GAME.Collisions.Collision;
-import PAOO_GAME.Collisions.KeyboardControl;
 import PAOO_GAME.Component.Drawer;
 import PAOO_GAME.Constants;
 import PAOO_GAME.Graphics.Assets;
+import PAOO_GAME.Player.Player;
 
 import static PAOO_GAME.Constants.jumpHeight;
 import static PAOO_GAME.Game.player;
@@ -21,7 +21,7 @@ public class Jumper extends Powers{
     @Override
     public void power() {
         if(visible==true &&
-                KeyboardControl.velocityY==-1 &&
+                Player.getEndAttackStatus() == false &&
                 Collision.checkCollision(
                         player.getX() -32,
                         player.getY() -32,

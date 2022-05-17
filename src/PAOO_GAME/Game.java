@@ -21,15 +21,12 @@ public class Game extends Component implements Runnable {
     //private Jumper jumper1=new Jumper(new Coord(17* tileHeight,19* tileWidth),64,64);
     //private Jumper jumper2=new Jumper(new Coord(2* tileHeight,10* tileWidth),64,64);
 
-    public static final int widthTiles = 50;
-    public static final int heightTiles = 25;
 
     public static Graphics g;
 
     public static Player player;
     public Map m=new Map(0);
 
-    private Updatable []listWithUpdatable=new Updatable[2];
     private Drawable []listWithDrawable=new Drawable[2];
 
     public static Game instance=null;
@@ -37,9 +34,8 @@ public class Game extends Component implements Runnable {
     private Game()
     {
         runState = false;
-        player=new BlackPlayer("Ciprian");
+        player=new BlackPlayer();
         listWithDrawable[1]=player;
-        listWithUpdatable[1]=player;
     }
 
     public static Game getInstance(){
@@ -51,13 +47,12 @@ public class Game extends Component implements Runnable {
 
     private void InitGame() throws IOException {
         wnd = new GameWindow("Schelet Proiect PAOO",
-                widthTiles*tileWidth,
-                heightTiles*tileHeight);
+                widthNrTiles *tileWidth,
+                heightNrTiles *tileHeight);
 
         m.init();
 
         listWithDrawable[0]=m;
-        listWithUpdatable[0]=m;//the map has to be the first
 
         wnd.BuildGameWindow();
 
@@ -130,9 +125,9 @@ public class Game extends Component implements Runnable {
     {
         int tmpMapIndex=m.index;
 
-        for(int i=0;i<listWithUpdatable.length;i++)
+        for(int i=0;i<listWithDrawable.length;i++)
         {
-            listWithUpdatable[i].update();
+            listWithDrawable[i].update();
         }
 
         if(m.index != tmpMapIndex)

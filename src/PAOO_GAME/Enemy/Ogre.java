@@ -1,36 +1,28 @@
 package PAOO_GAME.Enemy;
 
-import static PAOO_GAME.Constants.enemyMaxMove;
+import PAOO_GAME.Component.Drawer;
+import PAOO_GAME.Graphics.Assets;
+
+import static PAOO_GAME.Constants.enemyHeight;
+import static PAOO_GAME.Constants.enemyWidth;
 
 public class Ogre extends Enemy{
-    @Override
-    public void move() {
-        if (x < firstX - enemyMaxMove)
-        {
-            x++;
-        }else if(x > firstX + enemyMaxMove){
-            x--;
-        }else if(x <= firstX){
-            x--;
-        }else{
-            x++; //x>firstX
-        }
+    public Ogre(int x, int y) {
+        super(x, y);
     }
 
     @Override
-    public void attack() {
-        if(playerClose()){
-
-        }
-    }
-
-    @Override
-    public void draw() {
-
+    protected void attack() {
+        //TODO
     }
 
     @Override
     public void update() {
+        //TODO
+    }
 
+    @Override
+    public void draw() {
+        Drawer.draw(x,y, Assets.firstOgre, enemyWidth, enemyHeight);
     }
 }

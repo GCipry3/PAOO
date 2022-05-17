@@ -17,7 +17,7 @@ public class Diamond extends Powers{
     public void power() {
 
         if(visible==true &&
-                Player.getEndAtackStatus() == false &&
+                Player.getEndAttackStatus() == false &&
                 Collision.checkCollision(
                         player.getX() -32,
                         player.getY() -32,
