@@ -23,7 +23,7 @@ public class KeyboardControl implements KeyListener {
 
         int key=e.getKeyCode();
 
-        if(key == KeyEvent.VK_W)
+        if(key == KeyEvent.VK_W || key == KeyEvent.VK_SPACE)
         {
             velocityY=-1;
             jump=true;

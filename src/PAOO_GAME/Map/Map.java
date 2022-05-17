@@ -109,6 +109,7 @@ public class Map implements Drawable {
                         break;
                     case 9:
                         listOfDrawables.add(new Jumper(j*32,i*32,64,64));
+                        break;
                     case 4:
                         listOfDrawables.add(new Goblin(j*32,i*32));
                 }

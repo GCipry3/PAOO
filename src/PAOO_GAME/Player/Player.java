@@ -13,7 +13,7 @@ import static PAOO_GAME.Constants.*;
 
 public abstract class Player implements  Drawable {
 
-    protected int lifeStatus=100;
+    protected int lifeStatus=500;
 
     protected static int x;
     protected static int y;
@@ -27,6 +27,9 @@ public abstract class Player implements  Drawable {
     protected static boolean endAttack =true;
     protected static boolean oldAtack2=false;
 
+    protected int coins=0;
+    public List<ShinobiShuriken> listOfShurikens= new ArrayList<>();
+
     protected Player(){}
 
     public boolean getRight(){return right;}
@@ -37,8 +40,10 @@ public abstract class Player implements  Drawable {
     public int getY(){return y;}
     public void setX(int x){this.x=x;}
     public void setY(int y){this.y=y;}
-    public List<ShinobiShuriken> listOfShurikens= new ArrayList<>();
-
+    public void increaseCoins(){
+        coins++;
+        GameWindow.setCoins(coins);
+    }
     public int getLifeStatus() {
         return lifeStatus;
     }
@@ -62,6 +67,7 @@ public abstract class Player implements  Drawable {
     protected void attackWithShuriken(){
         if(KeyboardControl.atack2 != oldAtack2 && KeyboardControl.atack2) {
             listOfShurikens.add(new ShinobiShuriken(x, y));
+            listOfShurikens.add(new ShinobiShuriken(x, y+32));
             oldAtack2=KeyboardControl.atack2;
         }
         if(!KeyboardControl.atack2){
@@ -89,6 +95,9 @@ public abstract class Player implements  Drawable {
         ytmp=y;
 
         xtmp=x+ KeyboardControl.velocityX * playerSpeed;
+        if(KeyboardControl.velocityY == 1){
+            ytmp=y+playerSpeed*3;
+        }
 
         if(KeyboardControl.velocityX== 1) right=true;
 

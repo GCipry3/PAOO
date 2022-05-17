@@ -15,6 +15,7 @@ public class Goblin extends Enemy{
     private final List<Projectile> listOfProjectiles= new ArrayList<>();
     private final int damage=10;
     private int cntAttack=0;
+    private boolean attackOnlyOnce = true;
 
     public Goblin(int x, int y) {
         super(x, y);
@@ -37,20 +38,26 @@ public class Goblin extends Enemy{
             int xPlayer=player.getX();
             int yPlayer=player.getY();
 
-            if (Collision.checkCollision(
-                    x,y,enemyWidth,enemyHeight,
-                    xPlayer,yPlayer,playerWidth,playerHeight)){
-                player.takeDamage(100);
+            if(attackOnlyOnce) {
+                if (Collision.checkCollision(
+                        x, y, enemyWidth, enemyHeight,
+                        xPlayer, yPlayer, playerWidth, playerHeight)) {
+                    player.takeDamage(100);
+                    System.out.println("abagdg");;
+                    attackOnlyOnce=false;
+                }
             }
 
             for(int i=0;i<listOfProjectiles.size();i++){
                 Projectile tmp=listOfProjectiles.get(i);
-                if (Collision.checkCollision(
-                        tmp.getX(),tmp.getY(),
-                        tmp.getProjectileWidth(),tmp.getProjectileHeight(),
-                        xPlayer,yPlayer
-                        ,playerWidth,playerHeight)){
-                    player.takeDamage(damage);
+                if(tmp.getVisible()) {
+                    if (Collision.checkCollision(
+                            tmp.getX(), tmp.getY(),
+                            tmp.getProjectileWidth(), tmp.getProjectileHeight(),
+                            xPlayer, yPlayer
+                            , playerWidth, playerHeight)) {
+                        player.takeDamage(damage);
+                    }
                 }
             }
         }
@@ -59,7 +66,6 @@ public class Goblin extends Enemy{
     @Override
     public void update() {
         if(visible) {
-            attack();
 
             int xPlayer=player.getX();
             int yPlayer=player.getY();
@@ -99,6 +105,7 @@ public class Goblin extends Enemy{
                     }
                 }
             }
+            if(visible)attack();
         }
     }
 
