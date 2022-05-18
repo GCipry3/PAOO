@@ -7,18 +7,21 @@ import PAOO_GAME.Player.ShinobiShuriken;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static PAOO_GAME.Constants.*;
 import static PAOO_GAME.Game.player;
 
 public class Goblin extends Enemy{
-    private final List<Projectile> listOfProjectiles= new ArrayList<>();
-    private final int damage=10;
+    protected List<Projectile> listOfProjectiles= new ArrayList<>();
+    protected int damage=10;
     private int cntAttack=0;
     private boolean attackOnlyOnce = true;
+    protected int random;
 
     public Goblin(int x, int y) {
         super(x, y);
+        random= new Random().nextInt(0,3);
     }
 
     @Override
@@ -40,26 +43,23 @@ public class Goblin extends Enemy{
 
             if(attackOnlyOnce) {
                 if (Collision.checkCollision(
-                        x, y, enemyWidth, enemyHeight,
-                        xPlayer, yPlayer, playerWidth, playerHeight)) {
+                        x,
+                        y,
+                        enemyWidth,
+                        enemyHeight,
+                        xPlayer,
+                        yPlayer,
+                        playerWidth,
+                        playerHeight)
+                ) {
                     player.takeDamage(100);
-                    System.out.println("abagdg");;
                     attackOnlyOnce=false;
                 }
             }
+        }
 
-            for(int i=0;i<listOfProjectiles.size();i++){
-                Projectile tmp=listOfProjectiles.get(i);
-                if(tmp.getVisible()) {
-                    if (Collision.checkCollision(
-                            tmp.getX(), tmp.getY(),
-                            tmp.getProjectileWidth(), tmp.getProjectileHeight(),
-                            xPlayer, yPlayer
-                            , playerWidth, playerHeight)) {
-                        player.takeDamage(damage);
-                    }
-                }
-            }
+        for(int i=0;i<listOfProjectiles.size();i++){
+            listOfProjectiles.get(i).attack();
         }
     }
 
@@ -72,11 +72,6 @@ public class Goblin extends Enemy{
             if (playerClose()) {
                 move();
                 //System.out.println(x+" "+y);
-            }
-
-            for(int i=0;i<listOfProjectiles.size();i++){
-                listOfProjectiles.get(i).update();
-                //System.out.println(i);
             }
 
             if (!player.getEndAttackStatus())//daca playerul ataca
@@ -107,12 +102,28 @@ public class Goblin extends Enemy{
             }
             if(visible)attack();
         }
+
+        for(int i=0;i<listOfProjectiles.size();i++){
+            listOfProjectiles.get(i).update();//attack check
+            //System.out.println(i);
+        }
     }
 
     @Override
     public void draw() {
         if(visible) {
-            Drawer.draw(x, y, Assets.firstGoblin, enemyWidth, enemyHeight);
+            switch(random){
+                case 0:
+                    Drawer.draw(x, y, Assets.firstGoblin, enemyWidth, enemyHeight);
+                    break;
+                case 1:
+                    Drawer.draw(x, y, Assets.secondGoblin, enemyWidth, enemyHeight);
+                    break;
+                case 2:
+                    Drawer.draw(x, y, Assets.thirdGoblin, enemyWidth, enemyHeight);
+                    break;
+                default: throw new RuntimeException(Integer.toString(random));
+            }
             for(int i=0;i<listOfProjectiles.size();i++){
                     listOfProjectiles.get(i).draw();
             }

@@ -3,6 +3,7 @@ package PAOO_GAME.Map;
 import PAOO_GAME.Component.Drawer;
 import PAOO_GAME.Drawable;
 import PAOO_GAME.Enemy.Goblin;
+import PAOO_GAME.Enemy.Ogre;
 import PAOO_GAME.Graphics.ImageLoader;
 import PAOO_GAME.Powers.*;
 
@@ -112,6 +113,10 @@ public class Map implements Drawable {
                         break;
                     case 4:
                         listOfDrawables.add(new Goblin(j*32,i*32));
+                        break;
+                    case 10:
+                        listOfDrawables.add(new Ogre(j*32,i*32));
+                        break;
                 }
             }
         }

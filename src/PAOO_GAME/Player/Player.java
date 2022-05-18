@@ -67,7 +67,7 @@ public abstract class Player implements  Drawable {
     protected void attackWithShuriken(){
         if(KeyboardControl.atack2 != oldAtack2 && KeyboardControl.atack2) {
             listOfShurikens.add(new ShinobiShuriken(x, y));
-            listOfShurikens.add(new ShinobiShuriken(x, y+32));
+            listOfShurikens.add(new ShinobiShuriken(x-32, y+20));
             oldAtack2=KeyboardControl.atack2;
         }
         if(!KeyboardControl.atack2){
@@ -160,8 +160,8 @@ public abstract class Player implements  Drawable {
 
     public boolean checkWallCollision(){
         return Collision.checkCollisions(xtmp,ytmp,
-                playerWidth * playerDrawScale -10,
-                playerHeight * playerDrawScale -10,
+                playerWidth  -10,
+                playerHeight -10,
                 wallCollisions);
     }
 

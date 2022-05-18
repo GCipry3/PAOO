@@ -8,9 +8,8 @@ public final class Constants {
     public final static int tileWidth = 32;
     public final static int tileHeight = 32;
     public final static int playerSpeed =3;
-    public static final int playerWidth =32;
-    public final static int playerHeight =32;
-    public final static int playerDrawScale = 2;
+    public static final int playerWidth =64;
+    public final static int playerHeight =64;
     public final static int []wallCollisions={1,5};
     public final static int []nextLevelCollision={2};
     public final static int enemyMaxMove=48;

@@ -10,10 +10,12 @@ import PAOO_GAME.Player.Player;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static PAOO_GAME.Constants.*;
 
-public class Game extends Component implements Runnable {
+public final class Game extends Component implements Runnable {
 
     private GameWindow wnd;
     private boolean runState;
@@ -28,7 +30,7 @@ public class Game extends Component implements Runnable {
     public static Player player;
     public Map m=new Map(0);
 
-    private Drawable []listWithDrawable=new Drawable[2];
+    public List<Drawable> listWithDrawable=new ArrayList<>();
 
     public static Game instance=null;
 
@@ -36,7 +38,7 @@ public class Game extends Component implements Runnable {
     {
         runState = false;
         player=new BlackPlayer();
-        listWithDrawable[1]=player;
+        listWithDrawable.add(player);
     }
 
     public static Game getInstance(){
@@ -53,7 +55,7 @@ public class Game extends Component implements Runnable {
 
         m.init();
 
-        listWithDrawable[0]=m;
+        listWithDrawable.add(0,m);
 
         wnd.BuildGameWindow();
 
@@ -126,10 +128,7 @@ public class Game extends Component implements Runnable {
     {
         int tmpMapIndex=m.index;
 
-        for(int i=0;i<listWithDrawable.length;i++)
-        {
-            listWithDrawable[i].update();
-        }
+        listWithDrawable.forEach((i)->i.update());
 
         if(m.index != tmpMapIndex)
         {
@@ -159,9 +158,8 @@ public class Game extends Component implements Runnable {
         g = bs.getDrawGraphics();
         g.clearRect(0, 0, wnd.GetWndWidth(), wnd.GetWndHeight());
 
-        for(int i=0;i<listWithDrawable.length;i++){
-            listWithDrawable[i].draw();
-        }
+
+        listWithDrawable.forEach((i)->i.draw());
 
         Drawer.draw(widthNrTiles *tileWidth-450,32,Assets.coin,48,48);
 

@@ -55,18 +55,23 @@ public class Projectile implements Drawable {
     public void update() {
         if(visible==true) {
             move();
+
+            if(Collision.checkCollisions(x,y,projectileWidth,projectileHeight,
+                    wallCollisions)){
+                visible = false;
+            }
+        }
+    }
+
+    public void attack(){
+        if(visible) {
             int xPlayer = player.getX();
             int yPlayer = player.getY();
 
             if (Collision.checkCollision(x, y, projectileWidth, projectileHeight,
-                    xPlayer, yPlayer, playerWidth, playerHeight)) {
+                    xPlayer, yPlayer + 5, playerWidth, playerHeight)) {
                 player.takeDamage(damage);
                 visible = false;
-            }
-            if(Collision.checkCollisions(x,y,projectileWidth,projectileHeight,
-                    wallCollisions)){
-                visible = false;
-                System.out.println("wall touched by projectile");
             }
         }
     }

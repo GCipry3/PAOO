@@ -17,7 +17,7 @@ public class Rock extends Powers{
     public void draw() {
         if(visible==true)
         {
-            Drawer.draw(x,y, Assets.rock,width,height);
+            Drawer.draw(x,y, Assets.rock2,width,height);
         }
     }
 }

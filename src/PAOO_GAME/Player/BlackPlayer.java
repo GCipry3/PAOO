@@ -19,14 +19,14 @@ public class BlackPlayer extends Player {
             if(right)
             {
                 Drawer.draw(x,y, Assets.blackNinjaRight,
-                        playerWidth * playerDrawScale,
-                        playerHeight * playerDrawScale);
+                        playerWidth,
+                        playerHeight);
             }
             else
             {
                 Drawer.draw(x,y,Assets.blackNinjaLeft,
-                        playerWidth * playerDrawScale,
-                        playerHeight * playerDrawScale);
+                        playerWidth,
+                        playerHeight);
             }
 
             if(endAttack ==false)
