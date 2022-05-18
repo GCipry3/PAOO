@@ -3,10 +3,10 @@ package PAOO_GAME.Powers;
 import PAOO_GAME.Drawable;
 
 public abstract class Powers implements Drawable {
-    public int x=0;
-    public int y=0;
-    public int width=0;
-    public int height=0;
+    public int x;
+    public int y;
+    public int width;
+    public int height;
     public boolean visible=true;
 
 

@@ -1,6 +1,5 @@
 package PAOO_GAME.Component;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 
 import static PAOO_GAME.Game.g;

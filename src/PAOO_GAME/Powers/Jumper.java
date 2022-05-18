@@ -10,9 +10,6 @@ import static PAOO_GAME.Constants.jumpHeight;
 import static PAOO_GAME.Game.player;
 
 public class Jumper extends Powers{
-    private int cnt=0;
-    private int type=1;
-
     public Jumper(int x,int y, int _width, int _height)
     {
         super(x,y,_width,_height);
@@ -20,8 +17,8 @@ public class Jumper extends Powers{
 
     @Override
     public void power() {
-        if(visible==true &&
-                Player.getEndAttackStatus() == false &&
+        if(visible &&
+                Player.getEndAttack() &&
                 Collision.checkCollision(
                         player.getX() -32,
                         player.getY() -32,
@@ -29,14 +26,14 @@ public class Jumper extends Powers{
                         Constants.shurikenCirclePixels,
                         x,y, width, height) )
         {
-            jumpHeight+=64;
+            jumpHeight+=32;
             visible=false;
         }
         //System.out.println(Collision.checkCollision(player.x,player.y, player.getWidth(), player.getHeight(), x,y, width, height));
     }
     @Override
     public void draw() {
-        if(visible==true)
+        if(visible)
         {
             Drawer.draw(x,y, Assets.jumpRight,width,height);
         }

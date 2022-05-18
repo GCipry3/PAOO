@@ -3,6 +3,7 @@ package PAOO_GAME.Enemy;
 import PAOO_GAME.Collisions.Collision;
 import PAOO_GAME.Component.Drawer;
 import PAOO_GAME.Graphics.Assets;
+import PAOO_GAME.Player.Player;
 import PAOO_GAME.Player.ShinobiShuriken;
 
 import java.util.ArrayList;
@@ -58,9 +59,7 @@ public class Goblin extends Enemy{
             }
         }
 
-        for(int i=0;i<listOfProjectiles.size();i++){
-            listOfProjectiles.get(i).attack();
-        }
+        listOfProjectiles.forEach(Projectile::attack);
     }
 
     @Override
@@ -71,10 +70,9 @@ public class Goblin extends Enemy{
             int yPlayer=player.getY();
             if (playerClose()) {
                 move();
-                //System.out.println(x+" "+y);
             }
 
-            if (!player.getEndAttackStatus())//daca playerul ataca
+            if (Player.getEndAttack())//if player attacks
             {
                 if(Collision.checkCollision(
                         x,y,
@@ -93,8 +91,10 @@ public class Goblin extends Enemy{
                     if(Collision.checkCollision(
                             x,y,enemyWidth,enemyHeight,
                             tmp.getX(),tmp.getY(),
-                            tmp.getProjectileWidth(),tmp.getProjectileHeight()
-                    )){
+                            tmp.getProjectileWidth(),
+                            tmp.getProjectileHeight()
+                    ))
+                    {
                         player.listOfShurikens.get(i).setVisibleFalse();
                         visible=false;
                     }
@@ -103,30 +103,19 @@ public class Goblin extends Enemy{
             if(visible)attack();
         }
 
-        for(int i=0;i<listOfProjectiles.size();i++){
-            listOfProjectiles.get(i).update();//attack check
-            //System.out.println(i);
-        }
+        listOfProjectiles.forEach(Projectile::update);
     }
 
     @Override
     public void draw() {
         if(visible) {
-            switch(random){
-                case 0:
-                    Drawer.draw(x, y, Assets.firstGoblin, enemyWidth, enemyHeight);
-                    break;
-                case 1:
-                    Drawer.draw(x, y, Assets.secondGoblin, enemyWidth, enemyHeight);
-                    break;
-                case 2:
-                    Drawer.draw(x, y, Assets.thirdGoblin, enemyWidth, enemyHeight);
-                    break;
-                default: throw new RuntimeException(Integer.toString(random));
+            switch (random) {
+                case 0 -> Drawer.draw(x, y, Assets.firstGoblin, enemyWidth, enemyHeight);
+                case 1 -> Drawer.draw(x, y, Assets.secondGoblin, enemyWidth, enemyHeight);
+                case 2 -> Drawer.draw(x, y, Assets.thirdGoblin, enemyWidth, enemyHeight);
+                default -> throw new RuntimeException(Integer.toString(random));
             }
-            for(int i=0;i<listOfProjectiles.size();i++){
-                    listOfProjectiles.get(i).draw();
-            }
+            listOfProjectiles.forEach(Projectile::draw);
         }
     }
 

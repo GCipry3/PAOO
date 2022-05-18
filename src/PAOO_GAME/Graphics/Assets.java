@@ -2,7 +2,7 @@ package PAOO_GAME.Graphics;
 
 import java.awt.image.BufferedImage;
 
-public class Assets {
+public final class Assets {
 
     public static BufferedImage blackNinjaLeft;
     public static BufferedImage blackNinjaRight;

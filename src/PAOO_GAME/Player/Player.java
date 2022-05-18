@@ -18,43 +18,48 @@ public abstract class Player implements  Drawable {
     protected static int x;
     protected static int y;
 
-    protected boolean right=false;
-    protected int attackCnt =0;
-    protected int ytmp=y;
-    protected int xtmp=x;
-    protected static int jumpCnt=0;
-    protected static boolean jumpAvailable=true;
-    protected static boolean endAttack =true;
-    protected static boolean oldAtack2=false;
+    protected boolean right;
+
+    private int attackCnt =0;
+    private int yTmp =y;
+    private int xTmp =x;
+
+    private int jumpCnt=0;
+    private boolean jumpAvailable=true;
+
+    private static boolean endAttack  =true;
+    private static boolean oldAttack2 =false;
+
+
 
     protected int coins=0;
     public List<ShinobiShuriken> listOfShurikens= new ArrayList<>();
 
-    protected Player(){}
+    protected Player(){
+        x=tileWidth;
+        y=20*tileHeight;
+    }
 
     public boolean getRight(){return right;}
 
-    public static boolean getEndAttackStatus(){return endAttack;}
+    public static boolean getEndAttack(){return !endAttack;}
 
     public int getX(){return x;}
     public int getY(){return y;}
-    public void setX(int x){this.x=x;}
-    public void setY(int y){this.y=y;}
+    public void setX(int _x){x=_x;}
+    public void setY(int _y){y=_y;}
     public void increaseCoins(){
         coins++;
         GameWindow.setCoins(coins);
     }
-    public int getLifeStatus() {
-        return lifeStatus;
-    }
 
     protected void attack() {
-        if(KeyboardControl.atack)
+        if(KeyboardControl.attack)
             endAttack =false;
 
-        if(endAttack ==false)
+        if(!endAttack)
         {
-            KeyboardControl.atack=false;
+            KeyboardControl.attack =false;
             attackCnt++;
         }
         if(attackCnt >60)
@@ -65,90 +70,126 @@ public abstract class Player implements  Drawable {
     }
 
     protected void attackWithShuriken(){
-        if(KeyboardControl.atack2 != oldAtack2 && KeyboardControl.atack2) {
+        if(KeyboardControl.attack2 != oldAttack2 && KeyboardControl.attack2) {
             listOfShurikens.add(new ShinobiShuriken(x, y));
-            listOfShurikens.add(new ShinobiShuriken(x-32, y+20));
-            oldAtack2=KeyboardControl.atack2;
+            listOfShurikens.add(new ShinobiShuriken(x-16, y+20));
+            oldAttack2 =KeyboardControl.attack2;
         }
-        if(!KeyboardControl.atack2){
-            oldAtack2= false;
+        if(!KeyboardControl.attack2){
+            oldAttack2 = false;
         }
     }
 
     public void jump(){
-        ytmp=y;
-        xtmp=x;
+        yTmp =y;
+        xTmp =x;
         KeyboardControl.jump=false;
 
-        ytmp-=jumpHeight;
+        yTmp -=jumpHeight/20;//to make the jump more smooth
 
-        while(checkWallCollision() || ytmp<=32)
+        while(checkWallCollisionWithTmpPosition() || yTmp <=32)
         {
-            ytmp=ytmp+2;
+            yTmp = yTmp +2;
+        }
+
+        boolean wallAboveFound=false;
+        int aux= yTmp;
+        while(yTmp <y-10){
+            if(checkWallCollisionWithTmpPosition()){
+                wallAboveFound=true;
+                break;
+            }
+            yTmp +=2;
+        }
+        if(wallAboveFound){
+            while(wallAboveFound){
+                if(!checkWallCollisionWithTmpPosition()){
+                    wallAboveFound=false;
+                }
+                yTmp +=2;
+            }
+        }else{
+            yTmp =aux;
         }
     }
 
     public abstract void draw();
 
     public void update() {
-        listOfShurikens.forEach((i)->i.update());
-        ytmp=y;
+        //startOfPlayerProjectileUpdate
+        listOfShurikens.forEach(ShinobiShuriken::update);
+        //endOfPlayerProjectileUpdate
 
-        xtmp=x+ KeyboardControl.velocityX * playerSpeed;
+        //startOfDownMovement
+        xTmp =x+ KeyboardControl.velocityX * playerSpeed;
         if(KeyboardControl.velocityY == 1){
-            ytmp=y+playerSpeed*3;
+            yTmp =y+playerSpeed*3;
+        }else{
+            yTmp =y; //default value for yTmp
         }
+        //endOfDownMovement
 
+        //startOfChoosingPlayerSide
         if(KeyboardControl.velocityX== 1) right=true;
-
         if(KeyboardControl.velocityX==-1) right=false;
+        //endOfChoosingPlayerSide
 
+        //startOfAttack
         attack();
         attackWithShuriken();
+        //endOfAttack
 
+        //startOfUpdatePlayerPositionBeforeJump
+        if(!checkWallCollisionWithTmpPosition())
+        {
+            x= xTmp;
+            y= yTmp;
+        }
+        //endOfUpdatePlayerPositionBeforeJump
+
+        //startOfJump
         if(KeyboardControl.jump && jumpAvailable) {
-            jump();
             jumpAvailable=false;
         }
-        if(jumpCnt>30){
+        if(jumpCnt>30){ //count 30 means 1/2 seconds
             jumpAvailable=true;
             jumpCnt=0;
         }
-
-        if(!checkWallCollision())
-        {
-            x=xtmp;
-            y=ytmp;
-        }
-
         if(!jumpAvailable){
             jumpCnt++;
-            ytmp+=5;
+            jump(); //jump 30 times
         }
         else{
-            ytmp+=3;
+            yTmp +=2; //gravity
         }
-       if(!checkWallCollision())
-        {
-            x=xtmp;
-            y=ytmp;
-        }
+        yTmp +=1; //gravity
+        //endOfJump
 
+        //startOfUpdatePlayerPositionAfterJump
+        if(!checkWallCollisionWithTmpPosition())
+        {
+            x= xTmp;
+            y= yTmp;
+        }
+        //endOfUpdatePlayerPositionAfterJump
+
+        //startOfCheckNextLevel
         if(checkNextLevelCollision())
         {
             Map.index++;
         }
-        //System.out.println(x+"\t"+y);
+        //endOfCheckNextLevel
+
     }
 
-    public void increaseLifeStatus()
+    public void increaseLifeStatus(int amount)
     {
-        if(lifeStatus<100)
+        if(lifeStatus<500)
         {
-            if(lifeStatus+30>100){
-                lifeStatus=100;
+            if(lifeStatus+amount>500){
+                lifeStatus=500;
             }else{
-                lifeStatus+=30;
+                lifeStatus+=amount;
             }
         }
     }
@@ -158,18 +199,22 @@ public abstract class Player implements  Drawable {
         GameWindow.getDamage(lifeStatus);
     }
 
-    public boolean checkWallCollision(){
-        return Collision.checkCollisions(xtmp,ytmp,
-                playerWidth  -10,
-                playerHeight -10,
-                wallCollisions);
+    public boolean checkWallCollisionWithTmpPosition(){
+        return Collision.checkCollisions(
+                xTmp, yTmp,
+                playerWidth-10,
+                playerHeight-10,
+                wallCollisions
+        );
     }
 
     public boolean checkNextLevelCollision(){
-        return Collision.checkCollisions(x,y,
+        return Collision.checkCollisions(
+                x,y,
                 playerWidth,
                 playerHeight,
-                nextLevelCollision );
+                nextLevelCollision
+        );
     }
 
 }

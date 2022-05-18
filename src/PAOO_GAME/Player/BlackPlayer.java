@@ -9,8 +9,7 @@ public class BlackPlayer extends Player {
 
     public BlackPlayer()
     {
-        x=1* tileWidth;
-        y=20*tileHeight;
+        super();
     }
 
     @Override
@@ -18,24 +17,34 @@ public class BlackPlayer extends Player {
         {
             if(right)
             {
-                Drawer.draw(x,y, Assets.blackNinjaRight,
+                Drawer.draw(
+                        x,y,
+                        Assets.blackNinjaRight,
                         playerWidth,
-                        playerHeight);
+                        playerHeight
+                );
             }
             else
             {
-                Drawer.draw(x,y,Assets.blackNinjaLeft,
+                Drawer.draw(
+                        x,y,
+                        Assets.blackNinjaLeft,
                         playerWidth,
-                        playerHeight);
+                        playerHeight
+                );
             }
 
-            if(endAttack ==false)
+            if(getEndAttack())
             {
-                Drawer.draw(x-32,y-32,Assets.ShurikenBg, shurikenCirclePixels, shurikenCirclePixels);
+                Drawer.draw(
+                        x-32,y-32,
+                        Assets.ShurikenBg,
+                        shurikenCirclePixels,
+                        shurikenCirclePixels
+                );
             }
-            for(int i=0;i<listOfShurikens.size();i++){
-                listOfShurikens.get(i).draw();
-            }
+
+            listOfShurikens.forEach(ShinobiShuriken::draw);
         }
     }
 

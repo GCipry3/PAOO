@@ -7,12 +7,11 @@ import java.awt.*;
 
 public final class GameWindow{
     private JFrame wndFrame;
-    private JPanel healthBarPanel;
     private static JProgressBar healthBar;
-    private String wndTitle;
+    private final String wndTitle;
     private static JTextField textField;
-    private int wndWidth;
-    private int wndHeight;
+    private final int wndWidth;
+    private final int wndHeight;
 
     private Canvas canvas;
 
@@ -41,7 +40,7 @@ public final class GameWindow{
         wndFrame.setVisible(true);
         wndFrame.setFocusable(true);
 
-        healthBarPanel= new JPanel();
+        JPanel healthBarPanel = new JPanel();
         healthBarPanel.setBounds(wndWidth-350,48,300,30);
         healthBarPanel.setBackground(Color.red);
 

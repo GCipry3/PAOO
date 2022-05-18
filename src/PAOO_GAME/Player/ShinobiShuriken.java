@@ -10,11 +10,10 @@ import static PAOO_GAME.Game.player;
 
 public class ShinobiShuriken implements Drawable {
     private int x;
-    private int y;
-    private int direction; //0 reprezinta stanga, iar 1 dreapta
-    private int speed=4;
-    private int projectileWidth=24;
-    private int projectileHeight=24;
+    private final int y;
+    private final int direction; //0 means left, and 1 means right
+    private final int projectileWidth=24;
+    private final int projectileHeight=24;
     private boolean visible=true;
 
     ShinobiShuriken(int x,int y){
@@ -25,13 +24,10 @@ public class ShinobiShuriken implements Drawable {
     }
 
     public void move(){
-        switch (direction){
-            case 0:
-                x-=speed;
-                break;
-            case 1:
-                x+=speed;
-                break;
+        int speed = 4;
+        switch (direction) {
+            case 0 -> x -= speed;
+            case 1 -> x += speed;
         }
 
     }
@@ -40,7 +36,6 @@ public class ShinobiShuriken implements Drawable {
     public void draw() {
         if(visible) {
             Drawer.draw(x, y, Assets.gold, projectileWidth, projectileHeight);
-            //System.out.println("projectile");
         }
     }
 
@@ -52,7 +47,7 @@ public class ShinobiShuriken implements Drawable {
             if(Collision.checkCollisions(x,y,projectileWidth,projectileHeight,
                     wallCollisions)){
                 visible = false;
-                System.out.println("wall touched by projectile");
+                //System.out.println("wall touched by projectile");
             }
         }
     }

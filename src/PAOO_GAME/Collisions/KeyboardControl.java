@@ -9,14 +9,14 @@ public class KeyboardControl implements KeyListener {
     public static int velocityX=0;
     public static int velocityY=0;
 
-    public static boolean atack=false;
-    public static boolean atack2=false;
+    public static boolean attack =false;
+    public static boolean attack2 =false;
 
 
     public static boolean jump=false;
 
     @Override
-    public void keyTyped(KeyEvent e) {/*System.out.println("Let's GOOO");*/}
+    public void keyTyped(KeyEvent e) {}
     @Override
     public void keyPressed(KeyEvent e)
     {
@@ -42,10 +42,10 @@ public class KeyboardControl implements KeyListener {
         }
         if(key == KeyEvent.VK_E)
         {
-            atack=true;
+            attack =true;
         }
         if(key == KeyEvent.VK_Q){
-            atack2=true;
+            attack2 =true;
         }
 
         if(key == KeyEvent.VK_ESCAPE){
@@ -76,7 +76,7 @@ public class KeyboardControl implements KeyListener {
             velocityX=0;
         }
         if(key == KeyEvent.VK_Q){
-            atack2=false;
+            attack2 =false;
         }
 
     }

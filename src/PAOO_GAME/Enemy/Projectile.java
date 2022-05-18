@@ -10,13 +10,12 @@ import static PAOO_GAME.Game.player;
 
 public class Projectile implements Drawable {
     private int x;
-    private int y;
-    private int direction; //0 reprezinta stanga, iar 1 dreapta
-    private int speed=2;
-    private int projectileWidth=16;
-    private int projectileHeight=16;
+    private final int y;
+    private final int direction; //0 means left, and 1 right
+    private final int projectileWidth=16;
+    private final int projectileHeight=16;
     private boolean visible=true;
-    private int damage;
+    private final int damage;
 
     Projectile(int x,int y,int damage){
         int xPlayer= player.getX();
@@ -32,28 +31,24 @@ public class Projectile implements Drawable {
     }
 
     public void move(){
-        switch (direction){
-            case 0:
-                x-=speed;
-                break;
-            case 1:
-                x+=speed;
-                break;
+        int speed = 2;
+        switch (direction) {
+            case 0 -> x -= speed;
+            case 1 -> x += speed;
         }
 
     }
 
     @Override
     public void draw() {
-        if(visible==true) {
+        if(visible) {
             Drawer.draw(x, y, Assets.rock, projectileWidth, projectileHeight);
-            //System.out.println("projectile");
         }
     }
 
     @Override
     public void update() {
-        if(visible==true) {
+        if(visible) {
             move();
 
             if(Collision.checkCollisions(x,y,projectileWidth,projectileHeight,
@@ -82,6 +77,4 @@ public class Projectile implements Drawable {
 
     public int getX(){return x;}
     public int getY(){return y;}
-    public int getProjectileWidth(){return projectileWidth;}
-    public int getProjectileHeight(){return projectileHeight;}
 }

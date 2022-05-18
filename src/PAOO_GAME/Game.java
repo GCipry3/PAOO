@@ -19,11 +19,6 @@ public final class Game extends Component implements Runnable {
 
     private GameWindow wnd;
     private boolean runState;
-    private Thread gameThread;
-    private BufferStrategy bs;
-    //private Jumper jumper1=new Jumper(new Coord(17* tileHeight,19* tileWidth),64,64);
-    //private Jumper jumper2=new Jumper(new Coord(2* tileHeight,10* tileWidth),64,64);
-
 
     public static Graphics g;
 
@@ -49,7 +44,7 @@ public final class Game extends Component implements Runnable {
     }
 
     private void InitGame() throws IOException {
-        wnd = new GameWindow("Schelet Proiect PAOO",
+        wnd = new GameWindow("Attack on Ninja)",
                 widthNrTiles *tileWidth,
                 heightNrTiles *tileHeight);
 
@@ -71,19 +66,19 @@ public final class Game extends Component implements Runnable {
             e.printStackTrace();
         }
         long oldTime = System.nanoTime();
-        long curentTime;
+        long currentTime;
 
         final double framesPerSecond   = 60;
         final double timeFrame = 1000000000 / framesPerSecond;
 
         while (runState)
         {
-            curentTime = System.nanoTime();
-            if((curentTime - oldTime) > timeFrame)
+            currentTime = System.nanoTime();
+            if((currentTime - oldTime) > timeFrame)
             {
                 update();
                 draw();
-                oldTime = curentTime;
+                oldTime = currentTime;
             }
         }
 
@@ -94,55 +89,28 @@ public final class Game extends Component implements Runnable {
         if(!runState)
         {
             runState = true;
-            gameThread = new Thread(this);
+            Thread gameThread = new Thread(this);
             gameThread.start();
-        }
-        else
-        {
-            return;
         }
     }
 
     public synchronized void StopGame()
     {
-        if(runState == true)
+        if(runState)
         {
             runState = false;
-            /*try
-            {
-                gameThread.join();
-            }
-            catch(InterruptedException ex)
-            {
-                ex.printStackTrace();
-            }*/
             System.exit(0);
-        }
-        else
-        {
-            return;
         }
     }
 
     public void update()
     {
-        int tmpMapIndex=m.index;
-
-        listWithDrawable.forEach((i)->i.update());
-
-        if(m.index != tmpMapIndex)
-        {
-            //player.pos.set(1* Tile.tileWidth,20*Tile.tileHeight);
-            player.setX(1 * tileWidth);
-            player.setY(20 * tileHeight);
-            jumpHeight=64;
-        }
-
+        listWithDrawable.forEach(Drawable::update);
     }
 
     public void draw()
     {
-        bs = wnd.GetCanvas().getBufferStrategy();
+        BufferStrategy bs = wnd.GetCanvas().getBufferStrategy();
         if(bs == null)
         {
             try
@@ -155,11 +123,12 @@ public final class Game extends Component implements Runnable {
                 e.printStackTrace();
             }
         }
+        assert bs != null;
         g = bs.getDrawGraphics();
         g.clearRect(0, 0, wnd.GetWndWidth(), wnd.GetWndHeight());
 
 
-        listWithDrawable.forEach((i)->i.draw());
+        listWithDrawable.forEach(Drawable::draw);
 
         Drawer.draw(widthNrTiles *tileWidth-450,32,Assets.coin,48,48);
 

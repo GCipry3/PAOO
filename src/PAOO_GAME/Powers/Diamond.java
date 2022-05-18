@@ -16,8 +16,8 @@ public class Diamond extends Powers{
     @Override
     public void power() {
 
-        if(visible==true &&
-                Player.getEndAttackStatus() == false &&
+        if(visible &&
+                Player.getEndAttack() &&
                 Collision.checkCollision(
                         player.getX() -32,
                         player.getY() -32,
@@ -31,7 +31,7 @@ public class Diamond extends Powers{
 
     @Override
     public void draw() {
-        if(visible==true)
+        if(visible)
         {
             Drawer.draw(x,y, Assets.diamond,width,height);
         }

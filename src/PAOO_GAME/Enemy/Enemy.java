@@ -8,8 +8,8 @@ import static PAOO_GAME.Game.player;
 public abstract class Enemy implements  Drawable {
     protected int x;
     protected int y;
-    protected int firstX;//inamicul se va deplasa in stanga si dreapta
-    protected int firstY;//pozitiei initiale
+    protected int firstX;//the enemy will go left and right
+    protected int firstY;//initial positions
     protected boolean visible=true;
     protected int state=0;
 
@@ -26,20 +26,16 @@ public abstract class Enemy implements  Drawable {
     }
 
     protected void move(){
-        //implementarea este asemanatoare unui state machine
+        //the implementation is similar with a state machine
         if(x<firstX-enemyMaxMove){
             state=1;
         }
         if(x>firstX+enemyMaxMove){
             state=0;
         }
-        switch (state){
-            case 0:
-                moveLeftState();
-                break;
-            case 1:
-                moveRightState();
-                break;
+        switch (state) {
+            case 0 -> moveLeftState();
+            case 1 -> moveRightState();
         }
     }
 
@@ -54,12 +50,10 @@ public abstract class Enemy implements  Drawable {
         int xPlayer=player.getX();
         int yPlayer=player.getY();
 
-        if((x-xPlayer<6*tileWidth) && (x-xPlayer>-6*tileWidth) &&
-          (y-yPlayer<2*tileHeight) && (y-yPlayer>-2*tileHeight)){
-            //System.out.println((x-xPlayer)+"|"+(y-yPlayer));
-            return true;
-        }
-        return false;
+        return (x - xPlayer < 6 * tileWidth) &&
+                (x - xPlayer > -6 * tileWidth) &&
+                (y - yPlayer < 2 * tileHeight) &&
+                (y - yPlayer > -2 * tileHeight);
     }
 
     public int getX(){return x;}

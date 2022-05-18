@@ -1,6 +1,7 @@
 package PAOO_GAME.Map;
 
 import PAOO_GAME.Component.Drawer;
+import PAOO_GAME.Constants;
 import PAOO_GAME.Drawable;
 import PAOO_GAME.Enemy.Goblin;
 import PAOO_GAME.Enemy.Ogre;
@@ -15,35 +16,22 @@ import java.util.List;
 import java.util.Scanner;
 
 import static PAOO_GAME.Constants.*;
+import static PAOO_GAME.Game.player;
 
 public class Map implements Drawable {
-    private static int rows=25;
-    private static int cols=50;
-    public static int[][][] map =new int[3][rows][cols];
-    public static int actualMap[][]=new int[rows][cols];
+    public static int[][][] map     =new int[3][heightNrTiles][widthNrTiles];
+    public static int[][] actualMap =new int[heightNrTiles][widthNrTiles];
     public static int nrMaps;
     public static int level;
     public static int index;
     private static int oldIndexOfMap;
 
-    private static List<Drawable> listOfDrawables =new ArrayList<>();
+    private static final List<Drawable> listOfDrawables =new ArrayList<>();
 
     public Map(int _level)
     {
         level=_level;
         nrMaps=2;
-        /*switch(level)
-        {
-            case 0:
-                nrMaps=2;
-                break;
-            case 1:
-                nrMaps=3;
-                break;
-            case 2:
-                nrMaps=4;
-                break;
-        }*/
         index=0;
         oldIndexOfMap =0;
     }
@@ -52,7 +40,7 @@ public class Map implements Drawable {
     {
         Scanner input=new Scanner(new File(path));
 
-        for(int i = 0 ; i<rows && input.hasNextLine();i++)
+        for(int i = 0; i< heightNrTiles && input.hasNextLine(); i++)
         {
             String[] line=input.nextLine().trim().split(" ");
             for(int j = 0 ;j<line.length;j++)
@@ -66,14 +54,13 @@ public class Map implements Drawable {
     public void init() throws IOException {
         if(level==0)
         {
-            readMap("resources/maps/map1_1.txt",0);
+            readMap("resources/maps/map3_2.txt",0);
             readMap("resources/maps/map1_2.txt",1);
         }
 
         actualMap=map[index];
 
         updateListWithObjects();
-
     }
 
 
@@ -85,38 +72,25 @@ public class Map implements Drawable {
             oldIndexOfMap =index;
             listOfDrawables.clear();
             updateListWithObjects();
+            player.setX(tileWidth);
+            player.setY(20 * tileHeight);
+            jumpHeight=64;
         }
-        for(int i = 0; i< listOfDrawables.size(); i++){
-            listOfDrawables.get(i).update();
-        }
+
+        listOfDrawables.forEach(Drawable::update);
     }
 
     private void updateListWithObjects() {
-        for (int i=0;i<rows;i++){
-            for(int j=0;j<cols;j++){
-                switch(actualMap[i][j])
-                {
-                    case 1:
-                        listOfDrawables.add(new Rock(j*32,i*32,32,32));
-                        break;
-                    case 6:
-                        listOfDrawables.add(new Coin(j*32,i*32,32,32));
-                        break;
-                    case 8:
-                        listOfDrawables.add(new Diamond(j*32,i*32,48,48));
-                        break;
-                    case 7:
-                        listOfDrawables.add(new Gold(j*32,i*32,48,48));
-                        break;
-                    case 9:
-                        listOfDrawables.add(new Jumper(j*32,i*32,64,64));
-                        break;
-                    case 4:
-                        listOfDrawables.add(new Goblin(j*32,i*32));
-                        break;
-                    case 10:
-                        listOfDrawables.add(new Ogre(j*32,i*32));
-                        break;
+        for (int i = 0; i< heightNrTiles; i++){
+            for(int j = 0; j< widthNrTiles; j++){
+                switch (actualMap[i][j]) {
+                    case 1 -> listOfDrawables.add(new Rock(j * 32, i * 32, 32, 32));
+                    case 6 -> listOfDrawables.add(new Coin(j * 32, i * 32, 32, 32));
+                    case 8 -> listOfDrawables.add(new Diamond(j * 32, i * 32, 48, 48));
+                    case 7 -> listOfDrawables.add(new Gold(j * 32, i * 32, 48, 48));
+                    case 9 -> listOfDrawables.add(new Jumper(j * 32, i * 32, 64, 64));
+                    case 4 -> listOfDrawables.add(new Goblin(j * 32, i * 32));
+                    case 10 ->listOfDrawables.add(new Ogre(j * 32, i * 32));
                 }
             }
         }
@@ -126,12 +100,11 @@ public class Map implements Drawable {
     {
         BufferedImage bg = ImageLoader.LoadImage("resources/background.png");
         Drawer.draw(0,0, bg,
-                widthNrTiles * tileWidth,
-                heightNrTiles *tileHeight);
+                Constants.widthNrTiles * tileWidth,
+                Constants.heightNrTiles *tileHeight
+        );
 
-        for(int i = 0; i< listOfDrawables.size(); i++){
-            listOfDrawables.get(i).draw();
-        }
+        listOfDrawables.forEach(Drawable::draw);
     }
 
 }
