@@ -3,6 +3,7 @@ package PAOO_GAME.Player;
 import PAOO_GAME.Collisions.Collision;
 import PAOO_GAME.Collisions.KeyboardControl;
 import PAOO_GAME.Drawable;
+import PAOO_GAME.Game;
 import PAOO_GAME.GameWindow.GameWindow;
 import PAOO_GAME.Map.Map;
 
@@ -30,7 +31,7 @@ public abstract class Player implements  Drawable {
     private static boolean endAttack  =true;
     private static boolean oldAttack2 =false;
 
-
+    private boolean goldCollected=false;
 
     protected int coins=0;
     public List<ShinobiShuriken> listOfShurikens= new ArrayList<>();
@@ -39,6 +40,8 @@ public abstract class Player implements  Drawable {
         x=tileWidth;
         y=20*tileHeight;
     }
+
+    public void setGoldCollectedTrue(){goldCollected=true;}
 
     public boolean getRight(){return right;}
 
@@ -70,13 +73,20 @@ public abstract class Player implements  Drawable {
     }
 
     protected void attackWithShuriken(){
-        if(KeyboardControl.attack2 != oldAttack2 && KeyboardControl.attack2) {
-            listOfShurikens.add(new ShinobiShuriken(x, y));
-            listOfShurikens.add(new ShinobiShuriken(x-16, y+20));
-            oldAttack2 =KeyboardControl.attack2;
-        }
-        if(!KeyboardControl.attack2){
-            oldAttack2 = false;
+        int shurikenCounter=GameWindow.getShurikenCounter();
+        if(shurikenCounter>0) {
+            if (KeyboardControl.attack2 != oldAttack2 && KeyboardControl.attack2) {
+                listOfShurikens.add(new ShinobiShuriken(x, y));
+                if (goldCollected) {
+                    listOfShurikens.add(new ShinobiShuriken(x - 16, y + 20));
+                    listOfShurikens.add(new ShinobiShuriken(x - 16, y - 20));
+                }
+                oldAttack2 = KeyboardControl.attack2;
+                GameWindow.setShurikenCounter(shurikenCounter-1);
+            }
+            if (!KeyboardControl.attack2) {
+                oldAttack2 = false;
+            }
         }
     }
 
@@ -180,6 +190,9 @@ public abstract class Player implements  Drawable {
         }
         //endOfCheckNextLevel
 
+        if(lifeStatus<=0){
+            Game.getInstance().setLoseFlag();
+        }
     }
 
     public void increaseLifeStatus(int amount)

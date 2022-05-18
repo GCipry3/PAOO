@@ -3,10 +3,10 @@ package PAOO_GAME.Enemy;
 import PAOO_GAME.Collisions.Collision;
 import PAOO_GAME.Component.Drawer;
 import PAOO_GAME.Drawable;
+import PAOO_GAME.Game;
 import PAOO_GAME.Graphics.Assets;
 
 import static PAOO_GAME.Constants.*;
-import static PAOO_GAME.Game.player;
 
 public class Projectile implements Drawable {
     private int x;
@@ -18,7 +18,7 @@ public class Projectile implements Drawable {
     private final int damage;
 
     Projectile(int x,int y,int damage){
-        int xPlayer= player.getX();
+        int xPlayer= Game.getInstance().player.getX();
         this.x=x;
         this.y=y;
         if (xPlayer<x){
@@ -60,12 +60,12 @@ public class Projectile implements Drawable {
 
     public void attack(){
         if(visible) {
-            int xPlayer = player.getX();
-            int yPlayer = player.getY();
+            int xPlayer = Game.getInstance().player.getX();
+            int yPlayer = Game.getInstance().player.getY();
 
             if (Collision.checkCollision(x, y, projectileWidth, projectileHeight,
                     xPlayer, yPlayer + 5, playerWidth, playerHeight)) {
-                player.takeDamage(damage);
+                Game.getInstance().player.takeDamage(damage);
                 visible = false;
             }
         }

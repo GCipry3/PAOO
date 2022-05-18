@@ -2,6 +2,7 @@ package PAOO_GAME.Enemy;
 
 import PAOO_GAME.Collisions.Collision;
 import PAOO_GAME.Component.Drawer;
+import PAOO_GAME.Game;
 import PAOO_GAME.Graphics.Assets;
 import PAOO_GAME.Player.Player;
 import PAOO_GAME.Player.ShinobiShuriken;
@@ -11,7 +12,6 @@ import java.util.List;
 import java.util.Random;
 
 import static PAOO_GAME.Constants.*;
-import static PAOO_GAME.Game.player;
 
 public class Goblin extends Enemy{
     protected List<Projectile> listOfProjectiles= new ArrayList<>();
@@ -39,8 +39,8 @@ public class Goblin extends Enemy{
                 cntAttack=0;
             }
 
-            int xPlayer=player.getX();
-            int yPlayer=player.getY();
+            int xPlayer= Game.getInstance().player.getX();
+            int yPlayer= Game.getInstance().player.getY();
 
             if(attackOnlyOnce) {
                 if (Collision.checkCollision(
@@ -53,7 +53,7 @@ public class Goblin extends Enemy{
                         playerWidth,
                         playerHeight)
                 ) {
-                    player.takeDamage(100);
+                    Game.getInstance().player.takeDamage(100);
                     attackOnlyOnce=false;
                 }
             }
@@ -66,8 +66,8 @@ public class Goblin extends Enemy{
     public void update() {
         if(visible) {
 
-            int xPlayer=player.getX();
-            int yPlayer=player.getY();
+            int xPlayer=Game.getInstance().player.getX();
+            int yPlayer=Game.getInstance().player.getY();
             if (playerClose()) {
                 move();
             }
@@ -85,8 +85,8 @@ public class Goblin extends Enemy{
                 }
             }
 
-            for(int i=0;i<player.listOfShurikens.size();i++){
-                ShinobiShuriken tmp=player.listOfShurikens.get(i);
+            for(int i=0;i<Game.getInstance().player.listOfShurikens.size();i++){
+                ShinobiShuriken tmp=Game.getInstance().player.listOfShurikens.get(i);
                 if(tmp.getVisible()){
                     if(Collision.checkCollision(
                             x,y,enemyWidth,enemyHeight,
@@ -95,7 +95,7 @@ public class Goblin extends Enemy{
                             tmp.getProjectileHeight()
                     ))
                     {
-                        player.listOfShurikens.get(i).setVisibleFalse();
+                        Game.getInstance().player.listOfShurikens.get(i).setVisibleFalse();
                         visible=false;
                     }
                 }

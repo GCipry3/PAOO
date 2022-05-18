@@ -9,7 +9,8 @@ public final class GameWindow{
     private JFrame wndFrame;
     private static JProgressBar healthBar;
     private final String wndTitle;
-    private static JTextField textField;
+    private static JTextField coinsCounter;
+    private static JTextField shurikenCounter;//at each diamond collected you get 5 shuriken shoots
     private final int wndWidth;
     private final int wndHeight;
 
@@ -52,15 +53,25 @@ public final class GameWindow{
 
         healthBarPanel.add(healthBar);
 
-        textField =new JTextField();
-        textField.setVisible(true);
-        textField.setBounds(wndWidth-100,100,48,48);
-        textField.setText("0");
-        textField.setHorizontalAlignment(SwingConstants.CENTER);
-        textField.setEditable(false);
-        textField.setBackground(new Color(255, 152, 20));
-        Font font=new Font(textField.getFont().getName(),textField.getFont().getStyle(),32);
-        textField.setFont(font);
+        shurikenCounter =new JTextField();
+        shurikenCounter.setVisible(true);
+        shurikenCounter.setBounds(wndWidth-160,100,48,48);
+        shurikenCounter.setText("0");
+        shurikenCounter.setHorizontalAlignment(SwingConstants.CENTER);
+        shurikenCounter.setEditable(false);
+        shurikenCounter.setBackground(new Color(0, 120, 255));
+        Font font=new Font(shurikenCounter.getFont().getName(), shurikenCounter.getFont().getStyle(),32);
+        shurikenCounter.setFont(font);
+
+        coinsCounter =new JTextField();
+        coinsCounter.setVisible(true);
+        coinsCounter.setBounds(wndWidth-100,100,48,48);
+        coinsCounter.setText("0");
+        coinsCounter.setHorizontalAlignment(SwingConstants.CENTER);
+        coinsCounter.setEditable(false);
+        coinsCounter.setBackground(new Color(255, 152, 20));
+        font=new Font(coinsCounter.getFont().getName(), coinsCounter.getFont().getStyle(),32);
+        coinsCounter.setFont(font);
 
         canvas=new Canvas();
         canvas.setPreferredSize(new Dimension(wndWidth,wndHeight));
@@ -68,7 +79,8 @@ public final class GameWindow{
         canvas.setMinimumSize(new Dimension(wndWidth,wndHeight));
         canvas.addKeyListener(new KeyboardControl());
 
-        wndFrame.add(textField);
+        wndFrame.add(shurikenCounter);
+        wndFrame.add(coinsCounter);
         wndFrame.add(healthBarPanel);
         wndFrame.add(canvas);
 
@@ -81,8 +93,12 @@ public final class GameWindow{
     }
 
     public static void setCoins(int coins){
-        textField.setText(String.valueOf(coins));
+        coinsCounter.setText(String.valueOf(coins));
     }
+
+    public static void setShurikenCounter(int shurikenNumber){shurikenCounter.setText(Integer.toString(shurikenNumber));}
+
+    public static int getShurikenCounter(){return Integer.parseInt(shurikenCounter.getText());}
 
     public int GetWndWidth()
     {

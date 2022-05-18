@@ -10,7 +10,7 @@ public class Rock extends Powers{
 
     @Override
     public void power() {
-
+        //
     }
 
     @Override

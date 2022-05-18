@@ -3,11 +3,11 @@ package PAOO_GAME.Powers;
 import PAOO_GAME.Collisions.Collision;
 import PAOO_GAME.Component.Drawer;
 import PAOO_GAME.Constants;
+import PAOO_GAME.Game;
 import PAOO_GAME.Graphics.Assets;
 import PAOO_GAME.Player.Player;
 
 import static PAOO_GAME.Constants.jumpHeight;
-import static PAOO_GAME.Game.player;
 
 public class Jumper extends Powers{
     public Jumper(int x,int y, int _width, int _height)
@@ -20,8 +20,8 @@ public class Jumper extends Powers{
         if(visible &&
                 Player.getAttackStatus() &&
                 Collision.checkCollision(
-                        player.getX() -32,
-                        player.getY() -32,
+                        Game.getInstance().player.getX() -32,
+                        Game.getInstance().player.getY() -32,
                         Constants.shurikenCirclePixels,
                         Constants.shurikenCirclePixels,
                         x,y, width, height) )
@@ -35,7 +35,7 @@ public class Jumper extends Powers{
     public void draw() {
         if(visible)
         {
-            Drawer.draw(x,y, Assets.jumpRight,width,height);
+            Drawer.draw(x,y+15, Assets.jumpRight,width,height);
         }
     }
 

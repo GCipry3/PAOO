@@ -5,6 +5,7 @@ import PAOO_GAME.Constants;
 import PAOO_GAME.Drawable;
 import PAOO_GAME.Enemy.Goblin;
 import PAOO_GAME.Enemy.Ogre;
+import PAOO_GAME.Game;
 import PAOO_GAME.Graphics.ImageLoader;
 import PAOO_GAME.Powers.*;
 
@@ -16,7 +17,6 @@ import java.util.List;
 import java.util.Scanner;
 
 import static PAOO_GAME.Constants.*;
-import static PAOO_GAME.Game.player;
 
 public class Map implements Drawable {
     public static int[][][] map     =new int[3][heightNrTiles][widthNrTiles];
@@ -54,12 +54,21 @@ public class Map implements Drawable {
     public void init() throws IOException {
         if(level==0)
         {
-            readMap("resources/maps/map3_2.txt",0);
+            readMap("resources/maps/map1_1.txt",0);
             readMap("resources/maps/map1_2.txt",1);
+        }else if(level==1){
+            readMap("resources/maps/map2_1.txt",0);
+            readMap("resources/maps/map2_2.txt",1);
+        }else if(level==2){
+            readMap("resources/maps/map3_1.txt",0);
+            readMap("resources/maps/map3_2.txt",1);
+        }else{
+            throw new RuntimeException("Level "+level+" doesn't exist");
         }
 
         actualMap=map[index];
 
+        listOfDrawables.clear();
         updateListWithObjects();
     }
 
@@ -70,10 +79,12 @@ public class Map implements Drawable {
         if(oldIndexOfMap !=index){
             actualMap=map[index];
             oldIndexOfMap =index;
+            
             listOfDrawables.clear();
             updateListWithObjects();
-            player.setX(tileWidth);
-            player.setY(20 * tileHeight);
+
+            Game.getInstance().player.setX(tileWidth);
+            Game.getInstance().player.setY(20 * tileHeight);
             jumpHeight=64;
         }
 
@@ -83,14 +94,16 @@ public class Map implements Drawable {
     private void updateListWithObjects() {
         for (int i = 0; i< heightNrTiles; i++){
             for(int j = 0; j< widthNrTiles; j++){
+                int x=j*32;
+                int y=i*32;
                 switch (actualMap[i][j]) {
-                    case 1 -> listOfDrawables.add(new Rock(j * 32, i * 32, 32, 32));
-                    case 6 -> listOfDrawables.add(new Coin(j * 32, i * 32, 32, 32));
-                    case 8 -> listOfDrawables.add(new Diamond(j * 32, i * 32, 48, 48));
-                    case 7 -> listOfDrawables.add(new Gold(j * 32, i * 32, 48, 48));
-                    case 9 -> listOfDrawables.add(new Jumper(j * 32, i * 32, 64, 64));
-                    case 4 -> listOfDrawables.add(new Goblin(j * 32, i * 32));
-                    case 10 ->listOfDrawables.add(new Ogre(j * 32, i * 32));
+                    case 1 -> listOfDrawables.add(new Rock      (x, y, 32, 32));
+                    case 6 -> listOfDrawables.add(new Coin      (x, y, 32, 32));
+                    case 8 -> listOfDrawables.add(new Diamond   (x, y, 48, 48));
+                    case 7 -> listOfDrawables.add(new Gold      (x, y, 48, 48));
+                    case 9 -> listOfDrawables.add(new Jumper    (x, y, 64, 64));
+                    case 4 -> listOfDrawables.add(new Goblin    (x, y));
+                    case 10 ->listOfDrawables.add(new Ogre      (x, y));
                 }
             }
         }
@@ -98,8 +111,8 @@ public class Map implements Drawable {
 
     public void draw()
     {
-        BufferedImage bg = ImageLoader.LoadImage("resources/background.png");
-        Drawer.draw(0,0, bg,
+        BufferedImage background = ImageLoader.LoadImage("resources/background.png");
+        Drawer.draw(0,0, background,
                 Constants.widthNrTiles * tileWidth,
                 Constants.heightNrTiles *tileHeight
         );

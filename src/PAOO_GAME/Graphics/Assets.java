@@ -37,6 +37,19 @@ public final class Assets {
     public static BufferedImage rock;
     public static BufferedImage rock2;
 
+    public static BufferedImage up;
+    public static BufferedImage down;
+    public static BufferedImage left;
+    public static BufferedImage right;
+    public static BufferedImage shurikenAttackButton;
+    public static BufferedImage shurikenCircleButton;
+    public static BufferedImage upT;
+    public static BufferedImage downT;
+    public static BufferedImage leftT;
+    public static BufferedImage rightT;
+    public static BufferedImage shurikenAttackButtonT;
+    public static BufferedImage shurikenCircleButtonT;
+
     public static List<BufferedImage> shuriken=new ArrayList<>();
 
     public static void Init() {
@@ -45,6 +58,23 @@ public final class Assets {
         shuriken.add(shurikenSpriteSheet.crop(1,0));
         shuriken.add(shurikenSpriteSheet.crop(2,0));
         shuriken.add(shurikenSpriteSheet.crop(3,0));
+
+        SpriteSheet keyButtons = new SpriteSheet(ImageLoader.LoadImage("resources/static/buttons1.png"),87,76);
+        SpriteSheet keyButtonsTransparent = new SpriteSheet(ImageLoader.LoadImage("resources/static/buttons1_t1.png"),87,76);
+
+        up=keyButtons.crop(0,1);
+        down=keyButtons.crop(0,2);
+        right=keyButtons.crop(0,3);
+        left=keyButtons.crop(0,4);
+        shurikenAttackButton=keyButtons.crop(2,3);
+        shurikenCircleButton=keyButtons.crop(2,0);
+
+        upT=keyButtonsTransparent.crop(0,1);
+        downT=keyButtonsTransparent.crop(0,2);
+        rightT=keyButtonsTransparent.crop(0,3);
+        leftT=keyButtonsTransparent.crop(0,4);
+        shurikenAttackButtonT=keyButtonsTransparent.crop(2,3);
+        shurikenCircleButtonT=keyButtonsTransparent.crop(2,0);
 
         rock            =ImageLoader.LoadImage("resources/static/rock.png");
         rock2           =ImageLoader.LoadImage("resources/static/rock2.png");

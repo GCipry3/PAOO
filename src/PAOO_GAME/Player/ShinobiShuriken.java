@@ -3,10 +3,10 @@ package PAOO_GAME.Player;
 import PAOO_GAME.Collisions.Collision;
 import PAOO_GAME.Component.Drawer;
 import PAOO_GAME.Drawable;
+import PAOO_GAME.Game;
 import PAOO_GAME.Graphics.Assets;
 
 import static PAOO_GAME.Constants.*;
-import static PAOO_GAME.Game.player;
 
 public class ShinobiShuriken implements Drawable {
     private int x;
@@ -20,7 +20,7 @@ public class ShinobiShuriken implements Drawable {
     ShinobiShuriken(int x,int y){
         this.x=x;
         this.y=y;
-        direction = player.getRight()? 1:0;
+        direction = Game.getInstance().player.getRight()? 1:0;
 
     }
 

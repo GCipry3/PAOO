@@ -1,9 +1,9 @@
 package PAOO_GAME.Enemy;
 
 import PAOO_GAME.Drawable;
+import PAOO_GAME.Game;
 
 import static PAOO_GAME.Constants.*;
-import static PAOO_GAME.Game.player;
 
 public abstract class Enemy implements  Drawable {
     protected int x;
@@ -47,8 +47,8 @@ public abstract class Enemy implements  Drawable {
     }
 
     protected boolean playerClose(){
-        int xPlayer=player.getX();
-        int yPlayer=player.getY();
+        int xPlayer= Game.getInstance().player.getX();
+        int yPlayer= Game.getInstance().player.getY();
 
         return (x - xPlayer < 10 * tileWidth) &&
                 (x - xPlayer > -10 * tileWidth) &&
