@@ -34,7 +34,7 @@ public class BlackPlayer extends Player {
                 );
             }
 
-            if(getEndAttack())
+            if(getAttackStatus())
             {
                 Drawer.draw(
                         x-32,y-32,

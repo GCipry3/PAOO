@@ -42,7 +42,7 @@ public abstract class Player implements  Drawable {
 
     public boolean getRight(){return right;}
 
-    public static boolean getEndAttack(){return !endAttack;}
+    public static boolean getAttackStatus(){return !endAttack;}
 
     public int getX(){return x;}
     public int getY(){return y;}

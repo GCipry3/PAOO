@@ -1,6 +1,5 @@
 package PAOO_GAME;
 
-import PAOO_GAME.Component.Drawer;
 import PAOO_GAME.GameWindow.GameWindow;
 import PAOO_GAME.Graphics.Assets;
 import PAOO_GAME.Map.Map;
@@ -127,10 +126,7 @@ public final class Game extends Component implements Runnable {
         g = bs.getDrawGraphics();
         g.clearRect(0, 0, wnd.GetWndWidth(), wnd.GetWndHeight());
 
-
         listWithDrawable.forEach(Drawable::draw);
-
-        Drawer.draw(widthNrTiles *tileWidth-450,32,Assets.coin,48,48);
 
         bs.show();
         g.dispose();

@@ -1,6 +1,8 @@
 package PAOO_GAME.Graphics;
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 public final class Assets {
 
@@ -35,7 +37,15 @@ public final class Assets {
     public static BufferedImage rock;
     public static BufferedImage rock2;
 
+    public static List<BufferedImage> shuriken=new ArrayList<>();
+
     public static void Init() {
+        SpriteSheet shurikenSpriteSheet = new SpriteSheet(ImageLoader.LoadImage("resources/static/shurikenSpriteSheet.png"),500,500);
+        shuriken.add(shurikenSpriteSheet.crop(0,0));
+        shuriken.add(shurikenSpriteSheet.crop(1,0));
+        shuriken.add(shurikenSpriteSheet.crop(2,0));
+        shuriken.add(shurikenSpriteSheet.crop(3,0));
+
         rock            =ImageLoader.LoadImage("resources/static/rock.png");
         rock2           =ImageLoader.LoadImage("resources/static/rock2.png");
         firstGoblin     =ImageLoader.LoadImage("resources/goblin/Goblin1_1.png");

@@ -12,8 +12,9 @@ public class ShinobiShuriken implements Drawable {
     private int x;
     private final int y;
     private final int direction; //0 means left, and 1 means right
-    private final int projectileWidth=24;
-    private final int projectileHeight=24;
+    private final int projectileWidth=32;
+    private final int projectileHeight=32;
+    private int cntDraw=0;
     private boolean visible=true;
 
     ShinobiShuriken(int x,int y){
@@ -34,8 +35,21 @@ public class ShinobiShuriken implements Drawable {
 
     @Override
     public void draw() {
+        int delay=2;
         if(visible) {
-            Drawer.draw(x, y, Assets.gold, projectileWidth, projectileHeight);
+            cntDraw++;
+            if(cntDraw<delay) {
+                Drawer.draw(x, y, Assets.shuriken.get(0), projectileWidth, projectileHeight);
+            }else if(cntDraw<2*delay){
+                Drawer.draw(x, y, Assets.shuriken.get(1), projectileWidth, projectileHeight);
+            }else if(cntDraw<3*delay){
+                Drawer.draw(x, y, Assets.shuriken.get(2), projectileWidth, projectileHeight);
+            }else if(cntDraw<4*delay){
+                Drawer.draw(x, y, Assets.shuriken.get(3), projectileWidth, projectileHeight);
+            }else{
+                cntDraw=0;
+                Drawer.draw(x, y, Assets.shuriken.get(0), projectileWidth, projectileHeight);
+            }
         }
     }
 

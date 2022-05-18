@@ -18,7 +18,7 @@ public class Jumper extends Powers{
     @Override
     public void power() {
         if(visible &&
-                Player.getEndAttack() &&
+                Player.getAttackStatus() &&
                 Collision.checkCollision(
                         player.getX() -32,
                         player.getY() -32,

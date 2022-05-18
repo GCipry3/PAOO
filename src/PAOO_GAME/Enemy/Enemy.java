@@ -50,10 +50,10 @@ public abstract class Enemy implements  Drawable {
         int xPlayer=player.getX();
         int yPlayer=player.getY();
 
-        return (x - xPlayer < 6 * tileWidth) &&
-                (x - xPlayer > -6 * tileWidth) &&
-                (y - yPlayer < 2 * tileHeight) &&
-                (y - yPlayer > -2 * tileHeight);
+        return (x - xPlayer < 10 * tileWidth) &&
+                (x - xPlayer > -10 * tileWidth) &&
+                (y - yPlayer < 3 * tileHeight) &&
+                (y - yPlayer > -3 * tileHeight);
     }
 
     public int getX(){return x;}

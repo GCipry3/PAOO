@@ -72,7 +72,7 @@ public class Goblin extends Enemy{
                 move();
             }
 
-            if (Player.getEndAttack())//if player attacks
+            if (Player.getAttackStatus())//if player attacks
             {
                 if(Collision.checkCollision(
                         x,y,
@@ -113,7 +113,6 @@ public class Goblin extends Enemy{
                 case 0 -> Drawer.draw(x, y, Assets.firstGoblin, enemyWidth, enemyHeight);
                 case 1 -> Drawer.draw(x, y, Assets.secondGoblin, enemyWidth, enemyHeight);
                 case 2 -> Drawer.draw(x, y, Assets.thirdGoblin, enemyWidth, enemyHeight);
-                default -> throw new RuntimeException(Integer.toString(random));
             }
             listOfProjectiles.forEach(Projectile::draw);
         }

@@ -41,22 +41,24 @@ public final class GameWindow{
         wndFrame.setFocusable(true);
 
         JPanel healthBarPanel = new JPanel();
-        healthBarPanel.setBounds(wndWidth-350,48,300,30);
-        healthBarPanel.setBackground(Color.red);
+        healthBarPanel.setBounds(wndWidth-300,48,250,30);
+        healthBarPanel.setBackground(new Color(14, 24, 37));
 
         healthBar= new JProgressBar(0,500);
-        healthBar.setPreferredSize(new Dimension(300,30));
+        healthBar.setPreferredSize(new Dimension(250,30));
+        healthBar.setForeground(new Color(183, 11, 11));
+        healthBar.setVisible(true);
         healthBar.setValue(500);
 
         healthBarPanel.add(healthBar);
 
         textField =new JTextField();
         textField.setVisible(true);
-        textField.setBounds(wndWidth-450,80,48,48);
+        textField.setBounds(wndWidth-100,100,48,48);
         textField.setText("0");
         textField.setHorizontalAlignment(SwingConstants.CENTER);
         textField.setEditable(false);
-        textField.setBackground(new Color(48,122,40));
+        textField.setBackground(new Color(255, 152, 20));
         Font font=new Font(textField.getFont().getName(),textField.getFont().getStyle(),32);
         textField.setFont(font);
 
