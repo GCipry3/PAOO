@@ -13,13 +13,10 @@ public final class Assets {
     public static BufferedImage blueNinjaLeft;
     public static BufferedImage blueNinjaRight;
 
-    public static BufferedImage firstOgre;
-    public static BufferedImage secondOgre;
-    public static BufferedImage thirdOgre;
-
-    public static BufferedImage firstGoblin;
-    public static BufferedImage secondGoblin;
-    public static BufferedImage thirdGoblin;
+    public static List<BufferedImage> ogreRight =new ArrayList<>();
+    public static List<BufferedImage> goblinRight =new ArrayList<>();
+    public static List<BufferedImage> ogreLeft=new ArrayList<>();
+    public static List<BufferedImage> goblinLeft=new ArrayList<>();
 
     public static BufferedImage coin ;
     public static BufferedImage diamond ;
@@ -52,7 +49,30 @@ public final class Assets {
 
     public static List<BufferedImage> shuriken=new ArrayList<>();
 
+    public static BufferedImage grass;
+
+    public static BufferedImage startPageBackground ;
+    public static List<BufferedImage> buttons=new ArrayList<>();
+    public static BufferedImage selectPlayerPage;
+    public static BufferedImage selectPlayerBox;
+
+    public static BufferedImage mapSelectPage;
+    public static List<BufferedImage> mapsScreenshot=new ArrayList<>();
+
+    public static BufferedImage losePage;
+    public static BufferedImage winPage;
+
     public static void Init() {
+        losePage=ImageLoader.LoadImage("resources/static/loseBg.png");
+        winPage=ImageLoader.LoadImage("resources/static/winBg.png");
+        mapSelectPage=ImageLoader.LoadImage("resources/static/mapsSelectPage.png");
+        mapsScreenshot.add(ImageLoader.LoadImage("resources/maps/level1.png"));
+        mapsScreenshot.add(ImageLoader.LoadImage("resources/maps/level2.png"));
+        mapsScreenshot.add(ImageLoader.LoadImage("resources/maps/level3.png"));
+
+        selectPlayerPage=ImageLoader.LoadImage("resources/static/selectPlayer.png");
+        selectPlayerBox=ImageLoader.LoadImage("resources/static/frame.png");
+
         SpriteSheet shurikenSpriteSheet = new SpriteSheet(ImageLoader.LoadImage("resources/static/shurikenSpriteSheet.png"),500,500);
         shuriken.add(shurikenSpriteSheet.crop(0,0));
         shuriken.add(shurikenSpriteSheet.crop(1,0));
@@ -76,15 +96,35 @@ public final class Assets {
         shurikenAttackButtonT=keyButtonsTransparent.crop(2,3);
         shurikenCircleButtonT=keyButtonsTransparent.crop(2,0);
 
+        SpriteSheet buttonsSheet= new SpriteSheet(ImageLoader.LoadImage("resources/static/buttons.png"),225,62);
+
+        buttons.add(buttonsSheet.crop(0,0));//play
+        buttons.add(buttonsSheet.crop(0,3));//options
+        buttons.add(buttonsSheet.crop(0,5));//exit
+        buttons.add(buttonsSheet.crop(0,2));//restart
+
+        goblinRight.add(ImageLoader.LoadImage("resources/goblin/Goblin1_1.png"));
+        goblinRight.add(ImageLoader.LoadImage("resources/goblin/Goblin2_1.png"));
+        goblinRight.add(ImageLoader.LoadImage("resources/goblin/Goblin3_1.png"));
+
+        ogreRight.add(ImageLoader.LoadImage("resources/ogre/Ogre1_1.png"));
+        ogreRight.add(ImageLoader.LoadImage("resources/ogre/Ogre2_1.png"));
+        ogreRight.add(ImageLoader.LoadImage("resources/ogre/Ogre3_1.png"));
+
+        goblinLeft.add(ImageLoader.LoadImage("resources/goblin/Goblin1_1left.png"));
+        goblinLeft.add(ImageLoader.LoadImage("resources/goblin/Goblin2_1left.png"));
+        goblinLeft.add(ImageLoader.LoadImage("resources/goblin/Goblin3_1left.png"));
+
+        ogreLeft.add(ImageLoader.LoadImage("resources/ogre/Ogre1_1left.png"));
+        ogreLeft.add(ImageLoader.LoadImage("resources/ogre/Ogre2_1left.png"));
+        ogreLeft.add(ImageLoader.LoadImage("resources/ogre/Ogre3_1left.png"));
+
+        startPageBackground=ImageLoader.LoadImage("resources/static/firstPage.png");
+
+        grass           =ImageLoader.LoadImage("resources/static/grass1.png");
+
         rock            =ImageLoader.LoadImage("resources/static/rock.png");
         rock2           =ImageLoader.LoadImage("resources/static/rock2.png");
-        firstGoblin     =ImageLoader.LoadImage("resources/goblin/Goblin1_1.png");
-        secondGoblin    =ImageLoader.LoadImage("resources/goblin/Goblin2_1.png");
-        thirdGoblin     =ImageLoader.LoadImage("resources/goblin/Goblin3_1.png");
-
-        firstOgre       =ImageLoader.LoadImage("resources/ogre/Ogre1_1.png");
-        secondOgre      =ImageLoader.LoadImage("resources/ogre/Ogre2_1.png");
-        thirdOgre       =ImageLoader.LoadImage("resources/ogre/Ogre3_1.png");
 
         ShurikenBg      =ImageLoader.LoadImage("resources/powers/shuriken.png");
 
@@ -92,10 +132,10 @@ public final class Assets {
         blackNinjaLeft  =ImageLoader.LoadImage("resources/ninja/black/Ninja1left.png");
 
         blueNinjaRight  =ImageLoader.LoadImage("resources/ninja/blue/Ninja1.png");
-        blueNinjaLeft   =ImageLoader.LoadImage("resources/ninja/blue/Ninja2.png");
+        blueNinjaLeft   =ImageLoader.LoadImage("resources/ninja/blue/Ninja1left.png");
 
         greenNinjaRight =ImageLoader.LoadImage("resources/ninja/green/Ninja1.png");
-        greenNinjaLeft  =ImageLoader.LoadImage("resources/ninja/green/Ninja2.png");
+        greenNinjaLeft  =ImageLoader.LoadImage("resources/ninja/green/Ninja1left.png");
 
         diamond         =ImageLoader.LoadImage("resources/powers/diamond.png");
         gold            =ImageLoader.LoadImage("resources/powers/gold.png");
@@ -107,6 +147,8 @@ public final class Assets {
         jumpRight       =ImageLoader.LoadImage("resources/powers/jumpRight.png");
 
         checkpoint      =ImageLoader.LoadImage("resources/static/checkpoint.png");
+
+
 
     }
 

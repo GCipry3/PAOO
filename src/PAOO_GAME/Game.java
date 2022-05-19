@@ -1,6 +1,8 @@
 package PAOO_GAME;
 
+import PAOO_GAME.Collisions.Collision;
 import PAOO_GAME.Collisions.KeyboardControl;
+import PAOO_GAME.Collisions.MouseControl;
 import PAOO_GAME.Component.Drawer;
 import PAOO_GAME.GameWindow.GameWindow;
 import PAOO_GAME.Graphics.Assets;
@@ -23,23 +25,28 @@ public final class Game extends Component implements Runnable {
 
     public static Graphics g;
 
-    public PlayerFactory pFactory=new PlayerFactory();
     public Player player;
-    public Map m=new Map(0);
+    public Map m;
 
     public List<Drawable> listWithDrawable=new ArrayList<>();
 
     private boolean loseFlag=false;
     private boolean winFlag=false;
+    private int state=0;
+    //0-start
+    //1-choose player
+    //2-choose map
+    //3-play
+    //4-endGame
+    //5-winCase
+    //6-loseCase
+    //7-resetOrQuit
 
     public static Game instance=null;
 
     private Game()
     {
         runState = false;
-        pFactory.createPlayer("black");
-        player=pFactory.getPlayer();
-        listWithDrawable.add(player);
     }
 
     public static Game getInstance(){
@@ -56,10 +63,6 @@ public final class Game extends Component implements Runnable {
         wnd = new GameWindow("Attack on Ninja)",
                 widthNrTiles *tileWidth,
                 heightNrTiles *tileHeight);
-
-        m.init();
-
-        listWithDrawable.add(0,m);
 
         wnd.BuildGameWindow();
 
@@ -85,7 +88,11 @@ public final class Game extends Component implements Runnable {
             currentTime = System.nanoTime();
             if((currentTime - oldTime) > timeFrame)
             {
-                update();
+                try {
+                    update();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 draw();
                 oldTime = currentTime;
             }
@@ -112,15 +119,118 @@ public final class Game extends Component implements Runnable {
         }
     }
 
-    public void update()
-    {
-        if(!loseFlag && !winFlag) {
-            listWithDrawable.forEach(Drawable::update);
-        }/*else if(loseFlag){
+    public void update() throws IOException {
+        boolean selected=false;
+        switch (state){
+            case 0:
+                if(touchedRectangle(widthNrTiles*tileWidth-400,4*64+37,250,50)){
+                    state=1;
+                    MouseControl.getInstance().resetCoords();
+                }
+                if(touchedRectangle(widthNrTiles*tileWidth-400,5*64+37,250,50)){
+                    System.out.println("options will be displayed");
+                }
+                if(touchedRectangle(widthNrTiles*tileWidth-400,6*64+40,250,50)){
+                    StopGame();
+                }
+                break;
 
-        }else{
+            case 1:
+                PlayerFactory pFactory=new PlayerFactory();
 
-        }*/
+                if(touchedRectangle(150,250,430,500)){
+                    pFactory.createPlayer("black");
+                    selected=true;
+                }
+                if(touchedRectangle(150+435,250,430,500)){
+                    pFactory.createPlayer("green");
+                    selected=true;
+                }
+                if(touchedRectangle(150+2*435,250,430,500)){
+                    pFactory.createPlayer("blue");
+                    selected=true;
+                }
+
+                if(selected){
+                    state=2;
+                    player=pFactory.getPlayer();
+                    listWithDrawable.add(player);
+                    MouseControl.getInstance().resetCoords();
+                }
+                break;
+
+            case 2:
+                if(touchedRectangle(50,200,480,500)){
+                    m=new Map(0);
+                    selected=true;
+                }
+                if(touchedRectangle(50+500,200,480,500)){
+                    m=new Map(1);
+                    selected=true;
+                }
+                if(touchedRectangle(50+2*500,200,480,500)){
+                    m=new Map(2);
+                    selected=true;
+                }
+                if(selected)
+                {
+                    state = 3;
+                    m.init();
+                    listWithDrawable.add(0,m);
+                    GameWindow.setAllToVisible();
+                    MouseControl.getInstance().resetCoords();
+                }
+                break;
+
+            case 3:
+                if (!loseFlag && !winFlag) {
+                    updateAfterStart();
+                }else{
+                    state=4;
+                    GameWindow.setAllToNotVisible();
+                }
+                break;
+
+            case 4:
+                if(loseFlag){
+                    state=6;
+                }else{
+                    state=5;
+                }
+                break;
+
+            case 5,6:
+                if(touchedRectangle(widthNrTiles*tileWidth-300,heightNrTiles*tileHeight-100,250,60)){
+                    state=7;
+                }
+                break;
+            case 7:
+                //reset all
+                listWithDrawable.clear();
+                m=null;
+                player=null;
+                loseFlag=false;
+                winFlag=false;
+                state=0;
+                break;
+
+            default:
+                throw new IllegalStateException("Unexpected value: " + state);
+        }
+    }
+
+    public void updateAfterStart(){
+        listWithDrawable.forEach(Drawable::update);
+    }
+
+    public boolean touchedRectangle(int x,int y,int width,int height){
+        int xMouse= MouseControl.getInstance().getX();
+        int yMouse= MouseControl.getInstance().getY();
+
+        return Collision.checkCollision(
+          x,y,width,height,
+          xMouse,yMouse,1,1
+        );
     }
 
     public void draw()
@@ -142,8 +252,51 @@ public final class Game extends Component implements Runnable {
         g = bs.getDrawGraphics();
         g.clearRect(0, 0, wnd.GetWndWidth(), wnd.GetWndHeight());
 
-        listWithDrawable.forEach(Drawable::draw);
+        switch (state){
+            case 0:
+                Drawer.draw(0,0,Assets.startPageBackground,widthNrTiles*tileWidth,heightNrTiles*tileHeight);
+                Drawer.draw(widthNrTiles*tileWidth-400,4*64+32,Assets.buttons.get(0),250,60);
+                Drawer.draw(widthNrTiles*tileWidth-400,5*64+32,Assets.buttons.get(1),250,60);
+                Drawer.draw(widthNrTiles*tileWidth-400,6*64+32,Assets.buttons.get(2),250,60);
+                break;
 
+            case 1:
+                Drawer.draw(0,0,Assets.selectPlayerPage,widthNrTiles*tileWidth,heightNrTiles*tileHeight);
+                Drawer.draw(150,        250,Assets.selectPlayerBox,430,500);
+                Drawer.draw(150+435,    250,Assets.selectPlayerBox,430,500);
+                Drawer.draw(150+2*435,  250,Assets.selectPlayerBox,430,500);
+
+                break;
+
+            case 2:
+                Drawer.draw(0,0,Assets.mapSelectPage,widthNrTiles*tileWidth,heightNrTiles*tileHeight);
+                Drawer.draw(50,        200,Assets.mapsScreenshot.get(0),480,500);
+                Drawer.draw(50+500,    200,Assets.mapsScreenshot.get(1),480,500);
+                Drawer.draw(50+2*500,  200,Assets.mapsScreenshot.get(2),480,500);
+                break;
+
+            case 3:
+                listWithDrawable.forEach(Drawable::draw);
+                movementKeyDraw();
+                break;
+
+            case 5:
+                Drawer.draw(0,0,Assets.winPage,widthNrTiles*tileWidth,heightNrTiles*tileHeight);
+                Drawer.draw(widthNrTiles*tileWidth-300,heightNrTiles*tileHeight-100,Assets.buttons.get(3),250,60);
+                break;
+            case 6:
+                Drawer.draw(0,0,Assets.losePage,widthNrTiles*tileWidth,heightNrTiles*tileHeight);
+                Drawer.draw(widthNrTiles*tileWidth-300,heightNrTiles*tileHeight-100,Assets.buttons.get(3),250,60);
+                break;
+            case 7:
+                //TODO
+                break;
+        }
+        bs.show();
+        g.dispose();
+    }
+
+    public void movementKeyDraw(){
         if(KeyboardControl.d){
             Drawer.draw(widthNrTiles*tileWidth-2*64,4*64,Assets.right,64,64);
         }else{
@@ -174,9 +327,5 @@ public final class Game extends Component implements Runnable {
         }else{
             Drawer.draw(widthNrTiles*tileWidth-4*64,3*64,Assets.shurikenCircleButtonT,64,64);
         }
-
-        bs.show();
-        g.dispose();
     }
-
 }

@@ -14,7 +14,7 @@ import static PAOO_GAME.Constants.*;
 
 public abstract class Player implements  Drawable {
 
-    protected int lifeStatus=500;
+    protected int lifeStatus;
 
     protected static int x;
     protected static int y;
@@ -39,6 +39,7 @@ public abstract class Player implements  Drawable {
     protected Player(){
         x=tileWidth;
         y=20*tileHeight;
+        lifeStatus=500;
     }
 
     public void setGoldCollectedTrue(){goldCollected=true;}
@@ -186,7 +187,10 @@ public abstract class Player implements  Drawable {
         //startOfCheckNextLevel
         if(checkNextLevelCollision())
         {
-            Map.index++;
+            Map.increaseIndexOfMap();
+            if(Map.compareIndexWithNrMaps()){
+                Game.getInstance().setWinFlag();
+            }
         }
         //endOfCheckNextLevel
 

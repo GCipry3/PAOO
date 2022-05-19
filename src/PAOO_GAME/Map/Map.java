@@ -7,7 +7,7 @@ import PAOO_GAME.Enemy.Goblin;
 import PAOO_GAME.Enemy.Ogre;
 import PAOO_GAME.Game;
 import PAOO_GAME.Graphics.ImageLoader;
-import PAOO_GAME.Powers.*;
+import PAOO_GAME.Map.Powers.*;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -35,6 +35,9 @@ public class Map implements Drawable {
         index=0;
         oldIndexOfMap =0;
     }
+
+    public static void increaseIndexOfMap(){index++;}
+    public static boolean compareIndexWithNrMaps(){return index>=nrMaps;}
 
     public static void readMap(String path,int mapNr) throws IOException
     {
@@ -98,6 +101,8 @@ public class Map implements Drawable {
                 int y=i*32;
                 switch (actualMap[i][j]) {
                     case 1 -> listOfDrawables.add(new Rock      (x, y, 32, 32));
+                    case 5 -> listOfDrawables.add(new Grass     (x, y, 32, 32));
+                    case 2 -> listOfDrawables.add(new CheckPoint(x, y, 32, 64));
                     case 6 -> listOfDrawables.add(new Coin      (x, y, 32, 32));
                     case 8 -> listOfDrawables.add(new Diamond   (x, y, 48, 48));
                     case 7 -> listOfDrawables.add(new Gold      (x, y, 48, 48));

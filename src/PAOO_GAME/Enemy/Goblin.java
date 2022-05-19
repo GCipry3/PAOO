@@ -109,10 +109,10 @@ public class Goblin extends Enemy{
     @Override
     public void draw() {
         if(visible) {
-            switch (random) {
-                case 0 -> Drawer.draw(x, y, Assets.firstGoblin, enemyWidth, enemyHeight);
-                case 1 -> Drawer.draw(x, y, Assets.secondGoblin, enemyWidth, enemyHeight);
-                case 2 -> Drawer.draw(x, y, Assets.thirdGoblin, enemyWidth, enemyHeight);
+            if(state==1){
+                Drawer.draw(x, y, Assets.goblinRight.get(random), enemyWidth, enemyHeight);
+            }else{
+                Drawer.draw(x, y, Assets.goblinLeft.get(random), enemyWidth, enemyHeight);
             }
             listOfProjectiles.forEach(Projectile::draw);
         }

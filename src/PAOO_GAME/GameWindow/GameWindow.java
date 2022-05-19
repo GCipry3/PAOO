@@ -1,12 +1,14 @@
 package PAOO_GAME.GameWindow;
 
 import PAOO_GAME.Collisions.KeyboardControl;
+import PAOO_GAME.Collisions.MouseControl;
 
 import javax.swing.*;
 import java.awt.*;
 
 public final class GameWindow{
     private JFrame wndFrame;
+    private static JPanel healthBarPanel;
     private static JProgressBar healthBar;
     private final String wndTitle;
     private static JTextField coinsCounter;
@@ -41,7 +43,8 @@ public final class GameWindow{
         wndFrame.setVisible(true);
         wndFrame.setFocusable(true);
 
-        JPanel healthBarPanel = new JPanel();
+        healthBarPanel = new JPanel();
+        healthBarPanel.setVisible(false);
         healthBarPanel.setBounds(wndWidth-300,48,250,30);
         healthBarPanel.setBackground(new Color(14, 24, 37));
 
@@ -54,7 +57,7 @@ public final class GameWindow{
         healthBarPanel.add(healthBar);
 
         shurikenCounter =new JTextField();
-        shurikenCounter.setVisible(true);
+        shurikenCounter.setVisible(false);
         shurikenCounter.setBounds(wndWidth-160,100,48,48);
         shurikenCounter.setText("0");
         shurikenCounter.setHorizontalAlignment(SwingConstants.CENTER);
@@ -64,7 +67,7 @@ public final class GameWindow{
         shurikenCounter.setFont(font);
 
         coinsCounter =new JTextField();
-        coinsCounter.setVisible(true);
+        coinsCounter.setVisible(false);
         coinsCounter.setBounds(wndWidth-100,100,48,48);
         coinsCounter.setText("0");
         coinsCounter.setHorizontalAlignment(SwingConstants.CENTER);
@@ -78,6 +81,7 @@ public final class GameWindow{
         canvas.setMaximumSize(new Dimension(wndWidth,wndHeight));
         canvas.setMinimumSize(new Dimension(wndWidth,wndHeight));
         canvas.addKeyListener(new KeyboardControl());
+        canvas.addMouseListener(MouseControl.getInstance() );
 
         wndFrame.add(shurikenCounter);
         wndFrame.add(coinsCounter);
@@ -90,6 +94,17 @@ public final class GameWindow{
 
     public static void getDamage(int health){
         healthBar.setValue(health);
+    }
+
+    public static void setAllToVisible(){
+        healthBarPanel.setVisible(true);
+        shurikenCounter.setVisible(true);
+        coinsCounter.setVisible(true);
+    }
+    public static void setAllToNotVisible(){
+        healthBarPanel.setVisible(false);
+        shurikenCounter.setVisible(false);
+        coinsCounter.setVisible(false);
     }
 
     public static void setCoins(int coins){

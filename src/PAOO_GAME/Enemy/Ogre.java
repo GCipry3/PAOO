@@ -16,11 +16,10 @@ public class Ogre extends Goblin{
     @Override
     public void draw() {
         if(visible) {
-            switch (random) {
-                case 0 -> Drawer.draw(x, y, Assets.firstOgre, enemyWidth, enemyHeight);
-                case 1 -> Drawer.draw(x, y, Assets.secondOgre, enemyWidth, enemyHeight);
-                case 2 -> Drawer.draw(x, y, Assets.thirdOgre, enemyWidth, enemyHeight);
-                default -> throw new RuntimeException(Integer.toString(random));
+            if(state==1){
+                Drawer.draw(x, y, Assets.ogreRight.get(random), enemyWidth, enemyHeight);
+            }else{
+                Drawer.draw(x, y, Assets.ogreLeft.get(random), enemyWidth, enemyHeight);
             }
             listOfProjectiles.forEach(Projectile::draw);
         }

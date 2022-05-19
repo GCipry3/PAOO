@@ -11,12 +11,11 @@ public abstract class Enemy implements  Drawable {
     protected int firstX;//the enemy will go left and right
     protected int firstY;//initial positions
     protected boolean visible=true;
-    protected int state=0;
+    protected int state=0; //0 means go left, 1 means go right
 
     protected abstract void attack();
     public abstract void update();
     public abstract void draw();
-
 
     protected Enemy(int x,int y){
         firstX=x;
