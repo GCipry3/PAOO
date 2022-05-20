@@ -10,8 +10,10 @@ import PAOO_GAME.Map.Map;
 import PAOO_GAME.Player.Player;
 import PAOO_GAME.Player.PlayerFactory;
 
+import javax.sound.sampled.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +35,8 @@ public final class Game extends Component implements Runnable {
     private boolean loseFlag=false;
     private boolean winFlag=false;
     private int state=0;
+    private Clip clip;
+    private static boolean musicOn=false;
     //0-start
     //1-choose player
     //2-choose map
@@ -41,6 +45,8 @@ public final class Game extends Component implements Runnable {
     //5-winCase
     //6-loseCase
     //7-resetOrQuit
+
+    private final String musicPath="resources\\music\\music.wav";
 
     public static Game instance=null;
 
@@ -59,7 +65,7 @@ public final class Game extends Component implements Runnable {
     public void setLoseFlag(){loseFlag=true;}
     public void setWinFlag() {winFlag =true;}
 
-    private void InitGame() throws IOException {
+    private void InitGame() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         wnd = new GameWindow("Attack on Ninja)",
                 widthNrTiles *tileWidth,
                 heightNrTiles *tileHeight);
@@ -67,6 +73,12 @@ public final class Game extends Component implements Runnable {
         wnd.BuildGameWindow();
 
         Assets.Init();
+
+        AudioInputStream audioInputStream= AudioSystem.getAudioInputStream(new File(musicPath).getAbsoluteFile());
+        clip = AudioSystem.getClip();
+        clip.open(audioInputStream);
+        //clip.start();
+        //clip.loop(10);
     }
 
     @Override
@@ -74,7 +86,7 @@ public final class Game extends Component implements Runnable {
     {
         try {
             InitGame();
-        } catch (IOException e) {
+        } catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
             e.printStackTrace();
         }
         long oldTime = System.nanoTime();
@@ -128,7 +140,14 @@ public final class Game extends Component implements Runnable {
                     MouseControl.getInstance().resetCoords();
                 }
                 if(touchedRectangle(widthNrTiles*tileWidth-400,5*64+37,250,50)){
-                    System.out.println("options will be displayed");
+                    if(musicOn) {
+                        clip.stop();
+                        musicOn=false;
+                    }else{
+                        clip.start();
+                        musicOn=true;
+                    }
+                    MouseControl.getInstance().resetCoords();
                 }
                 if(touchedRectangle(widthNrTiles*tileWidth-400,6*64+40,250,50)){
                     StopGame();
@@ -211,6 +230,7 @@ public final class Game extends Component implements Runnable {
                 player=null;
                 loseFlag=false;
                 winFlag=false;
+                Player.setEndAttack(true);
                 state=0;
                 break;
 
@@ -256,7 +276,7 @@ public final class Game extends Component implements Runnable {
             case 0:
                 Drawer.draw(0,0,Assets.startPageBackground,widthNrTiles*tileWidth,heightNrTiles*tileHeight);
                 Drawer.draw(widthNrTiles*tileWidth-400,4*64+32,Assets.buttons.get(0),250,60);
-                Drawer.draw(widthNrTiles*tileWidth-400,5*64+32,Assets.buttons.get(1),250,60);
+                Drawer.draw(widthNrTiles*tileWidth-400,5*64+32,Assets.buttons.get(4),250,60);
                 Drawer.draw(widthNrTiles*tileWidth-400,6*64+32,Assets.buttons.get(2),250,60);
                 break;
 

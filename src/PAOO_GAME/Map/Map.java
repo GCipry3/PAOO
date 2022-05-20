@@ -86,8 +86,8 @@ public class Map implements Drawable {
             listOfDrawables.clear();
             updateListWithObjects();
 
-            Game.getInstance().player.setX(tileWidth);
-            Game.getInstance().player.setY(20 * tileHeight);
+            Game.getInstance().player.setX(tileWidth+5);
+            Game.getInstance().player.setY(20 * tileHeight-5);
             jumpHeight=64;
         }
 

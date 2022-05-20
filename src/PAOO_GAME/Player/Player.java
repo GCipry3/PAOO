@@ -37,8 +37,8 @@ public abstract class Player implements  Drawable {
     public List<ShinobiShuriken> listOfShurikens= new ArrayList<>();
 
     protected Player(){
-        x=tileWidth;
-        y=20*tileHeight;
+        x=tileWidth+5;
+        y=20*tileHeight-5;
         lifeStatus=500;
     }
 
@@ -47,6 +47,8 @@ public abstract class Player implements  Drawable {
     public boolean getRight(){return right;}
 
     public static boolean getAttackStatus(){return !endAttack;}
+
+    public static void setEndAttack(boolean value){endAttack=value;}
 
     public int getX(){return x;}
     public int getY(){return y;}
@@ -127,6 +129,8 @@ public abstract class Player implements  Drawable {
     public abstract void draw();
 
     public void update() {
+        yTmp +=1; //gravity
+
         //startOfPlayerProjectileUpdate
         listOfShurikens.forEach(ShinobiShuriken::update);
         //endOfPlayerProjectileUpdate
@@ -173,7 +177,6 @@ public abstract class Player implements  Drawable {
         else{
             yTmp +=2; //gravity
         }
-        yTmp +=1; //gravity
         //endOfJump
 
         //startOfUpdatePlayerPositionAfterJump

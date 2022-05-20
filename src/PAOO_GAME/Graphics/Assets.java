@@ -102,6 +102,7 @@ public final class Assets {
         buttons.add(buttonsSheet.crop(0,3));//options
         buttons.add(buttonsSheet.crop(0,5));//exit
         buttons.add(buttonsSheet.crop(0,2));//restart
+        buttons.add(buttonsSheet.crop(0,1));//music
 
         goblinRight.add(ImageLoader.LoadImage("resources/goblin/Goblin1_1.png"));
         goblinRight.add(ImageLoader.LoadImage("resources/goblin/Goblin2_1.png"));
