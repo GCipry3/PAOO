@@ -2,12 +2,12 @@ package PAOO_GAME.Enemy;
 
 import PAOO_GAME.Collisions.Collision;
 import PAOO_GAME.Drawable;
-import PAOO_GAME.Game;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static PAOO_GAME.Constants.*;
+import static PAOO_GAME.Game.player;
 
 public abstract class Enemy implements  Drawable {
     protected int x;
@@ -46,7 +46,7 @@ public abstract class Enemy implements  Drawable {
     }
 
     protected void giveDamageToPlayer(int x){
-        Game.getInstance().player.takeDamage(x);
+        player.takeDamage(x);
     }
 
     public void drawProjectiles()  {listOfProjectiles.forEach(Projectile::draw);  }
@@ -65,8 +65,8 @@ public abstract class Enemy implements  Drawable {
     }
 
     public boolean playerClose(){
-        int xPlayer= Game.getInstance().player.getX();
-        int yPlayer= Game.getInstance().player.getY();
+        int xPlayer= player.getX();
+        int yPlayer= player.getY();
 
         return (x - xPlayer < 10 * tileWidth) &&
                 (x - xPlayer > -10 * tileWidth) &&
@@ -75,18 +75,18 @@ public abstract class Enemy implements  Drawable {
     }
 
     public boolean collisionWithShurikensCheck(){
-        for(int i=0;i<Game.getInstance().player.getListOfShurikens().size();i++){
-            Game.getInstance().player.getListOfShurikens().get(i);
-            if(Game.getInstance().player.getListOfShurikens().get(i).getVisible()){
+        for(int i=0;i<player.getListOfShurikens().size();i++){
+            player.getListOfShurikens().get(i);
+            if(player.getListOfShurikens().get(i).getVisible()){
                 if(Collision.checkCollision(
                         x,y,enemyWidth,enemyHeight,
-                        Game.getInstance().player.getListOfShurikens().get(i).getX(),
-                        Game.getInstance().player.getListOfShurikens().get(i).getY(),
-                        Game.getInstance().player.getListOfShurikens().get(i).getProjectileWidth(),
-                        Game.getInstance().player.getListOfShurikens().get(i).getProjectileHeight()
+                        player.getListOfShurikens().get(i).getX(),
+                        player.getListOfShurikens().get(i).getY(),
+                        player.getListOfShurikens().get(i).getProjectileWidth(),
+                        player.getListOfShurikens().get(i).getProjectileHeight()
                 ))
                 {
-                    Game.getInstance().player.getListOfShurikens().get(i).setVisibleFalse();
+                    player.getListOfShurikens().get(i).setVisibleFalse();
                     return true;
                 }
             }
@@ -95,8 +95,8 @@ public abstract class Enemy implements  Drawable {
     }
 
     public boolean collisionWithAttackStateCheck(){
-        int xPlayer= Game.getInstance().player.getX();
-        int yPlayer= Game.getInstance().player.getY();
+        int xPlayer= player.getX();
+        int yPlayer= player.getY();
 
         return Collision.checkCollision(
                 x,y,
@@ -108,12 +108,12 @@ public abstract class Enemy implements  Drawable {
     }
 
     public boolean playerAttackStatusCheck(){
-        return Game.getInstance().player.getAttackStatus();
+        return player.getAttackStatus();
     }
 
     public boolean collisionWithPlayerCheck(){
-        int xPlayer= Game.getInstance().player.getX();
-        int yPlayer= Game.getInstance().player.getY();
+        int xPlayer= player.getX();
+        int yPlayer= player.getY();
 
         return Collision.checkCollision(
                 x,

@@ -1,11 +1,12 @@
 package PAOO_GAME.Enemy;
 
-import PAOO_GAME.Collisions.Collision;
 import PAOO_GAME.Component.Drawer;
 import PAOO_GAME.Drawable;
-import PAOO_GAME.Game;
 
+import static PAOO_GAME.Collisions.Collision.checkCollision;
+import static PAOO_GAME.Collisions.Collision.checkCollisions;
 import static PAOO_GAME.Constants.*;
+import static PAOO_GAME.Game.player;
 import static PAOO_GAME.Graphics.Assets.rock;
 
 public class Projectile implements Drawable {
@@ -18,7 +19,7 @@ public class Projectile implements Drawable {
     private final int damage;
 
     Projectile(int x,int y,int damage){
-        int xPlayer= Game.getInstance().player.getX();
+        int xPlayer= player.getX();
         this.x=x;
         this.y=y;
         if (xPlayer<x){
@@ -51,7 +52,7 @@ public class Projectile implements Drawable {
         if(visible) {
             move();
 
-            if(Collision.checkCollisions(x,y,projectileWidth,projectileHeight,wallCollisions)){
+            if(checkCollisions(x,y,projectileWidth,projectileHeight,wallCollisions)){
                 visible = false;
             }
         }
@@ -59,12 +60,13 @@ public class Projectile implements Drawable {
 
     public void attack(){
         if(visible) {
-            int xPlayer = Game.getInstance().player.getX();
-            int yPlayer = Game.getInstance().player.getY();
+            int xPlayer = player.getX();
+            int yPlayer = player.getY();
 
-            if (Collision.checkCollision(x, y, projectileWidth, projectileHeight,
+            if (checkCollision(x, y, projectileWidth, projectileHeight,
                     xPlayer, yPlayer + 5, playerWidth, playerHeight)) {
-                Game.getInstance().player.takeDamage(damage);
+
+                player.takeDamage(damage);
                 visible = false;
             }
         }

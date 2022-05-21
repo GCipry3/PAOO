@@ -27,13 +27,13 @@ public final class Game extends Component implements Runnable {
 
     public static Graphics g;
 
-    public Player player;
-    public Map m;
+    public static Player player;
+    public static Map m;
 
-    public List<Drawable> listWithDrawable=new ArrayList<>();
+    public static List<Drawable> listWithDrawable=new ArrayList<>();
 
-    private boolean loseFlag=false;
-    private boolean winFlag=false;
+    private static boolean loseFlag=false;
+    private static boolean winFlag=false;
     private int state=0;
     private Clip clip;
     private static boolean musicOn=false;
@@ -60,8 +60,8 @@ public final class Game extends Component implements Runnable {
         return instance;
     }
 
-    public void setLoseFlag(){loseFlag=true;}
-    public void setWinFlag() {winFlag =true;}
+    public static void setLoseFlag(){loseFlag=true;}
+    public static void setWinFlag() {winFlag =true;}
 
     private void InitGame() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         wnd = new GameWindow("Attack on Ninja)",
@@ -78,23 +78,23 @@ public final class Game extends Component implements Runnable {
         clip.open(audioInputStream);
     }
 
-    public int getPlayerX(){return player.getX();}
-    public int getPlayerY(){return player.getY();}
-    public boolean getPlayerAttackStatus(){return player.getAttackStatus();}
-    public void playerIncreaseCoin(){
+    /*public static int getPlayerX(){return player.getX();}
+    public static int getPlayerY(){return player.getY();}
+    public static boolean getPlayerAttackStatus(){return player.getAttackStatus();}
+    public static void playerIncreaseCoin(){
         player.increaseCoins();
         GameWindow.setCoins(player.getCoins());
     }
-    public void playerSetGoldCollected(){player.setGoldCollected();}
-    public void setPlayerX(int x){player.setX(x);}
-    public void setPlayerY(int y){player.setY(y);}
+    public static void playerSetGoldCollected(){player.setGoldCollected();}
+    public static void setPlayerX(int x){player.setX(x);}
+    public static void setPlayerY(int y){player.setY(y);}
 
-    public void mapIncreaseIndexOfMap(){Map.increaseIndexOfMap();}
-    public boolean mapCompareIndexWithNrMaps(){return Map.compareIndexWithNrMaps();}
+    public static void mapIncreaseIndexOfMap(){Map.increaseIndexOfMap();}
+    public static boolean mapCompareIndexWithNrMaps(){return Map.compareIndexWithNrMaps();}*/
 
-    public int getGameWindowShurikenCounter(){return GameWindow.getShurikenCounter();}
-    public void setGameWindowShurikenCounter(int x){GameWindow.setShurikenCounter(x);}
-    public void setGameWindowLifeBarStatus(int x){GameWindow.setLifeBarStatus(x);}
+    public static int getGameWindowShurikenCounter(){return GameWindow.getShurikenCounter();}
+    public static void setGameWindowShurikenCounter(int x){GameWindow.setShurikenCounter(x);}
+    //public static void setGameWindowLifeBarStatus(int x){GameWindow.setLifeBarStatus(x);}
 
     @Override
     public void run()

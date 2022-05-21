@@ -4,7 +4,6 @@ import PAOO_GAME.Component.Drawer;
 import PAOO_GAME.Drawable;
 import PAOO_GAME.Enemy.Goblin;
 import PAOO_GAME.Enemy.Ogre;
-import PAOO_GAME.Game;
 import PAOO_GAME.Map.Powers.*;
 
 import java.io.File;
@@ -14,6 +13,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import static PAOO_GAME.Constants.*;
+import static PAOO_GAME.Game.*;
 import static PAOO_GAME.Graphics.Assets.background;
 
 public class Map implements Drawable {
@@ -97,8 +97,8 @@ public class Map implements Drawable {
                 System.out.println("Problems at Map's matrix!!!!!!");
                 System.out.println("-----------------");
             }
-            Game.getInstance().setPlayerX(tileWidth+5);
-            Game.getInstance().setPlayerY(20 * tileHeight-5);
+            player.setX(tileWidth + 5); //setPlayerX
+            player.setY(20 * tileHeight-5);//setPlayerY
             jumpHeight=64;
         }
 

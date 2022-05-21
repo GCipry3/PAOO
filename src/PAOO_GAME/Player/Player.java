@@ -1,14 +1,18 @@
 package PAOO_GAME.Player;
 
-import PAOO_GAME.Collisions.Collision;
 import PAOO_GAME.Collisions.KeyboardControl;
 import PAOO_GAME.Drawable;
-import PAOO_GAME.Game;
+import PAOO_GAME.GameWindow.GameWindow;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static PAOO_GAME.Collisions.Collision.checkCollisions;
 import static PAOO_GAME.Constants.*;
+import static PAOO_GAME.Game.*;
+import static PAOO_GAME.GameWindow.GameWindow.setCoins;
+import static PAOO_GAME.Map.Map.compareIndexWithNrMaps;
+import static PAOO_GAME.Map.Map.increaseIndexOfMap;
 
 public abstract class Player implements  Drawable {
 
@@ -60,6 +64,7 @@ public abstract class Player implements  Drawable {
     public void setY(int _y){y=_y;}
     public void increaseCoins(){
         coins++;
+        setCoins(coins);
     }
     public int getCoins(){return coins;}
     public int getLifeStatus(){return lifeStatus;}
@@ -81,16 +86,16 @@ public abstract class Player implements  Drawable {
     }
 
     protected void attackWithShuriken(){
-        int shurikenCounter=Game.getInstance().getGameWindowShurikenCounter();
+        int shurikenCounter=getGameWindowShurikenCounter();
         if(shurikenCounter>0) {
             if (KeyboardControl.attack2 != oldAttack2 && KeyboardControl.attack2) {
                 listOfShurikens.add(new ShinobiShuriken(x, y,right? 1:0));
                 if (goldCollected) {
-                    listOfShurikens.add(new ShinobiShuriken(x - 16, y + 20,right? 1:0));
+                    listOfShurikens.add(new ShinobiShuriken(x - 8, y + 20,right? 1:0));
                     listOfShurikens.add(new ShinobiShuriken(x - 16, y - 20,right? 1:0));
                 }
                 oldAttack2 = KeyboardControl.attack2;
-                Game.getInstance().setGameWindowShurikenCounter(shurikenCounter-1);
+                setGameWindowShurikenCounter(shurikenCounter-1);
             }
             if (!KeyboardControl.attack2) {
                 oldAttack2 = false;
@@ -155,8 +160,8 @@ public abstract class Player implements  Drawable {
         //endOfChoosingPlayerSide
 
         //startOfAttack
-        attack();
-        attackWithShuriken();
+        this.attack();
+        this.attackWithShuriken();
         //endOfAttack
 
         //startOfUpdatePlayerPositionBeforeJump
@@ -184,7 +189,6 @@ public abstract class Player implements  Drawable {
             else{
                 jumpAvailable=true;
                 jumpCnt=0;
-                System.out.println("dfada");
             }
         }
         else{
@@ -203,25 +207,25 @@ public abstract class Player implements  Drawable {
         //startOfCheckNextLevel
         if(checkNextLevelCollision())
         {
-            Game.getInstance().mapIncreaseIndexOfMap();
-            if(Game.getInstance().mapCompareIndexWithNrMaps()){
-                Game.getInstance().setWinFlag();
+            increaseIndexOfMap();
+            if(compareIndexWithNrMaps()){
+                setWinFlag();
             }
         }
         //endOfCheckNextLevel
 
         if(lifeStatus<=0){
-            Game.getInstance().setLoseFlag();
+            setLoseFlag();
         }
     }
 
     public void takeDamage(int damage){
         lifeStatus-=damage;
-        Game.getInstance().setGameWindowLifeBarStatus(lifeStatus);
+        GameWindow.setLifeBarStatus(lifeStatus);
     }
 
     public boolean checkWallCollisionWithTmpPosition(){
-        return Collision.checkCollisions(
+        return checkCollisions(
                 xTmp, yTmp,
                 playerWidth-10,
                 playerHeight-10,
@@ -229,7 +233,7 @@ public abstract class Player implements  Drawable {
         );
     }
     public boolean checkUpperWallCollisionWithTmpPosition(){
-        return Collision.checkCollisions(
+        return checkCollisions(
                 xTmp, yTmp-5,
                 playerWidth-10,
                 playerHeight-10,
@@ -238,7 +242,7 @@ public abstract class Player implements  Drawable {
     }
 
     public boolean checkNextLevelCollision(){
-        return Collision.checkCollisions(
+        return checkCollisions(
                 x,y,
                 playerWidth,
                 playerHeight,
