@@ -9,6 +9,7 @@ public class BluePlayer extends Player{
     public BluePlayer()
     {
         super();
+        lifeStatus=250;
     }
 
     @Override

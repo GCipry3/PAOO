@@ -4,9 +4,9 @@ import PAOO_GAME.Collisions.Collision;
 import PAOO_GAME.Component.Drawer;
 import PAOO_GAME.Drawable;
 import PAOO_GAME.Game;
-import PAOO_GAME.Graphics.Assets;
 
 import static PAOO_GAME.Constants.*;
+import static PAOO_GAME.Graphics.Assets.rock;
 
 public class Projectile implements Drawable {
     private int x;
@@ -42,7 +42,7 @@ public class Projectile implements Drawable {
     @Override
     public void draw() {
         if(visible) {
-            Drawer.draw(x, y, Assets.rock, projectileWidth, projectileHeight);
+            Drawer.draw(x, y, rock, projectileWidth, projectileHeight);
         }
     }
 
@@ -51,8 +51,7 @@ public class Projectile implements Drawable {
         if(visible) {
             move();
 
-            if(Collision.checkCollisions(x,y,projectileWidth,projectileHeight,
-                    wallCollisions)){
+            if(Collision.checkCollisions(x,y,projectileWidth,projectileHeight,wallCollisions)){
                 visible = false;
             }
         }

@@ -5,7 +5,6 @@ import PAOO_GAME.Collisions.KeyboardControl;
 import PAOO_GAME.Collisions.MouseControl;
 import PAOO_GAME.Component.Drawer;
 import PAOO_GAME.GameWindow.GameWindow;
-import PAOO_GAME.Graphics.Assets;
 import PAOO_GAME.Map.Map;
 import PAOO_GAME.Player.Player;
 import PAOO_GAME.Player.PlayerFactory;
@@ -19,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static PAOO_GAME.Constants.*;
+import static PAOO_GAME.Graphics.Assets.*;
 
 public final class Game extends Component implements Runnable {
 
@@ -70,7 +70,7 @@ public final class Game extends Component implements Runnable {
 
         wnd.BuildGameWindow();
 
-        Assets.Init();
+        Init();
 
         String musicPath = "resources\\music\\music.wav";
         AudioInputStream audioInputStream= AudioSystem.getAudioInputStream(new File(musicPath).getAbsoluteFile());
@@ -188,6 +188,7 @@ public final class Game extends Component implements Runnable {
                 if(selected){
                     state=2;
                     player=pFactory.getPlayer();
+                    GameWindow.setLifeBarStatus(player.getLifeStatus());
                     listWithDrawable.add(player);
                     MouseControl.getInstance().resetCoords();
                 }
@@ -294,25 +295,25 @@ public final class Game extends Component implements Runnable {
 
         switch (state){
             case 0:
-                Drawer.draw(0,0,Assets.startPageBackground,widthNrTiles*tileWidth,heightNrTiles*tileHeight);
-                Drawer.draw(widthNrTiles*tileWidth-400,4*64+32,Assets.buttons.get(0),250,60);
-                Drawer.draw(widthNrTiles*tileWidth-400,5*64+32,Assets.buttons.get(4),250,60);
-                Drawer.draw(widthNrTiles*tileWidth-400,6*64+32,Assets.buttons.get(2),250,60);
+                Drawer.draw(0,0,startPageBackground,widthNrTiles*tileWidth,heightNrTiles*tileHeight);
+                Drawer.draw(widthNrTiles*tileWidth-400,4*64+32,buttons.get(0),250,60);
+                Drawer.draw(widthNrTiles*tileWidth-400,5*64+32,buttons.get(4),250,60);
+                Drawer.draw(widthNrTiles*tileWidth-400,6*64+32,buttons.get(2),250,60);
                 break;
 
             case 1:
-                Drawer.draw(0,0,Assets.selectPlayerPage,widthNrTiles*tileWidth,heightNrTiles*tileHeight);
-                Drawer.draw(150,        250,Assets.selectPlayerBox,430,500);
-                Drawer.draw(150+435,    250,Assets.selectPlayerBox,430,500);
-                Drawer.draw(150+2*435,  250,Assets.selectPlayerBox,430,500);
+                Drawer.draw(0,0,selectPlayerPage,widthNrTiles*tileWidth,heightNrTiles*tileHeight);
+                Drawer.draw(150,        250,selectPlayerBox,430,500);
+                Drawer.draw(150+435,    250,selectPlayerBox,430,500);
+                Drawer.draw(150+2*435,  250,selectPlayerBox,430,500);
 
                 break;
 
             case 2:
-                Drawer.draw(0,0,Assets.mapSelectPage,widthNrTiles*tileWidth,heightNrTiles*tileHeight);
-                Drawer.draw(50,        200,Assets.mapsScreenshot.get(0),480,500);
-                Drawer.draw(50+500,    200,Assets.mapsScreenshot.get(1),480,500);
-                Drawer.draw(50+2*500,  200,Assets.mapsScreenshot.get(2),480,500);
+                Drawer.draw(0,0,mapSelectPage,widthNrTiles*tileWidth,heightNrTiles*tileHeight);
+                Drawer.draw(50,        200,mapsScreenshot.get(0),480,500);
+                Drawer.draw(50+500,    200,mapsScreenshot.get(1),480,500);
+                Drawer.draw(50+2*500,  200,mapsScreenshot.get(2),480,500);
                 break;
 
             case 3:
@@ -321,12 +322,12 @@ public final class Game extends Component implements Runnable {
                 break;
 
             case 5:
-                Drawer.draw(0,0,Assets.winPage,widthNrTiles*tileWidth,heightNrTiles*tileHeight);
-                Drawer.draw(widthNrTiles*tileWidth-300,heightNrTiles*tileHeight-100,Assets.buttons.get(3),250,60);
+                Drawer.draw(0,0,winPage,widthNrTiles*tileWidth,heightNrTiles*tileHeight);
+                Drawer.draw(widthNrTiles*tileWidth-300,heightNrTiles*tileHeight-100,buttons.get(3),250,60);
                 break;
             case 6:
-                Drawer.draw(0,0,Assets.losePage,widthNrTiles*tileWidth,heightNrTiles*tileHeight);
-                Drawer.draw(widthNrTiles*tileWidth-300,heightNrTiles*tileHeight-100,Assets.buttons.get(3),250,60);
+                Drawer.draw(0,0,losePage,widthNrTiles*tileWidth,heightNrTiles*tileHeight);
+                Drawer.draw(widthNrTiles*tileWidth-300,heightNrTiles*tileHeight-100,buttons.get(3),250,60);
                 break;
             case 7:
                 //TODO
@@ -337,35 +338,35 @@ public final class Game extends Component implements Runnable {
     }
 
     public void movementKeyDraw(){
-        if(KeyboardControl.d){
-            Drawer.draw(widthNrTiles*tileWidth-2*64,4*64,Assets.right,64,64);
+        if(KeyboardControl.dPressed){
+            Drawer.draw(widthNrTiles*tileWidth-2*64,4*64,right,64,64);
         }else{
-            Drawer.draw(widthNrTiles*tileWidth-2*64,4*64,Assets.rightT,64,64);
+            Drawer.draw(widthNrTiles*tileWidth-2*64,4*64,rightT,64,64);
         }
-        if(KeyboardControl.s){
-            Drawer.draw(widthNrTiles*tileWidth-3*64,4*64,Assets.down,64,64);
+        if(KeyboardControl.sPressed){
+            Drawer.draw(widthNrTiles*tileWidth-3*64,4*64,down,64,64);
         }else{
-            Drawer.draw(widthNrTiles*tileWidth-3*64,4*64,Assets.downT,64,64);
+            Drawer.draw(widthNrTiles*tileWidth-3*64,4*64,downT,64,64);
         }
-        if(KeyboardControl.a){
-            Drawer.draw(widthNrTiles*tileWidth-4*64,4*64,Assets.left,64,64);
+        if(KeyboardControl.aPressed){
+            Drawer.draw(widthNrTiles*tileWidth-4*64,4*64,left,64,64);
         }else{
-            Drawer.draw(widthNrTiles*tileWidth-4*64,4*64,Assets.leftT,64,64);
+            Drawer.draw(widthNrTiles*tileWidth-4*64,4*64,leftT,64,64);
         }
-        if(KeyboardControl.e){
-            Drawer.draw(widthNrTiles*tileWidth-2*64,3*64,Assets.shurikenAttackButton,64,64);
+        if(KeyboardControl.ePressed){
+            Drawer.draw(widthNrTiles*tileWidth-2*64,3*64,shurikenAttackButton,64,64);
         }else{
-            Drawer.draw(widthNrTiles*tileWidth-2*64,3*64,Assets.shurikenAttackButtonT,64,64);
+            Drawer.draw(widthNrTiles*tileWidth-2*64,3*64,shurikenAttackButtonT,64,64);
         }
-        if(KeyboardControl.w){
-            Drawer.draw(widthNrTiles*tileWidth-3*64,3*64,Assets.up,64,64);
+        if(KeyboardControl.wPressed){
+            Drawer.draw(widthNrTiles*tileWidth-3*64,3*64,up,64,64);
         }else{
-            Drawer.draw(widthNrTiles*tileWidth-3*64,3*64,Assets.upT,64,64);
+            Drawer.draw(widthNrTiles*tileWidth-3*64,3*64,upT,64,64);
         }
-        if(KeyboardControl.q){
-            Drawer.draw(widthNrTiles*tileWidth-4*64,3*64,Assets.shurikenCircleButton,64,64);
+        if(KeyboardControl.qPressed){
+            Drawer.draw(widthNrTiles*tileWidth-4*64,3*64,shurikenCircleButton,64,64);
         }else{
-            Drawer.draw(widthNrTiles*tileWidth-4*64,3*64,Assets.shurikenCircleButtonT,64,64);
+            Drawer.draw(widthNrTiles*tileWidth-4*64,3*64,shurikenCircleButtonT,64,64);
         }
     }
 }

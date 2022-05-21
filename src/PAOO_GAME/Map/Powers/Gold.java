@@ -1,10 +1,7 @@
 package PAOO_GAME.Map.Powers;
 
-import PAOO_GAME.Collisions.Collision;
 import PAOO_GAME.Component.Drawer;
-import PAOO_GAME.Game;
 
-import static PAOO_GAME.Constants.shurikenCirclePixels;
 import static PAOO_GAME.Graphics.Assets.gold;
 
 
@@ -16,16 +13,10 @@ public class Gold extends Powers{
     @Override
     public void power() {
 
-        if(visible &&
-                Game.getInstance().getPlayerAttackStatus() &&
-                Collision.checkCollision(
-                        Game.getInstance().getPlayerX() -32,
-                        Game.getInstance().getPlayerY() -32,
-                        shurikenCirclePixels,
-                        shurikenCirclePixels,
-                        x,y, width, height) )
+
+        if(visible && collectFromAttackCheck())
         {
-            Game.getInstance().playerSetGoldCollected();
+            gameSetGoldCollectedFlag();
             visible=false;
         }
     }

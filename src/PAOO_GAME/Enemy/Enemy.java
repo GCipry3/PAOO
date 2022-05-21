@@ -1,7 +1,11 @@
 package PAOO_GAME.Enemy;
 
+import PAOO_GAME.Collisions.Collision;
 import PAOO_GAME.Drawable;
 import PAOO_GAME.Game;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static PAOO_GAME.Constants.*;
 
@@ -12,6 +16,9 @@ public abstract class Enemy implements  Drawable {
     protected int firstY;//initial positions
     protected boolean visible=true;
     protected int state=0; //0 means go left, 1 means go right
+    protected int damage;
+
+    protected List<Projectile> listOfProjectiles= new ArrayList<>();
 
     protected abstract void attack();
     public abstract void update();
@@ -38,6 +45,18 @@ public abstract class Enemy implements  Drawable {
         }
     }
 
+    protected void giveDamageToPlayer(int x){
+        Game.getInstance().player.takeDamage(x);
+    }
+
+    public void drawProjectiles()  {listOfProjectiles.forEach(Projectile::draw);  }
+    public void updateProjectiles(){listOfProjectiles.forEach(Projectile::update);}
+    public void attackProjectiles(){listOfProjectiles.forEach(Projectile::attack);}
+
+    protected void createNewProjectile(){
+        listOfProjectiles.add(new Projectile(x,y+40,damage));
+    }
+
     protected void moveLeftState(){
         x-=3;
     }
@@ -45,7 +64,7 @@ public abstract class Enemy implements  Drawable {
         x+=3;
     }
 
-    protected boolean playerClose(){
+    public boolean playerClose(){
         int xPlayer= Game.getInstance().player.getX();
         int yPlayer= Game.getInstance().player.getY();
 
@@ -53,6 +72,58 @@ public abstract class Enemy implements  Drawable {
                 (x - xPlayer > -10 * tileWidth) &&
                 (y - yPlayer < 3 * tileHeight) &&
                 (y - yPlayer > -3 * tileHeight);
+    }
+
+    public boolean collisionWithShurikensCheck(){
+        for(int i=0;i<Game.getInstance().player.getListOfShurikens().size();i++){
+            Game.getInstance().player.getListOfShurikens().get(i);
+            if(Game.getInstance().player.getListOfShurikens().get(i).getVisible()){
+                if(Collision.checkCollision(
+                        x,y,enemyWidth,enemyHeight,
+                        Game.getInstance().player.getListOfShurikens().get(i).getX(),
+                        Game.getInstance().player.getListOfShurikens().get(i).getY(),
+                        Game.getInstance().player.getListOfShurikens().get(i).getProjectileWidth(),
+                        Game.getInstance().player.getListOfShurikens().get(i).getProjectileHeight()
+                ))
+                {
+                    Game.getInstance().player.getListOfShurikens().get(i).setVisibleFalse();
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean collisionWithAttackStateCheck(){
+        int xPlayer= Game.getInstance().player.getX();
+        int yPlayer= Game.getInstance().player.getY();
+
+        return Collision.checkCollision(
+                x,y,
+                enemyWidth,enemyHeight,
+                xPlayer-32,yPlayer-32,
+                shurikenCirclePixels,
+                shurikenCirclePixels
+        );
+    }
+
+    public boolean playerAttackStatusCheck(){
+        return Game.getInstance().player.getAttackStatus();
+    }
+
+    public boolean collisionWithPlayerCheck(){
+        int xPlayer= Game.getInstance().player.getX();
+        int yPlayer= Game.getInstance().player.getY();
+
+        return Collision.checkCollision(
+                x,
+                y,
+                enemyWidth,
+                enemyHeight,
+                xPlayer,
+                yPlayer,
+                playerWidth,
+                playerHeight);
     }
 
     public int getX(){return x;}

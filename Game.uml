@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>PAOO_GAME.Game</OriginalElement>
+  <nodes>
+    <node x="1270.0" y="1261.4166666666667">PAOO_GAME.Map.Powers.Gold</node>
+    <node x="3162.0" y="272.1699852507338">PAOO_GAME.Player.ShinobiShuriken</node>
+    <node x="1269.5" y="781.4166666666667">PAOO_GAME.Map.Powers.Rock</node>
+    <node x="2548.0" y="432.0000000000001">PAOO_GAME.Player.BluePlayer</node>
+    <node x="2781.0" y="310.0000000000001">PAOO_GAME.Player.Player</node>
+    <node x="180.0" y="0.0">PAOO_GAME.Enemy.Enemy</node>
+    <node x="2493.5" y="765.0000000000001">PAOO_GAME.Collisions.MouseControl</node>
+    <node x="1263.0" y="901.4166666666667">PAOO_GAME.Map.Powers.Jumper</node>
+    <node x="517.0" y="103.5672013274334">PAOO_GAME.Enemy.Projectile</node>
+    <node x="2234.0" y="531.9199852507338">PAOO_GAME.Player.PlayerFactory</node>
+    <node x="2492.0" y="1062.9199852507338">PAOO_GAME.Graphics.ImageLoader</node>
+    <node x="2220.0" y="1240.0">PAOO_GAME.GameWindow.GameWindow</node>
+    <node x="2490.0" y="1166.0">PAOO_GAME.Graphics.SpriteSheet</node>
+    <node x="3424.0" y="1544.0754056047176">PAOO_GAME.Drawable</node>
+    <node x="1870.0" y="601.328447640116">PAOO_GAME.Game</node>
+    <node x="1258.0" y="1381.4166666666667">PAOO_GAME.Map.Powers.Diamond</node>
+    <node x="544.0" y="657.6666666666667">PAOO_GAME.Collisions.Collision</node>
+    <node x="1270.0" y="1021.4166666666667">PAOO_GAME.Map.Powers.Coin</node>
+    <node x="1252.0" y="1501.4166666666667">PAOO_GAME.Map.Powers.CheckPoint</node>
+    <node x="2543.0" y="530.0000000000001">PAOO_GAME.Player.GreenPlayer</node>
+    <node x="2273.0" y="1062.5">PAOO_GAME.Graphics.Assets</node>
+    <node x="1521.0" y="1080.8254056047178">PAOO_GAME.Map.Powers.Powers</node>
+    <node x="2545.0" y="628.0000000000001">PAOO_GAME.Player.BlackPlayer</node>
+    <node x="932.0" y="1098.4838679941001">PAOO_GAME.Map.Map</node>
+    <node x="1268.5" y="1141.4166666666667">PAOO_GAME.Map.Powers.Grass</node>
+    <node x="3164.5" y="1037.9920722713846">PAOO_GAME.Collisions.KeyboardControl</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="PAOO_GAME.Map.Powers.Gold" target="PAOO_GAME.Map.Powers.Powers" relationship="GENERALIZATION">
+      <point x="79.5" y="0.0" />
+      <point x="-152.5" y="103.5912610619489" />
+    </edge>
+    <edge source="PAOO_GAME.Map.Powers.Rock" target="PAOO_GAME.Map.Powers.Powers" relationship="GENERALIZATION">
+      <point x="80.0" y="0.0" />
+      <point x="1673.5" y="831.4166666666667" />
+      <point x="0.0" y="-127.0" />
+    </edge>
+    <edge source="PAOO_GAME.Enemy.Enemy" target="PAOO_GAME.Player.ShinobiShuriken" relationship="DEPENDENCY">
+      <point x="132.5" y="-196.9327986725666" />
+      <point x="3262.0" y="51.067201327433395" />
+      <point x="0.0" y="-127.0" />
+    </edge>
+    <edge source="PAOO_GAME.Map.Map" target="PAOO_GAME.Game" relationship="DEPENDENCY">
+      <point x="-15.0" y="-105.0" />
+      <point x="1040.0" y="738.051948051948" />
+      <point x="-138.72727272727275" y="-155.276499588168" />
+    </edge>
+    <edge source="PAOO_GAME.Map.Map" target="PAOO_GAME.Drawable" relationship="TO_MANY">
+      <point x="-60.0" y="105.0" />
+      <point x="995.0" y="1739.9005346607667" />
+      <point x="3529.0" y="1739.9005346607667" />
+      <point x="45.0" y="38.0" />
+    </edge>
+    <edge source="PAOO_GAME.Player.ShinobiShuriken" target="PAOO_GAME.Collisions.Collision" relationship="DEPENDENCY">
+      <point x="-15.0" y="-127.0" />
+      <point x="3247.0" y="283.08185909117907" />
+      <point x="711.0" y="283.08185909117907" />
+      <point x="0.0" y="-50.0" />
+    </edge>
+    <edge source="PAOO_GAME.Collisions.Collision" target="PAOO_GAME.Map.Map" relationship="DEPENDENCY">
+      <point x="0.0" y="50.0" />
+      <point x="711.0" y="1203.4838679941001" />
+      <point x="-123.0" y="0.0" />
+    </edge>
+    <edge source="PAOO_GAME.Player.GreenPlayer" target="PAOO_GAME.Player.Player" relationship="GENERALIZATION">
+      <point x="65.5" y="26.0" />
+      <point x="-163.5" y="15.0" />
+    </edge>
+    <edge source="PAOO_GAME.Map.Powers.CheckPoint" target="PAOO_GAME.Map.Powers.Powers" relationship="GENERALIZATION">
+      <point x="97.5" y="0.1587389380508739" />
+      <point x="1673.5" y="1551.5754056047176" />
+      <point x="0.0" y="127.0" />
+    </edge>
+    <edge source="PAOO_GAME.Map.Map" target="PAOO_GAME.Map.Powers.Coin" relationship="CREATE">
+      <point x="87.0" y="-99.71763422786648" />
+      <point x="1142.0" y="1071.4166666666667" />
+      <point x="-79.5" y="0.0" />
+    </edge>
+    <edge source="PAOO_GAME.Enemy.Enemy" target="PAOO_GAME.Game" relationship="DEPENDENCY">
+      <point x="132.5" y="151.5000000000001" />
+      <point x="1993.0" y="399.5000000000001" />
+      <point x="-15.0" y="-292.0" />
+    </edge>
+    <edge source="PAOO_GAME.Graphics.Assets" target="PAOO_GAME.Graphics.SpriteSheet" relationship="CREATE">
+      <point x="0.0" y="39.0" />
+      <point x="2323.0" y="1205.0" />
+      <point x="-118.5" y="0.0" />
+    </edge>
+    <edge source="PAOO_GAME.Game" target="PAOO_GAME.Map.Map" relationship="CREATE">
+      <point x="-140.8051948051948" y="-178.13364244531078" />
+      <point x="1025.0" y="715.1948051948052" />
+      <point x="-30.0" y="-105.0" />
+    </edge>
+    <edge source="PAOO_GAME.Map.Powers.Powers" target="PAOO_GAME.Drawable" relationship="REALIZATION">
+      <point x="45.0" y="127.0" />
+      <point x="1718.5" y="1709.9005346607667" />
+      <point x="3499.0" y="1709.9005346607667" />
+      <point x="15.0" y="38.0" />
+    </edge>
+    <edge source="PAOO_GAME.Map.Powers.Diamond" target="PAOO_GAME.Map.Powers.Powers" relationship="GENERALIZATION">
+      <point x="91.5" y="0.0" />
+      <point x="1658.5" y="1431.4166666666667" />
+      <point x="-15.0" y="127.0" />
+    </edge>
+    <edge source="PAOO_GAME.Game" target="PAOO_GAME.Player.Player" relationship="DEPENDENCY">
+      <point x="30.0" y="-292.0" />
+      <point x="2038.0" y="366.1038961038961" />
+      <point x="-163.01948051948057" y="-213.89610389610402" />
+    </edge>
+    <edge source="PAOO_GAME.Player.Player" target="PAOO_GAME.Game" relationship="DEPENDENCY">
+      <point x="-160.9415584415583" y="-226.3636363636365" />
+      <point x="2023.0" y="353.6363636363636" />
+      <point x="15.0" y="-292.0" />
+    </edge>
+    <edge source="PAOO_GAME.Game" target="PAOO_GAME.Collisions.Collision" relationship="DEPENDENCY">
+      <point x="-136.64935064935048" y="-205.14662945829787" />
+      <point x="1380.0" y="688.1818181818181" />
+      <point x="1380.0" y="688.9166666666667" />
+      <point x="167.0" y="-18.75" />
+    </edge>
+    <edge source="PAOO_GAME.Game" target="PAOO_GAME.GameWindow.GameWindow" relationship="TO_ONE">
+      <point x="21.07606679035257" y="291.9999999999999" />
+      <point x="2029.0760667903526" y="1378.9166666666667" />
+      <point x="-103.0" y="0.9166666666667425" />
+    </edge>
+    <edge source="PAOO_GAME.Enemy.Projectile" target="PAOO_GAME.Game" relationship="DEPENDENCY">
+      <point x="15.0" y="105.0" />
+      <point x="613.5" y="620.1666666666667" />
+      <point x="-138.0" y="-273.16178097344925" />
+    </edge>
+    <edge source="PAOO_GAME.Game" target="PAOO_GAME.Collisions.MouseControl" relationship="DEPENDENCY">
+      <point x="138.0" y="-1.3284476401158827" />
+      <point x="-115.0" y="0.0" />
+    </edge>
+    <edge source="PAOO_GAME.Player.BlackPlayer" target="PAOO_GAME.Player.Player" relationship="GENERALIZATION">
+      <point x="63.5" y="0.0" />
+      <point x="-163.5" y="87.0" />
+    </edge>
+    <edge source="PAOO_GAME.Enemy.Enemy" target="PAOO_GAME.Drawable" relationship="REALIZATION">
+      <point x="132.5" y="-211.9327986725666" />
+      <point x="3484.0" y="36.067201327433395" />
+      <point x="0.0" y="-38.0" />
+    </edge>
+    <edge source="PAOO_GAME.Player.PlayerFactory" target="PAOO_GAME.Player.Player" relationship="DEPENDENCY">
+      <point x="0.0" y="-50.0" />
+      <point x="2323.0" y="397.27272727272725" />
+      <point x="-158.86363636363603" y="-182.72727272727286" />
+    </edge>
+    <edge source="PAOO_GAME.Player.BluePlayer" target="PAOO_GAME.Player.Player" relationship="GENERALIZATION">
+      <point x="60.5" y="0.0" />
+      <point x="-163.5" y="-109.0" />
+    </edge>
+    <edge source="PAOO_GAME.Enemy.Enemy" target="PAOO_GAME.Collisions.Collision" relationship="DEPENDENCY">
+      <point x="0.0" y="248.0" />
+      <point x="312.5" y="737.667" />
+      <point x="-167.0" y="30.000333333333288" />
+    </edge>
+    <edge source="PAOO_GAME.Enemy.Enemy" target="PAOO_GAME.Player.Player" relationship="DEPENDENCY">
+      <point x="132.5" y="-181.9327986725666" />
+      <point x="2944.5" y="66.0672013274334" />
+      <point x="0.0" y="-270.0" />
+    </edge>
+    <edge source="PAOO_GAME.Map.Map" target="PAOO_GAME.Map.Powers.Grass" relationship="CREATE">
+      <point x="60.0" y="105.0" />
+      <point x="1115.0" y="1191.4166666666667" />
+      <point x="-81.0" y="0.0" />
+    </edge>
+    <edge source="PAOO_GAME.Map.Powers.Jumper" target="PAOO_GAME.Map.Powers.Powers" relationship="GENERALIZATION">
+      <point x="86.5" y="0.0" />
+      <point x="1658.5" y="951.4166666666667" />
+      <point x="-15.0" y="-127.0" />
+    </edge>
+    <edge source="PAOO_GAME.Player.Player" target="PAOO_GAME.Player.ShinobiShuriken" relationship="CREATE">
+      <point x="163.5" y="-67.5" />
+      <point x="3130.0" y="512.5000000000001" />
+      <point x="3130.0" y="483.83665191740033" />
+      <point x="-100.0" y="84.66666666666652" />
+    </edge>
+    <edge source="PAOO_GAME.Game" target="PAOO_GAME.Player.PlayerFactory" relationship="CREATE">
+      <point x="138.0" y="-284.5" />
+      <point x="-89.0" y="26.90846238938218" />
+    </edge>
+    <edge source="PAOO_GAME.Map.Map" target="PAOO_GAME.Map.Powers.CheckPoint" relationship="CREATE">
+      <point x="-15.0" y="105.0" />
+      <point x="1040.0" y="1551.4166666666667" />
+      <point x="-97.5" y="0.0" />
+    </edge>
+    <edge source="PAOO_GAME.Player.Player" target="PAOO_GAME.Collisions.KeyboardControl" relationship="DEPENDENCY">
+      <point x="163.5" y="82.5" />
+      <point x="3262.0" y="662.5000000000001" />
+      <point x="0.0" y="-61.0" />
+    </edge>
+    <edge source="PAOO_GAME.Player.PlayerFactory" target="PAOO_GAME.Player.GreenPlayer" relationship="CREATE">
+      <point x="89.0" y="-15.0" />
+      <point x="-65.5" y="-2.0800147492662973" />
+    </edge>
+    <edge source="PAOO_GAME.Player.Player" target="PAOO_GAME.Collisions.Collision" relationship="DEPENDENCY">
+      <point x="-160.9415584415583" y="-255.45454545454555" />
+      <point x="726.0" y="324.54545454545456" />
+      <point x="15.0" y="-50.0" />
+    </edge>
+    <edge source="PAOO_GAME.Map.Map" target="PAOO_GAME.Map.Powers.Rock" relationship="CREATE">
+      <point x="15.0" y="-105.0" />
+      <point x="1070.0" y="831.4166666666667" />
+      <point x="-80.0" y="0.0" />
+    </edge>
+    <edge source="PAOO_GAME.Game" target="PAOO_GAME.Drawable" relationship="DEPENDENCY">
+      <point x="-42.40816326530603" y="289.53982694244417" />
+      <point x="1965.591836734694" y="1643.7738095238099" />
+      <point x="3484.0" y="1643.7738095238099" />
+      <point x="0.0" y="38.0" />
+    </edge>
+    <edge source="PAOO_GAME.Game" target="PAOO_GAME.GameWindow.GameWindow" relationship="CREATE">
+      <point x="36.07606679035257" y="291.9999999999999" />
+      <point x="2044.0760667903526" y="1363.9166666666667" />
+      <point x="-103.0" y="-14.083333333333258" />
+    </edge>
+    <edge source="PAOO_GAME.Player.PlayerFactory" target="PAOO_GAME.Player.BlackPlayer" relationship="CREATE">
+      <point x="15.0" y="50.0" />
+      <point x="2338.0" y="667.0000000000001" />
+      <point x="-63.5" y="0.0" />
+    </edge>
+    <edge source="PAOO_GAME.Map.Map" target="PAOO_GAME.Map.Powers.Gold" relationship="CREATE">
+      <point x="123.0" y="97.5" />
+      <point x="-79.5" y="-10.432798672566605" />
+    </edge>
+    <edge source="PAOO_GAME.Player.PlayerFactory" target="PAOO_GAME.Player.BluePlayer" relationship="CREATE">
+      <point x="15.0" y="-50.0" />
+      <point x="2338.0" y="471.0000000000001" />
+      <point x="-60.5" y="0.0" />
+    </edge>
+    <edge source="PAOO_GAME.Player.Player" target="PAOO_GAME.Drawable" relationship="REALIZATION">
+      <point x="163.5" y="0.0" />
+      <point x="3428.4341372912804" y="580.0000000000001" />
+      <point x="-55.56586270871958" y="-30.880600409912404" />
+    </edge>
+    <edge source="PAOO_GAME.Map.Map" target="PAOO_GAME.Drawable" relationship="REALIZATION">
+      <point x="-45.0" y="105.0" />
+      <point x="1010.0" y="1724.9005346607667" />
+      <point x="3514.0" y="1724.9005346607667" />
+      <point x="30.0" y="38.0" />
+    </edge>
+    <edge source="PAOO_GAME.Game" target="PAOO_GAME.Collisions.KeyboardControl" relationship="DEPENDENCY">
+      <point x="6.07606679035257" y="291.9999999999999" />
+      <point x="2014.0760667903526" y="1544.0754056047176" />
+      <point x="3247.0" y="1544.0754056047176" />
+      <point x="-15.0" y="61.0" />
+    </edge>
+    <edge source="PAOO_GAME.Collisions.KeyboardControl" target="PAOO_GAME.Game" relationship="DEPENDENCY">
+      <point x="0.0" y="61.0" />
+      <point x="3262.0" y="1582.0754056047176" />
+      <point x="1999.0760667903526" y="1582.0754056047176" />
+      <point x="-8.92393320964743" y="291.9999999999999" />
+    </edge>
+    <edge source="PAOO_GAME.Player.ShinobiShuriken" target="PAOO_GAME.Drawable" relationship="REALIZATION">
+      <point x="100.0" y="0.0" />
+      <point x="3443.771799628942" y="399.1699852507338" />
+      <point x="3443.771799628942" y="1544.0754056047176" />
+      <point x="15.0" y="-38.0" />
+    </edge>
+    <edge source="PAOO_GAME.Player.PlayerFactory" target="PAOO_GAME.Player.Player" relationship="TO_ONE">
+      <point x="-15.0" y="-50.0" />
+      <point x="2308.0" y="378.57142857142856" />
+      <point x="-167.1753246753242" y="-201.42857142857156" />
+    </edge>
+    <edge source="PAOO_GAME.Map.Powers.Grass" target="PAOO_GAME.Map.Powers.Powers" relationship="GENERALIZATION">
+      <point x="81.0" y="16.4087389380511" />
+      <point x="-152.5" y="0.0" />
+    </edge>
+    <edge source="PAOO_GAME.Game" target="PAOO_GAME.Graphics.Assets" relationship="DEPENDENCY">
+      <point x="138.0" y="208.171552359884" />
+      <point x="-50.0" y="0.0" />
+    </edge>
+    <edge source="PAOO_GAME.Player.Player" target="PAOO_GAME.Player.ShinobiShuriken" relationship="TO_MANY">
+      <point x="163.5" y="-180.8300147492663" />
+      <point x="-100.0" y="0.0" />
+    </edge>
+    <edge source="PAOO_GAME.Map.Map" target="PAOO_GAME.Map.Powers.Jumper" relationship="CREATE">
+      <point x="-45.0" y="-105.0" />
+      <point x="1098.909090909091" y="1098.4838679941001" />
+      <point x="1098.909090909091" y="951.4166666666667" />
+      <point x="-86.5" y="0.0" />
+    </edge>
+    <edge source="PAOO_GAME.Game" target="PAOO_GAME.Player.Player" relationship="TO_ONE">
+      <point x="0.0" y="-292.0" />
+      <point x="2008.0" y="341.16883116883116" />
+      <point x="-152.62987012987014" y="-238.83116883116895" />
+    </edge>
+    <edge source="PAOO_GAME.GameWindow.GameWindow" target="PAOO_GAME.Collisions.MouseControl" relationship="DEPENDENCY">
+      <point x="103.0" y="-15.0" />
+      <point x="2788.5" y="1363.0" />
+      <point x="2788.5" y="892.0000000000001" />
+      <point x="115.0" y="0.0" />
+    </edge>
+    <edge source="PAOO_GAME.Enemy.Projectile" target="PAOO_GAME.Collisions.Collision" relationship="DEPENDENCY">
+      <point x="0.0" y="105.0" />
+      <point x="598.5" y="722.667" />
+      <point x="-167.0" y="15.000333333333288" />
+    </edge>
+    <edge source="PAOO_GAME.Enemy.Projectile" target="PAOO_GAME.Player.Player" relationship="DEPENDENCY">
+      <point x="81.5" y="30.0" />
+      <point x="2929.5" y="238.5672013274334" />
+      <point x="-15.0" y="-270.0" />
+    </edge>
+    <edge source="PAOO_GAME.Enemy.Enemy" target="PAOO_GAME.Enemy.Projectile" relationship="TO_MANY">
+      <point x="132.5" y="-59.432798672566605" />
+      <point x="300.0" y="188.5672013274334" />
+      <point x="300.0" y="208.5672013274334" />
+      <point x="-81.5" y="0.0" />
+    </edge>
+    <edge source="PAOO_GAME.Map.Powers.Powers" target="PAOO_GAME.Game" relationship="DEPENDENCY">
+      <point x="152.5" y="-29.99695796460196" />
+      <point x="-138.0" y="284.4999999999999" />
+    </edge>
+    <edge source="PAOO_GAME.Map.Powers.Powers" target="PAOO_GAME.Collisions.Collision" relationship="DEPENDENCY">
+      <point x="15.0" y="127.0" />
+      <point x="1688.5" y="1618.9166666666667" />
+      <point x="696.0" y="1618.9166666666667" />
+      <point x="-15.0" y="50.0" />
+    </edge>
+    <edge source="PAOO_GAME.Enemy.Enemy" target="PAOO_GAME.Enemy.Projectile" relationship="CREATE">
+      <point x="132.5" y="0.0" />
+      <point x="300.0" y="248.0" />
+      <point x="300.0" y="268.0" />
+      <point x="-81.5" y="59.432798672566605" />
+    </edge>
+    <edge source="PAOO_GAME.Game" target="PAOO_GAME.Drawable" relationship="TO_MANY">
+      <point x="-31.94434137291273" y="287.4470625639657" />
+      <point x="1976.0556586270873" y="1607.699443413729" />
+      <point x="-57.65862708719851" y="25.624037809011497" />
+    </edge>
+    <edge source="PAOO_GAME.GameWindow.GameWindow" target="PAOO_GAME.Collisions.KeyboardControl" relationship="CREATE">
+      <point x="103.0" y="0.0" />
+      <point x="3232.0" y="1378.0" />
+      <point x="-30.0" y="61.0" />
+    </edge>
+    <edge source="PAOO_GAME.Map.Powers.Coin" target="PAOO_GAME.Map.Powers.Powers" relationship="GENERALIZATION">
+      <point x="79.5" y="16.9087389380511" />
+      <point x="-152.5" y="-119.5" />
+    </edge>
+    <edge source="PAOO_GAME.Graphics.Assets" target="PAOO_GAME.Graphics.ImageLoader" relationship="DEPENDENCY">
+      <point x="15.0" y="39.0" />
+      <point x="2338.0" y="1101.9199852507338" />
+      <point x="-116.5" y="0.0" />
+    </edge>
+    <edge source="PAOO_GAME.Game" target="PAOO_GAME.Map.Map" relationship="TO_ONE">
+      <point x="-138.0" y="-129.41178097344925" />
+      <point x="1055.0" y="763.9166666666667" />
+      <point x="0.0" y="-105.0" />
+    </edge>
+    <edge source="PAOO_GAME.Map.Map" target="PAOO_GAME.Map.Powers.Diamond" relationship="CREATE">
+      <point x="0.0" y="105.0" />
+      <point x="1055.0" y="1431.4166666666667" />
+      <point x="-91.5" y="0.0" />
+    </edge>
+    <edge source="PAOO_GAME.Enemy.Projectile" target="PAOO_GAME.Drawable" relationship="REALIZATION">
+      <point x="81.5" y="15.0" />
+      <point x="3469.0" y="223.5672013274334" />
+      <point x="-15.0" y="-38.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.48125" showDependencies="true" x="1862.0" y="870.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

@@ -12,12 +12,12 @@ public class KeyboardControl implements KeyListener {
     public static boolean attack =false;
     public static boolean attack2 =false;
 
-    public static boolean w=false;
-    public static boolean a=false;
-    public static boolean s=false;
-    public static boolean d=false;
-    public static boolean q=false;
-    public static boolean e=false;
+    public static boolean wPressed =false;
+    public static boolean aPressed =false;
+    public static boolean sPressed =false;
+    public static boolean dPressed =false;
+    public static boolean qPressed =false;
+    public static boolean ePressed =false;
 
 
     public static boolean jump=false;
@@ -34,31 +34,31 @@ public class KeyboardControl implements KeyListener {
         {
             velocityY=-1;
             jump=true;
-            w=true;
+            wPressed =true;
         }
         if(key == KeyEvent.VK_S)
         {
             velocityY=1;
-            s=true;
+            sPressed =true;
         }
         if(key == KeyEvent.VK_A)
         {
             velocityX=-1;
-            a=true;
+            aPressed =true;
         }
         if(key == KeyEvent.VK_D)
         {
             velocityX=1;
-            d=true;
+            dPressed =true;
         }
         if(key == KeyEvent.VK_E)
         {
             attack =true;
-            KeyboardControl.e =true;
+            KeyboardControl.ePressed =true;
         }
         if(key == KeyEvent.VK_Q){
             attack2 =true;
-            q=true;
+            qPressed =true;
         }
 
         if(key == KeyEvent.VK_ESCAPE){
@@ -73,30 +73,30 @@ public class KeyboardControl implements KeyListener {
         if(key == KeyEvent.VK_W)
         {
             //KeyboardControl.jump=false;
-            w=false;
+            wPressed =false;
             velocityY=0;
         }
         if(key == KeyEvent.VK_S)
         {
-            s=false;
+            sPressed =false;
             velocityY=0;
         }
         if(key == KeyEvent.VK_A)
         {
-            a=false;
+            aPressed =false;
             velocityX=0;
         }
         if(key == KeyEvent.VK_D)
         {
-            d=false;
+            dPressed =false;
             velocityX=0;
         }
         if(key == KeyEvent.VK_Q){
-            q=false;
+            qPressed =false;
             attack2 =false;
         }
         if(key == KeyEvent.VK_E){
-            KeyboardControl.e =false;
+            KeyboardControl.ePressed =false;
         }
 
     }

@@ -48,11 +48,10 @@ public final class GameWindow{
         healthBarPanel.setBounds(wndWidth-300,48,250,30);
         healthBarPanel.setBackground(new Color(14, 24, 37));
 
-        healthBar= new JProgressBar(0,500);
+        healthBar= new JProgressBar(0, 750);
         healthBar.setPreferredSize(new Dimension(250,30));
         healthBar.setForeground(new Color(183, 11, 11));
         healthBar.setVisible(true);
-        healthBar.setValue(500);
 
         healthBarPanel.add(healthBar);
 

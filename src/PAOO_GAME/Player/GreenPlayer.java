@@ -9,6 +9,7 @@ public class GreenPlayer extends Player {
     public GreenPlayer()
     {
         super();
+        lifeStatus=500;
     }
 
     @Override

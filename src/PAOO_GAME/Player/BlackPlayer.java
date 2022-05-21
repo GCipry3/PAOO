@@ -10,6 +10,7 @@ public class BlackPlayer extends Player {
     public BlackPlayer()
     {
         super();
+        lifeStatus=750;
     }
 
     @Override

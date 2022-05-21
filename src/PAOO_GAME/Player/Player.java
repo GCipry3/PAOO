@@ -62,6 +62,7 @@ public abstract class Player implements  Drawable {
         coins++;
     }
     public int getCoins(){return coins;}
+    public int getLifeStatus(){return lifeStatus;}
 
     protected void attack() {
         if(KeyboardControl.attack)
@@ -211,18 +212,6 @@ public abstract class Player implements  Drawable {
 
         if(lifeStatus<=0){
             Game.getInstance().setLoseFlag();
-        }
-    }
-
-    public void increaseLifeStatus(int amount)
-    {
-        if(lifeStatus<500)
-        {
-            if(lifeStatus+amount>500){
-                lifeStatus=500;
-            }else{
-                lifeStatus+=amount;
-            }
         }
     }
 

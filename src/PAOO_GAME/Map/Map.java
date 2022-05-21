@@ -73,10 +73,10 @@ public class Map implements Drawable {
         try {
             updateListWithObjects();
         }catch (ElementNotFoundOnMapException e){
+            System.out.println("-----------------");
             System.out.println(e.getMessage());
             System.out.println("Problems at Map's matrix!!!!!!");
-            System.out.println("Problems at Map's matrix!!!!!!");
-            System.out.println("Problems at Map's matrix!!!!!!");
+            System.out.println("-----------------");
         }
     }
 
@@ -92,10 +92,10 @@ public class Map implements Drawable {
             try {
                 updateListWithObjects();
             }catch (ElementNotFoundOnMapException e){
+                System.out.println("-----------------");
+                System.out.println(e.getMessage());
                 System.out.println("Problems at Map's matrix!!!!!!");
-                System.out.println("Problems at Map's matrix!!!!!!");
-                System.out.println("Problems at Map's matrix!!!!!!");
-                System.out.println("Problems at Map's matrix!!!!!!");
+                System.out.println("-----------------");
             }
             Game.getInstance().setPlayerX(tileWidth+5);
             Game.getInstance().setPlayerY(20 * tileHeight-5);
@@ -117,9 +117,7 @@ public class Map implements Drawable {
                 int x=j*32;
                 int y=i*32;
                 switch (actualMap[i][j]) {
-                    case 0 -> {
-                        //air
-                    }
+                    case 0 ->{}
                     case 1 -> listOfDrawables.add(new Rock      (x, y, 32, 32));
                     case 5 -> listOfDrawables.add(new Grass     (x, y, 32, 32));
                     case 2 -> listOfDrawables.add(new CheckPoint(x, y, 32, 64));
