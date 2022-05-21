@@ -1,7 +1,8 @@
 package PAOO_GAME.Map.Powers;
 
 import PAOO_GAME.Component.Drawer;
-import PAOO_GAME.Graphics.Assets;
+
+import static PAOO_GAME.Graphics.Assets.rock2;
 
 public class Rock extends Powers{
     public Rock(int _x, int _y, int _width, int _height) {
@@ -17,7 +18,7 @@ public class Rock extends Powers{
     public void draw() {
         if(visible)
         {
-            Drawer.draw(x,y, Assets.rock2,width,height);
+            Drawer.draw(x,y, rock2,width,height);
         }
     }
 }

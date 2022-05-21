@@ -92,7 +92,7 @@ public final class GameWindow{
 
     }
 
-    public static void getDamage(int health){
+    public static void setLifeBarStatus(int health){
         healthBar.setValue(health);
     }
 

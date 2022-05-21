@@ -4,8 +4,6 @@ import PAOO_GAME.Collisions.Collision;
 import PAOO_GAME.Collisions.KeyboardControl;
 import PAOO_GAME.Drawable;
 import PAOO_GAME.Game;
-import PAOO_GAME.GameWindow.GameWindow;
-import PAOO_GAME.Map.Map;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,13 +26,13 @@ public abstract class Player implements  Drawable {
     private int jumpCnt=0;
     private boolean jumpAvailable=true;
 
-    private static boolean endAttack  =true;
-    private static boolean oldAttack2 =false;
+    private boolean endAttack  =true;
+    private boolean oldAttack2 =false;
 
     private boolean goldCollected=false;
 
     protected int coins=0;
-    public List<ShinobiShuriken> listOfShurikens= new ArrayList<>();
+    private final List<ShinobiShuriken> listOfShurikens= new ArrayList<>();
 
     protected Player(){
         x=tileWidth+5;
@@ -42,13 +40,19 @@ public abstract class Player implements  Drawable {
         lifeStatus=500;
     }
 
-    public void setGoldCollectedTrue(){goldCollected=true;}
+    public void drawShurikens(){
+        listOfShurikens.forEach(ShinobiShuriken::draw);
+    }
+
+    public List<ShinobiShuriken> getListOfShurikens(){return listOfShurikens;}
+
+    public void setGoldCollected(){goldCollected=true;}
 
     public boolean getRight(){return right;}
 
-    public static boolean getAttackStatus(){return !endAttack;}
+    public boolean getAttackStatus(){return !endAttack;}
 
-    public static void setEndAttack(boolean value){endAttack=value;}
+    public void setEndAttack(boolean value){endAttack=value;}
 
     public int getX(){return x;}
     public int getY(){return y;}
@@ -56,8 +60,8 @@ public abstract class Player implements  Drawable {
     public void setY(int _y){y=_y;}
     public void increaseCoins(){
         coins++;
-        GameWindow.setCoins(coins);
     }
+    public int getCoins(){return coins;}
 
     protected void attack() {
         if(KeyboardControl.attack)
@@ -76,16 +80,16 @@ public abstract class Player implements  Drawable {
     }
 
     protected void attackWithShuriken(){
-        int shurikenCounter=GameWindow.getShurikenCounter();
+        int shurikenCounter=Game.getInstance().getGameWindowShurikenCounter();
         if(shurikenCounter>0) {
             if (KeyboardControl.attack2 != oldAttack2 && KeyboardControl.attack2) {
-                listOfShurikens.add(new ShinobiShuriken(x, y));
+                listOfShurikens.add(new ShinobiShuriken(x, y,right? 1:0));
                 if (goldCollected) {
-                    listOfShurikens.add(new ShinobiShuriken(x - 16, y + 20));
-                    listOfShurikens.add(new ShinobiShuriken(x - 16, y - 20));
+                    listOfShurikens.add(new ShinobiShuriken(x - 16, y + 20,right? 1:0));
+                    listOfShurikens.add(new ShinobiShuriken(x - 16, y - 20,right? 1:0));
                 }
                 oldAttack2 = KeyboardControl.attack2;
-                GameWindow.setShurikenCounter(shurikenCounter-1);
+                Game.getInstance().setGameWindowShurikenCounter(shurikenCounter-1);
             }
             if (!KeyboardControl.attack2) {
                 oldAttack2 = false;
@@ -170,9 +174,17 @@ public abstract class Player implements  Drawable {
             jumpAvailable=true;
             jumpCnt=0;
         }
+
         if(!jumpAvailable){
             jumpCnt++;
-            jump(); //jump 30 times
+            if(!checkUpperWallCollisionWithTmpPosition()) {
+                jump(); //jump 30 times only if there were no collisions with walls
+            }
+            else{
+                jumpAvailable=true;
+                jumpCnt=0;
+                System.out.println("dfada");
+            }
         }
         else{
             yTmp +=2; //gravity
@@ -190,8 +202,8 @@ public abstract class Player implements  Drawable {
         //startOfCheckNextLevel
         if(checkNextLevelCollision())
         {
-            Map.increaseIndexOfMap();
-            if(Map.compareIndexWithNrMaps()){
+            Game.getInstance().mapIncreaseIndexOfMap();
+            if(Game.getInstance().mapCompareIndexWithNrMaps()){
                 Game.getInstance().setWinFlag();
             }
         }
@@ -216,12 +228,20 @@ public abstract class Player implements  Drawable {
 
     public void takeDamage(int damage){
         lifeStatus-=damage;
-        GameWindow.getDamage(lifeStatus);
+        Game.getInstance().setGameWindowLifeBarStatus(lifeStatus);
     }
 
     public boolean checkWallCollisionWithTmpPosition(){
         return Collision.checkCollisions(
                 xTmp, yTmp,
+                playerWidth-10,
+                playerHeight-10,
+                wallCollisions
+        );
+    }
+    public boolean checkUpperWallCollisionWithTmpPosition(){
+        return Collision.checkCollisions(
+                xTmp, yTmp-5,
                 playerWidth-10,
                 playerHeight-10,
                 wallCollisions

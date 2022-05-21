@@ -3,10 +3,9 @@ package PAOO_GAME.Player;
 import PAOO_GAME.Collisions.Collision;
 import PAOO_GAME.Component.Drawer;
 import PAOO_GAME.Drawable;
-import PAOO_GAME.Game;
-import PAOO_GAME.Graphics.Assets;
 
-import static PAOO_GAME.Constants.*;
+import static PAOO_GAME.Constants.wallCollisions;
+import static PAOO_GAME.Graphics.Assets.shuriken;
 
 public class ShinobiShuriken implements Drawable {
     private int x;
@@ -17,10 +16,10 @@ public class ShinobiShuriken implements Drawable {
     private int cntDraw=0;
     private boolean visible=true;
 
-    ShinobiShuriken(int x,int y){
+    ShinobiShuriken(int x,int y,int dir){
         this.x=x;
         this.y=y;
-        direction = Game.getInstance().player.getRight()? 1:0;
+        direction = dir;
 
     }
 
@@ -30,7 +29,6 @@ public class ShinobiShuriken implements Drawable {
             case 0 -> x -= speed;
             case 1 -> x += speed;
         }
-
     }
 
     @Override
@@ -39,16 +37,16 @@ public class ShinobiShuriken implements Drawable {
         if(visible) {
             cntDraw++;
             if(cntDraw<delay) {
-                Drawer.draw(x, y, Assets.shuriken.get(0), projectileWidth, projectileHeight);
+                Drawer.draw(x, y, shuriken.get(0), projectileWidth, projectileHeight);
             }else if(cntDraw<2*delay){
-                Drawer.draw(x, y, Assets.shuriken.get(1), projectileWidth, projectileHeight);
+                Drawer.draw(x, y, shuriken.get(1), projectileWidth, projectileHeight);
             }else if(cntDraw<3*delay){
-                Drawer.draw(x, y, Assets.shuriken.get(2), projectileWidth, projectileHeight);
+                Drawer.draw(x, y, shuriken.get(2), projectileWidth, projectileHeight);
             }else if(cntDraw<4*delay){
-                Drawer.draw(x, y, Assets.shuriken.get(3), projectileWidth, projectileHeight);
+                Drawer.draw(x, y, shuriken.get(3), projectileWidth, projectileHeight);
             }else{
                 cntDraw=0;
-                Drawer.draw(x, y, Assets.shuriken.get(0), projectileWidth, projectileHeight);
+                Drawer.draw(x, y, shuriken.get(0), projectileWidth, projectileHeight);
             }
         }
     }
@@ -57,7 +55,6 @@ public class ShinobiShuriken implements Drawable {
     public void update() {
         if(visible) {
             move();
-
             if(Collision.checkCollisions(x,y,projectileWidth,projectileHeight,
                     wallCollisions)){
                 visible = false;

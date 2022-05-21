@@ -46,8 +46,6 @@ public final class Game extends Component implements Runnable {
     //6-loseCase
     //7-resetOrQuit
 
-    private final String musicPath="resources\\music\\music.wav";
-
     public static Game instance=null;
 
     private Game()
@@ -74,12 +72,29 @@ public final class Game extends Component implements Runnable {
 
         Assets.Init();
 
+        String musicPath = "resources\\music\\music.wav";
         AudioInputStream audioInputStream= AudioSystem.getAudioInputStream(new File(musicPath).getAbsoluteFile());
         clip = AudioSystem.getClip();
         clip.open(audioInputStream);
-        //clip.start();
-        //clip.loop(10);
     }
+
+    public int getPlayerX(){return player.getX();}
+    public int getPlayerY(){return player.getY();}
+    public boolean getPlayerAttackStatus(){return player.getAttackStatus();}
+    public void playerIncreaseCoin(){
+        player.increaseCoins();
+        GameWindow.setCoins(player.getCoins());
+    }
+    public void playerSetGoldCollected(){player.setGoldCollected();}
+    public void setPlayerX(int x){player.setX(x);}
+    public void setPlayerY(int y){player.setY(y);}
+
+    public void mapIncreaseIndexOfMap(){Map.increaseIndexOfMap();}
+    public boolean mapCompareIndexWithNrMaps(){return Map.compareIndexWithNrMaps();}
+
+    public int getGameWindowShurikenCounter(){return GameWindow.getShurikenCounter();}
+    public void setGameWindowShurikenCounter(int x){GameWindow.setShurikenCounter(x);}
+    public void setGameWindowLifeBarStatus(int x){GameWindow.setLifeBarStatus(x);}
 
     @Override
     public void run()
@@ -102,7 +117,7 @@ public final class Game extends Component implements Runnable {
             {
                 try {
                     update();
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 draw();
@@ -131,7 +146,7 @@ public final class Game extends Component implements Runnable {
         }
     }
 
-    public void update() throws IOException {
+    public void update() {
         boolean selected=false;
         switch (state){
             case 0:
@@ -194,7 +209,12 @@ public final class Game extends Component implements Runnable {
                 if(selected)
                 {
                     state = 3;
-                    m.init();
+                    try{
+                        m.init();
+                    }catch (Exception e){
+                        System.out.println("map exception");
+                    }
+
                     listWithDrawable.add(0,m);
                     GameWindow.setAllToVisible();
                     MouseControl.getInstance().resetCoords();
@@ -230,7 +250,7 @@ public final class Game extends Component implements Runnable {
                 player=null;
                 loseFlag=false;
                 winFlag=false;
-                Player.setEndAttack(true);
+                //player.setEndAttack(true);
                 state=0;
                 break;
 

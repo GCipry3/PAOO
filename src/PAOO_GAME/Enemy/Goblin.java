@@ -4,7 +4,6 @@ import PAOO_GAME.Collisions.Collision;
 import PAOO_GAME.Component.Drawer;
 import PAOO_GAME.Game;
 import PAOO_GAME.Graphics.Assets;
-import PAOO_GAME.Player.Player;
 import PAOO_GAME.Player.ShinobiShuriken;
 
 import java.util.ArrayList;
@@ -72,7 +71,7 @@ public class Goblin extends Enemy{
                 move();
             }
 
-            if (Player.getAttackStatus())//if player attacks
+            if (Game.getInstance().player.getAttackStatus())//if player attacks
             {
                 if(Collision.checkCollision(
                         x,y,
@@ -85,8 +84,8 @@ public class Goblin extends Enemy{
                 }
             }
 
-            for(int i=0;i<Game.getInstance().player.listOfShurikens.size();i++){
-                ShinobiShuriken tmp=Game.getInstance().player.listOfShurikens.get(i);
+            for(int i=0;i<Game.getInstance().player.getListOfShurikens().size();i++){
+                ShinobiShuriken tmp=Game.getInstance().player.getListOfShurikens().get(i);
                 if(tmp.getVisible()){
                     if(Collision.checkCollision(
                             x,y,enemyWidth,enemyHeight,
@@ -95,7 +94,7 @@ public class Goblin extends Enemy{
                             tmp.getProjectileHeight()
                     ))
                     {
-                        Game.getInstance().player.listOfShurikens.get(i).setVisibleFalse();
+                        Game.getInstance().player.getListOfShurikens().get(i).setVisibleFalse();
                         visible=false;
                     }
                 }

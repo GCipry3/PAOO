@@ -2,9 +2,11 @@ package PAOO_GAME.Map.Powers;
 
 import PAOO_GAME.Collisions.Collision;
 import PAOO_GAME.Component.Drawer;
-import PAOO_GAME.Constants;
 import PAOO_GAME.Game;
-import PAOO_GAME.Graphics.Assets;
+
+import static PAOO_GAME.Constants.playerHeight;
+import static PAOO_GAME.Constants.playerWidth;
+import static PAOO_GAME.Graphics.Assets.checkpoint;
 
 public class CheckPoint extends Powers{
     public CheckPoint(int _x, int _y, int _width, int _height) {
@@ -15,10 +17,10 @@ public class CheckPoint extends Powers{
     public void power() {
 
         if(visible && Collision.checkCollision(
-                        Game.getInstance().player.getX(),
-                        Game.getInstance().player.getY(),
-                        Constants.playerWidth,
-                        Constants.playerHeight,
+                        Game.getInstance().getPlayerX(),
+                        Game.getInstance().getPlayerY(),
+                        playerWidth,
+                        playerHeight,
                         x,y, width, height) )
         {
             visible=false;
@@ -30,7 +32,7 @@ public class CheckPoint extends Powers{
     public void draw() {
         if(visible)
         {
-            Drawer.draw(x,y, Assets.checkpoint,width,height);
+            Drawer.draw(x,y, checkpoint,width,height);
         }
     }
 }

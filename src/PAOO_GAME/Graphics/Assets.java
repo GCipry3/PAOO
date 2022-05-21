@@ -6,6 +6,7 @@ import java.util.List;
 
 public final class Assets {
 
+    public static BufferedImage background;
     public static BufferedImage blackNinjaLeft;
     public static BufferedImage blackNinjaRight;
     public static BufferedImage greenNinjaLeft;
@@ -63,6 +64,8 @@ public final class Assets {
     public static BufferedImage winPage;
 
     public static void Init() {
+        background = ImageLoader.LoadImage("resources/background.png");
+
         losePage=ImageLoader.LoadImage("resources/static/loseBg.png");
         winPage=ImageLoader.LoadImage("resources/static/winBg.png");
         mapSelectPage=ImageLoader.LoadImage("resources/static/mapsSelectPage.png");

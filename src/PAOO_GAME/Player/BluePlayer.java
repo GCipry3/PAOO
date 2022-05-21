@@ -1,10 +1,9 @@
 package PAOO_GAME.Player;
 
 import PAOO_GAME.Component.Drawer;
-import PAOO_GAME.Graphics.Assets;
 
 import static PAOO_GAME.Constants.*;
-import static PAOO_GAME.Constants.shurikenCirclePixels;
+import static PAOO_GAME.Graphics.Assets.*;
 
 public class BluePlayer extends Player{
     public BluePlayer()
@@ -19,7 +18,7 @@ public class BluePlayer extends Player{
             {
                 Drawer.draw(
                         x,y,
-                        Assets.blueNinjaRight,
+                        blueNinjaRight,
                         playerWidth,
                         playerHeight
                 );
@@ -28,7 +27,7 @@ public class BluePlayer extends Player{
             {
                 Drawer.draw(
                         x,y,
-                        Assets.blueNinjaLeft,
+                        blueNinjaLeft,
                         playerWidth,
                         playerHeight
                 );
@@ -38,13 +37,13 @@ public class BluePlayer extends Player{
             {
                 Drawer.draw(
                         x-32,y-32,
-                        Assets.ShurikenBg,
+                        ShurikenBg,
                         shurikenCirclePixels,
                         shurikenCirclePixels
                 );
             }
 
-            listOfShurikens.forEach(ShinobiShuriken::draw);
+            drawShurikens();
         }
     }
 }

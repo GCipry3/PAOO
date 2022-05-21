@@ -1,15 +1,12 @@
 package PAOO_GAME.Map;
 
 import PAOO_GAME.Component.Drawer;
-import PAOO_GAME.Constants;
 import PAOO_GAME.Drawable;
 import PAOO_GAME.Enemy.Goblin;
 import PAOO_GAME.Enemy.Ogre;
 import PAOO_GAME.Game;
-import PAOO_GAME.Graphics.ImageLoader;
 import PAOO_GAME.Map.Powers.*;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,6 +14,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import static PAOO_GAME.Constants.*;
+import static PAOO_GAME.Graphics.Assets.background;
 
 public class Map implements Drawable {
     public static int[][][] map     =new int[3][heightNrTiles][widthNrTiles];
@@ -99,8 +97,8 @@ public class Map implements Drawable {
                 System.out.println("Problems at Map's matrix!!!!!!");
                 System.out.println("Problems at Map's matrix!!!!!!");
             }
-            Game.getInstance().player.setX(tileWidth+5);
-            Game.getInstance().player.setY(20 * tileHeight-5);
+            Game.getInstance().setPlayerX(tileWidth+5);
+            Game.getInstance().setPlayerY(20 * tileHeight-5);
             jumpHeight=64;
         }
 
@@ -130,7 +128,7 @@ public class Map implements Drawable {
                     case 7 -> listOfDrawables.add(new Gold      (x, y, 48, 48));
                     case 9 -> listOfDrawables.add(new Jumper    (x, y, 64, 64));
                     case 4 -> listOfDrawables.add(new Goblin    (x, y));
-                    case 10 ->listOfDrawables.add(new Ogre      (x, y));
+                    case 10 -> listOfDrawables.add(new Ogre      (x, y));
                     default -> throw new ElementNotFoundOnMapException(actualMap[i][j]);
                 }
             }
@@ -139,10 +137,9 @@ public class Map implements Drawable {
 
     public void draw()
     {
-        BufferedImage background = ImageLoader.LoadImage("resources/background.png");
         Drawer.draw(0,0, background,
-                Constants.widthNrTiles * tileWidth,
-                Constants.heightNrTiles *tileHeight
+                widthNrTiles * tileWidth,
+                heightNrTiles *tileHeight
         );
 
         listOfDrawables.forEach(Drawable::draw);

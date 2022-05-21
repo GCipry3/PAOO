@@ -6,8 +6,8 @@ public final class PlayerFactory {
     public void createPlayer(String type){
         switch (type){
             case "black" -> player=new BlackPlayer();
-            case "blue"  -> player=new BluePlayer();
-            case "green" -> player=new GreenPlayer();
+            case "blue"  -> player= new BluePlayer();
+            case "green" -> player= new GreenPlayer();
         }
     }
 

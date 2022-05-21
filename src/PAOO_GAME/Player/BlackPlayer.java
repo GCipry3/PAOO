@@ -1,9 +1,9 @@
 package PAOO_GAME.Player;
 
 import PAOO_GAME.Component.Drawer;
-import PAOO_GAME.Graphics.Assets;
 
 import static PAOO_GAME.Constants.*;
+import static PAOO_GAME.Graphics.Assets.*;
 
 public class BlackPlayer extends Player {
 
@@ -19,7 +19,7 @@ public class BlackPlayer extends Player {
             {
                 Drawer.draw(
                         x,y,
-                        Assets.blackNinjaRight,
+                        blackNinjaRight,
                         playerWidth,
                         playerHeight
                 );
@@ -28,7 +28,7 @@ public class BlackPlayer extends Player {
             {
                 Drawer.draw(
                         x,y,
-                        Assets.blackNinjaLeft,
+                        blackNinjaLeft,
                         playerWidth,
                         playerHeight
                 );
@@ -38,13 +38,13 @@ public class BlackPlayer extends Player {
             {
                 Drawer.draw(
                         x-32,y-32,
-                        Assets.ShurikenBg,
+                        ShurikenBg,
                         shurikenCirclePixels,
                         shurikenCirclePixels
                 );
             }
 
-            listOfShurikens.forEach(ShinobiShuriken::draw);
+            drawShurikens();
         }
     }
 
