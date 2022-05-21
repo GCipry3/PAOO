@@ -72,7 +72,14 @@ public class Map implements Drawable {
         actualMap=map[index];
 
         listOfDrawables.clear();
-        updateListWithObjects();
+        try {
+            updateListWithObjects();
+        }catch (ElementNotFoundOnMapException e){
+            System.out.println(e.getMessage());
+            System.out.println("Problems at Map's matrix!!!!!!");
+            System.out.println("Problems at Map's matrix!!!!!!");
+            System.out.println("Problems at Map's matrix!!!!!!");
+        }
     }
 
 
@@ -84,8 +91,14 @@ public class Map implements Drawable {
             oldIndexOfMap =index;
             
             listOfDrawables.clear();
-            updateListWithObjects();
-
+            try {
+                updateListWithObjects();
+            }catch (ElementNotFoundOnMapException e){
+                System.out.println("Problems at Map's matrix!!!!!!");
+                System.out.println("Problems at Map's matrix!!!!!!");
+                System.out.println("Problems at Map's matrix!!!!!!");
+                System.out.println("Problems at Map's matrix!!!!!!");
+            }
             Game.getInstance().player.setX(tileWidth+5);
             Game.getInstance().player.setY(20 * tileHeight-5);
             jumpHeight=64;
@@ -94,12 +107,21 @@ public class Map implements Drawable {
         listOfDrawables.forEach(Drawable::update);
     }
 
-    private void updateListWithObjects() {
+    public static class ElementNotFoundOnMapException extends Exception{
+        public ElementNotFoundOnMapException(int x){
+            super("The element "+x+" is not recognized");
+        }
+    }
+
+    private void updateListWithObjects() throws ElementNotFoundOnMapException {
         for (int i = 0; i< heightNrTiles; i++){
             for(int j = 0; j< widthNrTiles; j++){
                 int x=j*32;
                 int y=i*32;
                 switch (actualMap[i][j]) {
+                    case 0 -> {
+                        //air
+                    }
                     case 1 -> listOfDrawables.add(new Rock      (x, y, 32, 32));
                     case 5 -> listOfDrawables.add(new Grass     (x, y, 32, 32));
                     case 2 -> listOfDrawables.add(new CheckPoint(x, y, 32, 64));
@@ -109,6 +131,7 @@ public class Map implements Drawable {
                     case 9 -> listOfDrawables.add(new Jumper    (x, y, 64, 64));
                     case 4 -> listOfDrawables.add(new Goblin    (x, y));
                     case 10 ->listOfDrawables.add(new Ogre      (x, y));
+                    default -> throw new ElementNotFoundOnMapException(actualMap[i][j]);
                 }
             }
         }
