@@ -13,6 +13,12 @@ public final class Assets {
     public static BufferedImage greenNinjaRight;
     public static BufferedImage blueNinjaLeft;
     public static BufferedImage blueNinjaRight;
+    public static BufferedImage blackNinjaLeft1;
+    public static BufferedImage blackNinjaRight1;
+    public static BufferedImage greenNinjaLeft1;
+    public static BufferedImage greenNinjaRight1;
+    public static BufferedImage blueNinjaLeft1;
+    public static BufferedImage blueNinjaRight1;
 
     public static List<BufferedImage> ogreRight =new ArrayList<>();
     public static List<BufferedImage> goblinRight =new ArrayList<>();
@@ -140,6 +146,15 @@ public final class Assets {
 
         greenNinjaRight =ImageLoader.LoadImage("resources/ninja/green/Ninja1.png");
         greenNinjaLeft  =ImageLoader.LoadImage("resources/ninja/green/Ninja1left.png");
+
+        blackNinjaRight1 =ImageLoader.LoadImage("resources/ninja/black/Ninja2.png");
+        blackNinjaLeft1  =ImageLoader.LoadImage("resources/ninja/black/Ninja2left.png");
+
+        blueNinjaRight1  =ImageLoader.LoadImage("resources/ninja/blue/Ninja2.png");
+        blueNinjaLeft1   =ImageLoader.LoadImage("resources/ninja/blue/Ninja2left.png");
+
+        greenNinjaRight1 =ImageLoader.LoadImage("resources/ninja/green/Ninja2.png");
+        greenNinjaLeft1  =ImageLoader.LoadImage("resources/ninja/green/Ninja2left.png");
 
         diamond         =ImageLoader.LoadImage("resources/powers/diamond.png");
         gold            =ImageLoader.LoadImage("resources/powers/gold.png");

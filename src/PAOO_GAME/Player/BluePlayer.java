@@ -6,6 +6,7 @@ import static PAOO_GAME.Constants.*;
 import static PAOO_GAME.Graphics.Assets.*;
 
 public class BluePlayer extends Player{
+    private static int cntDraw=0;
     public BluePlayer()
     {
         super();
@@ -17,22 +18,60 @@ public class BluePlayer extends Player{
         {
             if(right)
             {
-                Drawer.draw(
-                        x,y,
-                        blueNinjaRight,
-                        playerWidth,
-                        playerHeight
-                );
+                if(cntDraw<20) {
+                    Drawer.draw(
+                            x, y,
+                            blueNinjaRight,
+                            playerWidth,
+                            playerHeight
+                    );
+                }
+                else if(cntDraw<40){
+                    Drawer.draw(
+                            x, y,
+                            blueNinjaRight1,
+                            playerWidth,
+                            playerHeight
+                    );
+                }else{
+                    Drawer.draw(
+                            x, y,
+                            blueNinjaRight1,
+                            playerWidth,
+                            playerHeight
+                    );
+                    cntDraw=0;
+                }
             }
             else
             {
-                Drawer.draw(
-                        x,y,
-                        blueNinjaLeft,
-                        playerWidth,
-                        playerHeight
-                );
+                if(cntDraw<20) {
+                    Drawer.draw(
+                            x, y,
+                            blueNinjaLeft,
+                            playerWidth,
+                            playerHeight
+                    );
+                }
+
+                else if(cntDraw<40){
+                    Drawer.draw(
+                            x, y,
+                            blueNinjaLeft1,
+                            playerWidth,
+                            playerHeight
+                    );
+                }else{
+                    Drawer.draw(
+                            x, y,
+                            blueNinjaLeft1,
+                            playerWidth,
+                            playerHeight
+                    );
+                    cntDraw=0;
+                }
             }
+            cntDraw++;
 
             if(getAttackStatus())
             {

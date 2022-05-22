@@ -6,7 +6,7 @@ import static PAOO_GAME.Constants.*;
 import static PAOO_GAME.Graphics.Assets.*;
 
 public class BlackPlayer extends Player {
-
+    private static int cntDraw=0;
     public BlackPlayer()
     {
         super();
@@ -18,21 +18,56 @@ public class BlackPlayer extends Player {
         {
             if(right)
             {
-                Drawer.draw(
-                        x,y,
-                        blackNinjaRight,
-                        playerWidth,
-                        playerHeight
-                );
+                if(cntDraw<20) {
+                    Drawer.draw(
+                            x, y,
+                            blackNinjaRight,
+                            playerWidth,
+                            playerHeight
+                    );
+                }else if(cntDraw<40){
+                    Drawer.draw(
+                            x, y,
+                            blackNinjaRight1,
+                            playerWidth,
+                            playerHeight
+                    );
+                }else{
+                    Drawer.draw(
+                            x, y,
+                            blackNinjaRight1,
+                            playerWidth,
+                            playerHeight
+                    );
+                    cntDraw=0;
+                }
             }
             else
             {
-                Drawer.draw(
-                        x,y,
-                        blackNinjaLeft,
-                        playerWidth,
-                        playerHeight
-                );
+                if(cntDraw<20) {
+                    Drawer.draw(
+                            x, y,
+                            blackNinjaLeft,
+                            playerWidth,
+                            playerHeight
+                    );
+                }else if(cntDraw<40){
+                    Drawer.draw(
+                            x, y,
+                            blackNinjaLeft1,
+                            playerWidth,
+                            playerHeight
+                    );
+                }else{
+
+                    Drawer.draw(
+                            x, y,
+                            blackNinjaLeft1,
+                            playerWidth,
+                            playerHeight
+                    );
+                    cntDraw=0;
+                }
             }
 
             if(getAttackStatus())
@@ -46,6 +81,7 @@ public class BlackPlayer extends Player {
             }
 
             drawShurikens();
+            cntDraw++;
         }
     }
 
