@@ -2,6 +2,7 @@ package PAOO_GAME.Player;
 
 import PAOO_GAME.Collisions.KeyboardControl;
 import PAOO_GAME.Drawable;
+import PAOO_GAME.Game;
 import PAOO_GAME.GameWindow.GameWindow;
 
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public abstract class Player implements  Drawable {
 
     private boolean goldCollected=false;
 
-    protected int coins=0;
+    protected int coins=Database.getInstance().get("Coins");
     private final List<ShinobiShuriken> listOfShurikens= new ArrayList<>();
 
     protected Player(){
@@ -65,6 +66,7 @@ public abstract class Player implements  Drawable {
     public void increaseCoins(){
         coins++;
         setCoins(coins);
+        Database.getInstance().update("Coins",coins);
     }
     public int getCoins(){return coins;}
     public int getLifeStatus(){return lifeStatus;}
@@ -86,7 +88,7 @@ public abstract class Player implements  Drawable {
     }
 
     protected void attackWithShuriken(){
-        int shurikenCounter=getGameWindowShurikenCounter();
+        int shurikenCounter= Game.getInstance().getGameWindowShurikenCounter();
         if(shurikenCounter>0) {
             if (KeyboardControl.attack2 != oldAttack2 && KeyboardControl.attack2) {
                 listOfShurikens.add(new ShinobiShuriken(x, y,right? 1:0));
@@ -95,7 +97,7 @@ public abstract class Player implements  Drawable {
                     listOfShurikens.add(new ShinobiShuriken(x - 16, y - 20,right? 1:0));
                 }
                 oldAttack2 = KeyboardControl.attack2;
-                setGameWindowShurikenCounter(shurikenCounter-1);
+                Game.getInstance().setGameWindowShurikenCounter(shurikenCounter-1);
             }
             if (!KeyboardControl.attack2) {
                 oldAttack2 = false;

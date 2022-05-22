@@ -58,7 +58,7 @@ public abstract class Powers implements Drawable {
     }
 
     protected void gameWindowsAddShurikensToCounter(int x){
-        setGameWindowShurikenCounter(Game.getGameWindowShurikenCounter()+x);
+        Game.getInstance().setGameWindowShurikenCounter(Game.getInstance().getGameWindowShurikenCounter()+x);
     }
 
     protected void playerIncreaseCoinsCollected(){

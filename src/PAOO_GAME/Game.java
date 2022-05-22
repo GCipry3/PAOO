@@ -14,6 +14,7 @@ import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.io.File;
 import java.io.IOException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +37,9 @@ public final class Game extends Component implements Runnable {
     private static boolean winFlag=false;
     private int state=0;
     private Clip clip;
-    private static boolean musicOn=false;
+    private static boolean musicOn=Database.getInstance().get("Music")==1;
+
+    boolean loadFlag=false;
     //0-start
     //1-choose player
     //2-choose map
@@ -60,6 +63,90 @@ public final class Game extends Component implements Runnable {
         return instance;
     }
 
+    public static final class Database {
+        private static Database instance=null;
+
+        private Database(){}
+
+        public static Database getInstance()
+        {
+            if(instance==null){
+                instance=new Database();
+            }
+            return instance;
+        }
+
+        public void update(String column,int value){
+            switch (column) {
+                case "Coins", "Map", "Music" -> {
+                    Connection c ;
+                    Statement st ;
+                    try {
+                        Class.forName("org.sqlite.JDBC");
+                        c = DriverManager.getConnection("jdbc:sqlite:game.db");
+                        c.setAutoCommit(false);
+
+                        st = c.createStatement();
+                        String sql ;
+
+                        sql = "UPDATE Game SET " + column + " = '" + value + "' ;";
+
+                        st.executeUpdate(sql);
+                        c.commit();
+                        st.close();
+                        c.close();
+                    } catch (Exception e) {
+                        System.err.println(e.getClass().getName() + ": " + e.getMessage());
+                        System.exit(0);
+                    }
+                    break;
+                }
+                default -> {
+                    System.out.println("PROBLEMS IN DATABASE -> UPDATE\n" + column + " NOT FOUND");
+                    System.err.println("PROBLEMS IN DATABASE -> UPDATE\n" + column + " NOT FOUND");
+                }
+            }
+        }
+        public int get(String column) {
+            Connection c=null;
+            Statement st=null;
+            ResultSet rs=null;
+            int value;
+            try{
+                Class.forName("org.sqlite.JDBC");
+                c = DriverManager.getConnection("jdbc:sqlite:game.db");
+                c.setAutoCommit(false);
+                st=c.createStatement();
+
+                rs = st.executeQuery("SELECT "+column+" FROM Game;");
+                value=Integer.valueOf(rs.getString(column));
+                rs.close();
+                st.close();
+                c.close();
+            }
+            catch ( Exception e ) {
+                System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+                System.exit(0);
+                value=0;
+            }
+            try {
+                return value;
+            }catch (Exception e){
+                System.out.println("PROBLEMS IN DATABASE -> GET\n"+column+" NOT FOUND");
+                System.err.println("PROBLEMS IN DATABASE -> GET\n"+column+" NOT FOUND");
+                return 0;
+            }
+        }
+    }
+
+    public void setDatabaseValue(String column,int value){
+        Database.getInstance().update(column,value);
+    }
+
+    public int getDatabaseValue(String column){
+        return Database.getInstance().get(column);
+    }
+
     public static void setLoseFlag(){loseFlag=true;}
     public static void setWinFlag() {winFlag =true;}
 
@@ -76,6 +163,11 @@ public final class Game extends Component implements Runnable {
         AudioInputStream audioInputStream= AudioSystem.getAudioInputStream(new File(musicPath).getAbsoluteFile());
         clip = AudioSystem.getClip();
         clip.open(audioInputStream);
+
+        if(Database.getInstance().get("Music")==1){
+            clip.start();
+        }
+
     }
 
     /*public static int getPlayerX(){return player.getX();}
@@ -92,8 +184,8 @@ public final class Game extends Component implements Runnable {
     public static void mapIncreaseIndexOfMap(){Map.increaseIndexOfMap();}
     public static boolean mapCompareIndexWithNrMaps(){return Map.compareIndexWithNrMaps();}*/
 
-    public static int getGameWindowShurikenCounter(){return GameWindow.getShurikenCounter();}
-    public static void setGameWindowShurikenCounter(int x){GameWindow.setShurikenCounter(x);}
+    public int getGameWindowShurikenCounter(){return GameWindow.getShurikenCounter();}
+    public void setGameWindowShurikenCounter(int x){GameWindow.setShurikenCounter(x);}
     //public static void setGameWindowLifeBarStatus(int x){GameWindow.setLifeBarStatus(x);}
 
     @Override
@@ -136,7 +228,6 @@ public final class Game extends Component implements Runnable {
             gameThread.start();
         }
     }
-
     public synchronized void StopGame()
     {
         if(runState)
@@ -150,9 +241,16 @@ public final class Game extends Component implements Runnable {
         boolean selected=false;
         switch (state){
             case 0:
+                if(touchedRectangle(widthNrTiles*tileWidth-400,3*64+37,250,50)){//restart button
+                    state=1;
+                    loadFlag=true;
+                    MouseControl.getInstance().resetCoords();
+                    Database.getInstance().update("Music",musicOn?1:0);
+                }
                 if(touchedRectangle(widthNrTiles*tileWidth-400,4*64+37,250,50)){
                     state=1;
                     MouseControl.getInstance().resetCoords();
+                    Database.getInstance().update("Music",musicOn?1:0);
                 }
                 if(touchedRectangle(widthNrTiles*tileWidth-400,5*64+37,250,50)){
                     if(musicOn) {
@@ -186,7 +284,22 @@ public final class Game extends Component implements Runnable {
                 }
 
                 if(selected){
-                    state=2;
+                    if(!loadFlag){
+                        state=2;
+                    }else{
+                        int dbMap=Database.getInstance().get("Map");
+                        m=new Map(dbMap-1); //in database map can be 1,2,3
+                        try{
+                            m.init();
+                        }catch (Exception e){
+                            System.out.println("map exception");
+                        }
+
+                        listWithDrawable.add(0,m);
+                        GameWindow.setAllToVisible();
+                        state=3;
+                    }
+
                     player=pFactory.getPlayer();
                     GameWindow.setLifeBarStatus(player.getLifeStatus());
                     listWithDrawable.add(player);
@@ -195,17 +308,23 @@ public final class Game extends Component implements Runnable {
                 break;
 
             case 2:
+                GameWindow.setLastMapVisibility(true);
+                GameWindow.setLastMapText("Last map played was "+ getDatabaseValue("Map"));
+                int mapNr = 0;
                 if(touchedRectangle(50,200,480,500)){
                     m=new Map(0);
                     selected=true;
+                    mapNr=1;
                 }
                 if(touchedRectangle(50+500,200,480,500)){
                     m=new Map(1);
                     selected=true;
+                    mapNr=2;
                 }
                 if(touchedRectangle(50+2*500,200,480,500)){
                     m=new Map(2);
                     selected=true;
+                    mapNr=3;
                 }
                 if(selected)
                 {
@@ -215,10 +334,13 @@ public final class Game extends Component implements Runnable {
                     }catch (Exception e){
                         System.out.println("map exception");
                     }
-
+                    
+                    Database.getInstance().update("Map",mapNr);
+                    
                     listWithDrawable.add(0,m);
                     GameWindow.setAllToVisible();
                     MouseControl.getInstance().resetCoords();
+                    GameWindow.setLastMapVisibility(false);
                 }
                 break;
 
@@ -252,6 +374,8 @@ public final class Game extends Component implements Runnable {
                 loseFlag=false;
                 winFlag=false;
                 //player.setEndAttack(true);
+                setGameWindowShurikenCounter(0);
+                jumpHeight=64;
                 state=0;
                 break;
 
@@ -296,6 +420,7 @@ public final class Game extends Component implements Runnable {
         switch (state){
             case 0:
                 Drawer.draw(0,0,startPageBackground,widthNrTiles*tileWidth,heightNrTiles*tileHeight);
+                Drawer.draw(widthNrTiles*tileWidth-400,3*64+32,buttons.get(3),250,60);
                 Drawer.draw(widthNrTiles*tileWidth-400,4*64+32,buttons.get(0),250,60);
                 Drawer.draw(widthNrTiles*tileWidth-400,5*64+32,buttons.get(4),250,60);
                 Drawer.draw(widthNrTiles*tileWidth-400,6*64+32,buttons.get(2),250,60);

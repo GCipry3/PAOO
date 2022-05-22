@@ -2,6 +2,7 @@ package PAOO_GAME.GameWindow;
 
 import PAOO_GAME.Collisions.KeyboardControl;
 import PAOO_GAME.Collisions.MouseControl;
+import PAOO_GAME.Game;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +14,7 @@ public final class GameWindow{
     private final String wndTitle;
     private static JTextField coinsCounter;
     private static JTextField shurikenCounter;//at each diamond collected you get 5 shuriken shoots
+    private static JTextField lastMap;
     private final int wndWidth;
     private final int wndHeight;
 
@@ -68,12 +70,24 @@ public final class GameWindow{
         coinsCounter =new JTextField();
         coinsCounter.setVisible(false);
         coinsCounter.setBounds(wndWidth-100,100,48,48);
-        coinsCounter.setText("0");
+        coinsCounter.setText(Game.Database.getInstance().get("Coins")+"");
         coinsCounter.setHorizontalAlignment(SwingConstants.CENTER);
         coinsCounter.setEditable(false);
         coinsCounter.setBackground(new Color(255, 152, 20));
         font=new Font(coinsCounter.getFont().getName(), coinsCounter.getFont().getStyle(),32);
         coinsCounter.setFont(font);
+
+
+        lastMap =new JTextField();
+        lastMap.setVisible(false);
+        lastMap.setBounds(wndWidth-300,100,250,48);
+        lastMap.setHorizontalAlignment(SwingConstants.CENTER);
+        lastMap.setEditable(false);
+        lastMap.setBackground(new Color(0, 152, 20));
+        font=new Font(lastMap.getFont().getName(), lastMap.getFont().getStyle(),20);
+        lastMap.setFont(font);
+
+
 
         canvas=new Canvas();
         canvas.setPreferredSize(new Dimension(wndWidth,wndHeight));
@@ -82,6 +96,7 @@ public final class GameWindow{
         canvas.addKeyListener(new KeyboardControl());
         canvas.addMouseListener(MouseControl.getInstance() );
 
+        wndFrame.add(lastMap);
         wndFrame.add(shurikenCounter);
         wndFrame.add(coinsCounter);
         wndFrame.add(healthBarPanel);
@@ -104,6 +119,14 @@ public final class GameWindow{
         healthBarPanel.setVisible(false);
         shurikenCounter.setVisible(false);
         coinsCounter.setVisible(false);
+    }
+
+    public static void setLastMapText(String value){
+        lastMap.setText(value);
+    }
+
+    public static void setLastMapVisibility(boolean state){
+        lastMap.setVisible(state);
     }
 
     public static void setCoins(int coins){
