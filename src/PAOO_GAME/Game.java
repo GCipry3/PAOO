@@ -113,7 +113,7 @@ public final class Game extends Component implements Runnable {
             ResultSet rs=null;
             int value;
             try{
-                Class.forName("org.sqlite.JDBC");
+                Class.forName("");
                 c = DriverManager.getConnection("jdbc:sqlite:game.db");
                 c.setAutoCommit(false);
                 st=c.createStatement();
